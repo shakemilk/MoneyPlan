@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		271B79F91787116B008427F0 /* CalculationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B79F81787116B008427F0 /* CalculationScreenViewController.m */; };
+		271B79FC17871213008427F0 /* names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 271B79FB17871213008427F0 /* names.plist */; };
 		74EC6F481783FF3E0066D122 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EC6F471783FF3E0066D122 /* UIKit.framework */; };
 		74EC6F4A1783FF3E0066D122 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EC6F491783FF3E0066D122 /* Foundation.framework */; };
 		74EC6F4C1783FF3E0066D122 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EC6F4B1783FF3E0066D122 /* CoreGraphics.framework */; };
@@ -21,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		271B79F71787116B008427F0 /* CalculationScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculationScreenViewController.h; sourceTree = "<group>"; };
+		271B79F81787116B008427F0 /* CalculationScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculationScreenViewController.m; sourceTree = "<group>"; };
+		271B79FB17871213008427F0 /* names.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = names.plist; sourceTree = "<group>"; };
 		74EC6F441783FF3E0066D122 /* MoneyPlan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyPlan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74EC6F471783FF3E0066D122 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		74EC6F491783FF3E0066D122 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -53,6 +58,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		271B79FA178711F4008427F0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				271B79FB17871213008427F0 /* names.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		74EC6F3B1783FF3E0066D122 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +101,9 @@
 				74EC6F5F1783FF3E0066D122 /* MainStoryboard.storyboard */,
 				74EC6F621783FF3E0066D122 /* SHMViewController.h */,
 				74EC6F631783FF3E0066D122 /* SHMViewController.m */,
+				271B79F71787116B008427F0 /* CalculationScreenViewController.h */,
+				271B79F81787116B008427F0 /* CalculationScreenViewController.m */,
+				271B79FA178711F4008427F0 /* Resources */,
 				74EC6F4E1783FF3E0066D122 /* Supporting Files */,
 			);
 			path = MoneyPlan;
@@ -164,6 +180,7 @@
 				74EC6F5C1783FF3E0066D122 /* Default@2x.png in Resources */,
 				74EC6F5E1783FF3E0066D122 /* Default-568h@2x.png in Resources */,
 				74EC6F611783FF3E0066D122 /* MainStoryboard.storyboard in Resources */,
+				271B79FC17871213008427F0 /* names.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +194,7 @@
 				74EC6F541783FF3E0066D122 /* main.m in Sources */,
 				74EC6F581783FF3E0066D122 /* SHMAppDelegate.m in Sources */,
 				74EC6F641783FF3E0066D122 /* SHMViewController.m in Sources */,
+				271B79F91787116B008427F0 /* CalculationScreenViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
