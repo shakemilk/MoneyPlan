@@ -2,25 +2,41 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>item 0</key>
+	<key>Names</key>
+	<array>
+		<string>Mikhail Pogosskiy</string>
+		<string>Mikhail Grushin</string>
+		<string>Nadezhda Shmakova</string>
+	</array>
+	<key>DebtsByName</key>
 	<dict>
-		<key>name</key>
-		<string>Михаил Погосский</string>
-		<key>ConnectedPeople</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Михаил Грушин</string>
-				<key>ows</key>
-				<integer>500</integer>
-			</dict>
-		</array>
+		<key>Mikhail Pogosskiy</key>
+		<dict>
+			<key>Mikhail Pogosskiy</key>
+			<integer>0</integer>
+			<key>Mikhail Grushin</key>
+			<string>0</string>
+			<key>Nadezhda Shmakova</key>
+			<string>0</string>
+		</dict>
+		<key>Mikhail Grushin</key>
+		<dict>
+			<key>Mikhail Pogosskiy</key>
+			<integer>600</integer>
+			<key>Mikhail Grushin</key>
+			<string>0</string>
+			<key>Nadezhda Shmakova</key>
+			<string>550</string>
+		</dict>
+		<key>Nadezhda Shmakova</key>
+		<dict>
+			<key>Mikhail Pogosskiy</key>
+			<integer>1100</integer>
+			<key>Mikhail Grushin</key>
+			<string>0</string>
+			<key>Nadezhda Shmakova</key>
+			<string>0</string>
+		</dict>
 	</dict>
-	<key>item 1</key>
-	<dict/>
-	<key>item 2</key>
-	<dict/>
-	<key>item 3</key>
-	<dict/>
 </dict>
 </plist>

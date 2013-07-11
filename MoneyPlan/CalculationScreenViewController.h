@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CalculationScreenSectionHeaderView.h"
 
-@interface CalculationScreenViewController : UIViewController
+
+@interface CalculationScreenViewController : UIViewController <SectionHeaderViewDelegate>
 
 @end
