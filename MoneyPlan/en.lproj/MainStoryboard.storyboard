@@ -22,9 +22,9 @@
         <!--View Controller-->
         <scene sceneID="5">
             <objects>
-                <viewController id="2" customClass="CalculationScreenViewController" sceneMemberID="viewController">
+                <viewController id="2" customClass="SHMViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -46,11 +46,11 @@
             <objects>
                 <viewController id="4R7-Xb-6jh" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gG5-YW-PBh">
-                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K3W-mD-2Wi">
-                                <rect key="frame" x="139" y="216" width="42" height="27"/>
+                                <rect key="frame" x="139" y="172" width="42" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -67,16 +67,16 @@
             </objects>
             <point key="canvasLocation" x="854" y="8"/>
         </scene>
-        <!--View Controller - Item 3-->
+        <!--Calculation Screen View Controller - Item 3-->
         <scene sceneID="vot-TE-BXp">
             <objects>
-                <viewController id="8ks-hc-uIb" sceneMemberID="viewController">
+                <viewController id="8ks-hc-uIb" customClass="CalculationScreenViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ttk-Ps-x36">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HW5-fm-8W3">
-                                <rect key="frame" x="139" y="214" width="42" height="27"/>
+                                <rect key="frame" x="139" y="170" width="42" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -96,11 +96,11 @@
             <objects>
                 <viewController id="fQK-f8-Qw1" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bTx-n0-K7o">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pHg-vx-T8h">
-                                <rect key="frame" x="139" y="214" width="42" height="28"/>
+                                <rect key="frame" x="139" y="170" width="42" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -120,7 +120,7 @@
             <objects>
                 <tabBarController definesPresentationContext="YES" id="ifL-OI-3GC" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="ivT-48-Rfd"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="EGQ-58-A2s">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -138,6 +138,12 @@
         </scene>
     </scenes>
     <classes>
+        <class className="CalculationScreenViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculationScreenViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
         <class className="SHMViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SHMViewController.h"/>
         </class>
