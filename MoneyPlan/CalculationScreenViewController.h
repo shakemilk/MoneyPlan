@@ -10,6 +10,6 @@
 #import "CalculationScreenSectionHeaderView.h"
 
 
-@interface CalculationScreenViewController : UIViewController <SectionHeaderViewDelegate>
+@interface SHMCalculationScreenViewController : UIViewController <SHMSectionHeaderViewDelegate>
 
 @end

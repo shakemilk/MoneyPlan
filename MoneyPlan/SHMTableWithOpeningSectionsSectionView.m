@@ -26,7 +26,7 @@
     return self;
 }
 
--(id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)sectionNumber delegate:(id<SectionHeaderViewDelegate>)delegate
+-(id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)sectionNumber delegate:(id<SHMSectionHeaderViewDelegate>)delegate
 {
     self = [super initWithFrame:frame];
 

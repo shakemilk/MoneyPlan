@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Pogosskiy. All rights reserved.
 //
 
-#import "CalculationScreenViewController.h"
+#import "SHMCalculationScreenViewController.h"
 #import "Foundation/Foundation.h"
 
-@interface CalculationScreenViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SHMCalculationScreenViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *namesOfPeople;   // тут имена из plist
@@ -21,12 +21,43 @@
 
 #define HEADER_HEIGHT 45
 
-@implementation CalculationScreenViewController
+@implementation SHMCalculationScreenViewController
 
 @synthesize tableView = _tableView;
 @synthesize namesOfPeople = _namesOfPeople;
 
 @synthesize numberOfRowsToShow = _numberOfRowsToShow;
+
+
+
+-(UITableView *) tableView{
+    
+    if (!_tableView){
+        CGFloat x = 0.0;
+        CGFloat y = 50.0;
+        CGFloat width = self.view.frame.size.width;
+        CGFloat height = self.view.frame.size.height - 100;
+        
+        CGRect tableRect = CGRectMake(x, y, width, height);
+        _tableView = [[UITableView alloc] initWithFrame:tableRect style:UITableViewStylePlain];
+        
+        _tableView.rowHeight = 45;
+        _tableView.sectionFooterHeight = 22;
+        _tableView.sectionHeaderHeight = HEADER_HEIGHT; 
+        _tableView.scrollEnabled = YES;
+        _tableView.showsVerticalScrollIndicator = YES;
+        _tableView.userInteractionEnabled = YES;
+        _tableView.bounces = YES;
+
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+    
+    }
+    
+    return _tableView;
+}
+
+
 
 #pragma mark -
 #pragma mark TableViewDataSource Methods
@@ -41,8 +72,6 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //здесь наверное еще проверка какая-нибудь нужна. А если там никого нет в plist?
-    
-    //return self.namesOfPeople.count;
     return [[self.numberOfRowsToShow objectAtIndex:section] integerValue]; //тест вообще надо следить чтоб там NSInteger был
 
 }
@@ -61,14 +90,46 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) //если доступных ячеек нет, создаем новую ячейку
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     //тут нужна проверка на пустоту namesOfPeople
+    
+    
+    
     cell.textLabel.text = [self.namesOfPeople objectAtIndex:indexPath.row];
+    cell.detailTextLabel.frame = CGRectMake(10, 20, 200,22);        // required
+    cell.detailTextLabel.text = [self.namesOfPeople objectAtIndex:indexPath.row];
+    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];   // also required
+
+    /*
+    cell.textLabel.text = @"Foo";
+    cell.detailTextLabel.text = @"Bar";
+    cell.textLabel.frame = CGRectMake(10, 20, 100,22);
+    */
+    
     return cell;
 }
 
+/*
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:10];
+    cell.textLabel.backgroundColor=[UIColor redColor];
+    cell.textLabel.frame = CGRectMake(10, 20, 100,22);
+    cell.detailTextLabel.frame = CGRectMake(10, 20, 200,22);
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // this method is called for each cell and returns height
+    //NSString * text = @"Your very long text";
+    //CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize: 14.0] forWidth:[tableView frame].size.width - 40.0 lineBreakMode:UILineBreakModeWordWrap];
+    // return either default height or height to fit the text
+    return 44;
+}
+
+ */
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -76,32 +137,8 @@
 }
 
 
-
 #pragma mark -
 #pragma mark TableViewController Methods
-
-
--(UITableView *)createTableView
-{
- 
-    CGFloat x = 0.0;
-    CGFloat y = 50.0;
-    CGFloat width = self.view.frame.size.width;
-    CGFloat height = self.view.frame.size.height - 100;
-    
-    CGRect tableRect = CGRectMake(x, y, width, height);
-    UITableView *tableView = [[UITableView alloc] initWithFrame:tableRect style:UITableViewStylePlain];
-    
-    tableView.rowHeight = 45;
-    tableView.sectionFooterHeight = 22;
-    tableView.sectionHeaderHeight = 22;
-    tableView.scrollEnabled = YES;
-    tableView.showsVerticalScrollIndicator = YES;
-    tableView.userInteractionEnabled = YES;
-    tableView.bounces = YES;
-
-    return tableView;
-}
 
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -146,6 +183,7 @@
 -(void)sectionHeaderView:(CalculationScreenSectionHeaderView *)sectionHeaderView sectionClosed:(NSInteger)sectionClosed
 //method launches for the section that was just closed by the user
 {
+        
     //test
     NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
     
@@ -160,14 +198,24 @@
     deleteAnimation = UITableViewRowAnimationBottom;
     
     NSMutableArray *array = [self.numberOfRowsToShow mutableCopy];
-    NSInteger rows1 = [[array objectAtIndex:sectionClosed] integerValue] - [indexPathsToDelete count];
-    NSNumber *rows = [[NSNumber alloc] initWithInteger:rows1];
+    
+    NSInteger rowsNumberToDelete = [[array objectAtIndex:sectionClosed] integerValue];
+    if (rowsNumberToDelete == 0)
+        return;
+#warning TODO не должен вообще попадать на этот return. выяснить, почему иногда это происходит
+    if (rowsNumberToDelete > 0)
+    {
+        rowsNumberToDelete -= [indexPathsToDelete count];
+    }
+    
+    
+    NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToDelete];
     
     [array replaceObjectAtIndex:sectionClosed withObject:rows];
     self.numberOfRowsToShow = array;
     
     // Apply the updates.
-    [self.tableView beginUpdates];
+    [self.tableView beginUpdates];  //между begin и end не должно 
     [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
     [self.tableView endUpdates];
 }
@@ -186,14 +234,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
-    self.tableView = [self createTableView];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    
-    self.tableView.sectionHeaderHeight = HEADER_HEIGHT;
-    
+        
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"names" withExtension:@"plist"];
     NSDictionary  *namesDictionary = [[NSDictionary alloc] initWithContentsOfURL:url];
     self.namesOfPeople = [namesDictionary objectForKey:@"Names"];
@@ -205,6 +246,7 @@
     }
     self.numberOfRowsToShow = array;
     
+    //lazily instantiate tableView
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"]; //что это за строка непонятно, но она починила всю таблицу
     [self.view addSubview:self.tableView];
 }
