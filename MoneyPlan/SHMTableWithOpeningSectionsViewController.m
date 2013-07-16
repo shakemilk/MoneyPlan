@@ -7,12 +7,20 @@
 //
 
 #import "SHMTableWithOpeningSectionsViewController.h"
+#import "SHMTableWithOpeningSectionsSectionView.h"
 
-@interface SHMTableWithOpeningSectionsViewController ()
+@interface SHMTableWithOpeningSectionsViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
+@property (nonatomic, strong) NSArray *namesOfPeople;   // тут имена из plist
+@property (nonatomic, strong) NSArray *numberOfRowsToShow;    //number for each section
 @end
 
 @implementation SHMTableWithOpeningSectionsViewController
+
+@synthesize tableView = _tableView;
+@synthesize namesOfPeople = _namesOfPeople;
+@synthesize numberOfRowsToShow = _numberOfRowsToShow;
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -23,6 +31,32 @@
     return self;
 }
 
+
+#define HEADER_HEIGHT 45
+#define ROW_HEIGHT 45
+
+-(UITableView *) tableView{
+    
+    if (!_tableView){
+
+        _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+        
+        _tableView.rowHeight = ROW_HEIGHT;
+        _tableView.sectionHeaderHeight = HEADER_HEIGHT;
+        _tableView.scrollEnabled = YES;
+        _tableView.showsVerticalScrollIndicator = YES;
+        _tableView.userInteractionEnabled = YES;
+        _tableView.bounces = YES;
+        
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        
+    }
+    
+    return _tableView;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -30,8 +64,19 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"names" withExtension:@"plist"];
+    NSDictionary  *namesDictionary = [[NSDictionary alloc] initWithContentsOfURL:url];
+    self.namesOfPeople = [namesDictionary objectForKey:@"Names"];
+    
+    NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
+    for (NSInteger i = 0; i < self.namesOfPeople.count; i++) {
+        NSNumber *num = [[NSNumber alloc]initWithInteger:self.namesOfPeople.count];
+        [array addObject:num];
+    }
+    self.numberOfRowsToShow = array;
+    
+    //lazily instantiate tableView
+    [self.view addSubview:self.tableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,64 +91,64 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return self.namesOfPeople.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [[self.numberOfRowsToShow objectAtIndex:section] integerValue]; //тест вообще надо следить чтоб там NSInteger был
 }
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    //и тут проверки на объект надо воткнуть на то, какой объект мы передаем
+    return [self.namesOfPeople objectAtIndex:section];
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
+    if (!cell) //если доступных ячеек нет, создаем новую ячейку
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier];
+    }
+    
+    //тут нужна проверка на пустоту namesOfPeople
+    
+    cell.textLabel.text = [self.namesOfPeople objectAtIndex:indexPath.row];
+    cell.detailTextLabel.frame = CGRectMake(10, 20, 200,22);        // required
+    cell.detailTextLabel.text = [self.namesOfPeople objectAtIndex:indexPath.row];
+    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];   // also required
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    //lazily instatniate headers
+    
+    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, HEADER_HEIGHT) title:[self.namesOfPeople objectAtIndex:section] section:section delegate:self];
+    //it works!!!
+    
+    return sectionHeader;
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:10];
+    cell.textLabel.backgroundColor=[UIColor whiteColor];
+    cell.textLabel.frame = CGRectMake(10, 20, 100,22);
+    cell.detailTextLabel.frame = CGRectMake(10, 20, 200,22);
+    
 }
-*/
+
 
 #pragma mark - Table view delegate
 
@@ -116,6 +161,75 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+}
+
+#pragma mark -
+#pragma mark SectionViewDelegate Methods
+
+
+-(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionOpened:(NSInteger)sectionOpened
+//method launches for the section that was just opened by the user
+{
+    NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
+    
+    for (NSInteger i = 0; i < self.namesOfPeople.count; i++) {
+        [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionOpened]];
+    }
+    
+    UITableViewRowAnimation insertAnimation = UITableViewRowAnimationTop;
+    
+    NSMutableArray *array = [self.numberOfRowsToShow mutableCopy];
+    NSInteger rowsNumberToAdd = [[array objectAtIndex:sectionOpened] integerValue] + [indexPathsToInsert count];
+    NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToAdd];
+    
+    [array replaceObjectAtIndex:sectionOpened withObject:rows];
+    self.numberOfRowsToShow = array;
+    
+    // Apply the updates.
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
+    [self.tableView endUpdates];
+}
+
+-(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionClosed:(NSInteger)sectionClosed
+//method launches for the section that was just closed by the user
+{
+    
+    //test
+    NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
+    
+    for (NSInteger i = 0; i < self.namesOfPeople.count; i++) {
+        [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionClosed]];
+    }
+    
+    
+    // Style the animation so that there's a smooth flow in either direction.
+    UITableViewRowAnimation deleteAnimation;
+    deleteAnimation = UITableViewRowAnimationBottom;
+    
+    NSMutableArray *array = [self.numberOfRowsToShow mutableCopy];
+    
+    NSInteger rowsNumberToDelete = [[array objectAtIndex:sectionClosed] integerValue];
+    if (rowsNumberToDelete == 0)
+        return;
+#warning TODO не должен вообще попадать на этот return. выяснить, почему иногда это происходит
+    if (rowsNumberToDelete > 0)
+    {
+        rowsNumberToDelete -= [indexPathsToDelete count];
+    }
+    
+    
+    NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToDelete];
+    
+    [array replaceObjectAtIndex:sectionClosed withObject:rows];
+    self.numberOfRowsToShow = array;
+    
+    // Apply the updates.
+    [self.tableView beginUpdates];  //между begin и end не должно
+    [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
+    [self.tableView endUpdates];
 }
 
 @end

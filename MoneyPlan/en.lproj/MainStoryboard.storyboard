@@ -70,7 +70,7 @@
         <!--Calculation Screen View Controller - Item 3-->
         <scene sceneID="vot-TE-BXp">
             <objects>
-                <viewController id="8ks-hc-uIb" customClass="CalculationScreenViewController" sceneMemberID="viewController">
+                <viewController id="8ks-hc-uIb" customClass="SHMCalculationScreenViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ttk-Ps-x36">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -138,8 +138,8 @@
         </scene>
     </scenes>
     <classes>
-        <class className="CalculationScreenViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculationScreenViewController.h"/>
+        <class className="SHMCalculationScreenViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SHMCalculationScreenViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>

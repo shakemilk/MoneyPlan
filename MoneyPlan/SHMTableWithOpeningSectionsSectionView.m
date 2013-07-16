@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Shakemilk. All rights reserved.
 //
 
-#import "CalculationScreenSectionHeaderView.h"
+#import "SHMTableWithOpeningSectionsSectionView.h"
 #import <QuartzCore/QuartzCore.h>
 
 
-@implementation CalculationScreenSectionHeaderView
+@implementation SHMTableWithOpeningSectionsSectionView
 
 @synthesize titleLabel = _titleLabel;
 @synthesize delegate = _delegate;
@@ -26,7 +26,7 @@
     return self;
 }
 
--(id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)sectionNumber delegate:(id<SHMSectionHeaderViewDelegate>)delegate
+-(id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)sectionNumber delegate:(id<SHMTableWithOpeningSectionsSectionViewDelegate>)delegate
 {
     self = [super initWithFrame:frame];
 
@@ -48,7 +48,7 @@
         CGRect titleLabelFrame = self.bounds;
         titleLabelFrame.origin.x += 15.0;   //взято из проекта apple. подредактировать размеры
         titleLabelFrame.size.width -= 15.0;
-        CGRectInset(titleLabelFrame, 0.0, 5.0); //возвращает прямоугольник с тем же центром, но меньше по размеру
+        //CGRectInset(titleLabelFrame, 0.0, 5.0); //возвращает прямоугольник с тем же центром, но меньше по размеру
         UILabel *label = [[UILabel alloc] initWithFrame:titleLabelFrame];
         label.text = title;
         label.font = [UIFont boldSystemFontOfSize:20.0];

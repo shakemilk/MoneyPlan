@@ -10,29 +10,27 @@
 #import <Foundation/Foundation.h>
 
 
-@protocol SHMSectionHeaderViewDelegate;
+@protocol SHMTableWithOpeningSectionsSectionViewDelegate;
 
-@interface CalculationScreenSectionHeaderView : UIView
+@interface SHMTableWithOpeningSectionsSectionView : UIView
 
 @property (nonatomic, weak) UILabel *titleLabel;
 @property (nonatomic, assign) NSInteger section;    //а зачем assign?
-@property (nonatomic, weak) id <SHMSectionHeaderViewDelegate> delegate;
+@property (nonatomic, weak) id <SHMTableWithOpeningSectionsSectionViewDelegate> delegate;
 
 @property (nonatomic) BOOL opened;   // открыта или закрыта секция
 
 
--(id)initWithFrame:(CGRect)frame title:(NSString*)title section:(NSInteger)sectionNumber delegate:(id <SHMSectionHeaderViewDelegate>)delegate;
+-(id)initWithFrame:(CGRect)frame title:(NSString*)title section:(NSInteger)sectionNumber delegate:(id <SHMTableWithOpeningSectionsSectionViewDelegate>)delegate;
 -(void) toggleOpenWithUserAction:(BOOL)userAction;
 
 @end
 
 
-
-
-@protocol SHMSectionHeaderViewDelegate <NSObject>
+@protocol SHMTableWithOpeningSectionsSectionViewDelegate <NSObject>
 
 @optional
--(void)sectionHeaderView:(CalculationScreenSectionHeaderView *)sectionHeaderView sectionOpened:(NSInteger) sectionOpened;
--(void)sectionHeaderView:(CalculationScreenSectionHeaderView *)sectionHeaderView sectionClosed:(NSInteger) sectionClosed;
+-(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionOpened:(NSInteger) sectionOpened;
+-(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionClosed:(NSInteger) sectionClosed;
 
 @end
