@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) NSArray *namesOfPeople;   // тут имена из plist
 @property (nonatomic, strong) NSArray *numberOfRowsToShow;    //number for each section
+@property (nonatomic, strong) NSDictionary *listOfDebts;
 @end
 
 @implementation SHMTableWithOpeningSectionsViewController
@@ -64,9 +65,11 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
-    NSURL *url = [[NSBundle mainBundle] URLForResource:@"names" withExtension:@"plist"];
-    NSDictionary  *namesDictionary = [[NSDictionary alloc] initWithContentsOfURL:url];
+    NSURL *urlForArray = [[NSBundle mainBundle] URLForResource:@"names" withExtension:@"plist"];
+    NSDictionary  *namesDictionary = [[NSDictionary alloc] initWithContentsOfURL:urlForArray];
     self.namesOfPeople = [namesDictionary objectForKey:@"Names"];
+    self.listOfDebts = [namesDictionary objectForKey:@"DebtsByName"];
+    
     
     NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
     for (NSInteger i = 0; i < self.namesOfPeople.count; i++) {
@@ -122,8 +125,15 @@
     //тут нужна проверка на пустоту namesOfPeople
     
     cell.textLabel.text = [self.namesOfPeople objectAtIndex:indexPath.row];
-    cell.detailTextLabel.frame = CGRectMake(10, 20, 200,22);        // required
+    //cell.detailTextLabel.frame = CGRectMake(10, 20, 200,22);        // required
     cell.detailTextLabel.text = [self.namesOfPeople objectAtIndex:indexPath.row];
+    
+    NSString *titleForHeader = [self tableView:tableView titleForHeaderInSection:indexPath.section];
+
+    NSNumber *debt = [[self.listOfDebts objectForKey:titleForHeader] objectForKey:cell.textLabel.text];
+    
+    cell.detailTextLabel.text = [debt stringValue];
+    
     cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];   // also required
     
     return cell;
@@ -140,15 +150,16 @@
     return sectionHeader;
 }
 
-
+/*
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:10];
     cell.textLabel.backgroundColor=[UIColor whiteColor];
     cell.textLabel.frame = CGRectMake(10, 20, 100,22);
     cell.detailTextLabel.frame = CGRectMake(10, 20, 200,22);
     
 }
-
+*/
 
 #pragma mark - Table view delegate
 
