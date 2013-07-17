@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) NSArray *namesOfPeople;   // тут имена из plist
 @property (nonatomic, strong) NSArray *numberOfRowsToShow;    //number for each section
-@property (nonatomic, strong) NSDictionary *listOfDebts;
+@property (nonatomic, strong) NSDictionary *listOfDebts;    //тут список долгов, кто кому что должен
 @end
 
 @implementation SHMTableWithOpeningSectionsViewController
@@ -36,11 +36,18 @@
 #define HEADER_HEIGHT 45
 #define ROW_HEIGHT 45
 
+#define SPACE_FOR_TABBAR 49     //высота таб бара
+
 -(UITableView *) tableView{
     
     if (!_tableView){
-
-        _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+        CGFloat x = 0.0;
+        CGFloat y = 0.0;
+        CGFloat width = self.view.frame.size.width;
+        CGFloat height = self.view.frame.size.height - SPACE_FOR_TABBAR - 45; //без 45 при полностью раскрытых секциях сверху и закрытой последней секции нельзя увидеть ее заголовок. на нем не тормозится.
+        CGRect rect = CGRectMake(x, y, width, height);
+        
+        _tableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
         
         _tableView.rowHeight = ROW_HEIGHT;
         _tableView.sectionHeaderHeight = HEADER_HEIGHT;
@@ -67,7 +74,9 @@
  
     NSURL *urlForArray = [[NSBundle mainBundle] URLForResource:@"names" withExtension:@"plist"];
     NSDictionary  *namesDictionary = [[NSDictionary alloc] initWithContentsOfURL:urlForArray];
+    
     self.namesOfPeople = [namesDictionary objectForKey:@"Names"];
+
     self.listOfDebts = [namesDictionary objectForKey:@"DebtsByName"];
     
     
@@ -92,14 +101,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return self.namesOfPeople.count;
+    return self.listOfDebts.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [[self.numberOfRowsToShow objectAtIndex:section] integerValue]; //тест вообще надо следить чтоб там NSInteger был
 }
@@ -119,22 +126,16 @@
     // Configure the cell...
     if (!cell) //если доступных ячеек нет, создаем новую ячейку
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     
     //тут нужна проверка на пустоту namesOfPeople
-    
     cell.textLabel.text = [self.namesOfPeople objectAtIndex:indexPath.row];
-    //cell.detailTextLabel.frame = CGRectMake(10, 20, 200,22);        // required
-    cell.detailTextLabel.text = [self.namesOfPeople objectAtIndex:indexPath.row];
     
     NSString *titleForHeader = [self tableView:tableView titleForHeaderInSection:indexPath.section];
-
     NSNumber *debt = [[self.listOfDebts objectForKey:titleForHeader] objectForKey:cell.textLabel.text];
     
     cell.detailTextLabel.text = [debt stringValue];
-    
-    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:12];   // also required
     
     return cell;
 }
@@ -150,30 +151,21 @@
     return sectionHeader;
 }
 
-/*
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:10];
-    cell.textLabel.backgroundColor=[UIColor whiteColor];
-    cell.textLabel.frame = CGRectMake(10, 20, 100,22);
-    cell.detailTextLabel.frame = CGRectMake(10, 20, 200,22);
-    
+    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:14];   // also required
+    //cell.textLabel.backgroundColor=[UIColor whiteColor];
+       
 }
-*/
+
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 #pragma mark -
@@ -218,7 +210,7 @@
     
     // Style the animation so that there's a smooth flow in either direction.
     UITableViewRowAnimation deleteAnimation;
-    deleteAnimation = UITableViewRowAnimationBottom;
+    deleteAnimation = UITableViewRowAnimationTop;
     
     NSMutableArray *array = [self.numberOfRowsToShow mutableCopy];
     

@@ -15,27 +15,27 @@
 			<key>Mikhail Pogosskiy</key>
 			<integer>0</integer>
 			<key>Mikhail Grushin</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Nadezhda Shmakova</key>
-			<string>0</string>
+			<integer>0</integer>
 		</dict>
 		<key>Mikhail Grushin</key>
 		<dict>
 			<key>Mikhail Pogosskiy</key>
 			<integer>600</integer>
 			<key>Mikhail Grushin</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Nadezhda Shmakova</key>
-			<string>550</string>
+			<integer>550</integer>
 		</dict>
 		<key>Nadezhda Shmakova</key>
 		<dict>
 			<key>Mikhail Pogosskiy</key>
 			<integer>1100</integer>
 			<key>Mikhail Grushin</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Nadezhda Shmakova</key>
-			<string>0</string>
+			<integer>0</integer>
 		</dict>
 	</dict>
 </dict>
