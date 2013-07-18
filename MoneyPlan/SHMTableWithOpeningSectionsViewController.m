@@ -33,10 +33,10 @@
 }
 
 
-#define HEADER_HEIGHT 45
-#define ROW_HEIGHT 45
+#define SHM_HEADER_HEIGHT 45
+#define SHM_ROW_HEIGHT 45
 
-#define SPACE_FOR_TABBAR 49     //высота таб бара
+#define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
 
 -(UITableView *) tableView{
     
@@ -44,13 +44,13 @@
         CGFloat x = 0.0;
         CGFloat y = 0.0;
         CGFloat width = self.view.frame.size.width;
-        CGFloat height = self.view.frame.size.height - SPACE_FOR_TABBAR - 45; //без 45 при полностью раскрытых секциях сверху и закрытой последней секции нельзя увидеть ее заголовок. на нем не тормозится.
+        CGFloat height = self.view.frame.size.height - SHM_SPACE_FOR_TABBAR - 45; //без 45 при полностью раскрытых секциях сверху и закрытой последней секции нельзя увидеть ее заголовок. на нем не тормозится.
         CGRect rect = CGRectMake(x, y, width, height);
         
         _tableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
         
-        _tableView.rowHeight = ROW_HEIGHT;
-        _tableView.sectionHeaderHeight = HEADER_HEIGHT;
+        _tableView.rowHeight = SHM_ROW_HEIGHT;
+        _tableView.sectionHeaderHeight = SHM_HEADER_HEIGHT;
         _tableView.scrollEnabled = YES;
         _tableView.showsVerticalScrollIndicator = YES;
         _tableView.userInteractionEnabled = YES;
@@ -145,7 +145,7 @@
 {
     //lazily instatniate headers
     
-    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, HEADER_HEIGHT) title:[self.namesOfPeople objectAtIndex:section] section:section delegate:self];
+    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[self.namesOfPeople objectAtIndex:section] section:section delegate:self];
     //it works!!!
     
     return sectionHeader;
