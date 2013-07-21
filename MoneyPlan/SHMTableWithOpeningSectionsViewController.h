@@ -10,6 +10,6 @@
 
 @interface SHMTableWithOpeningSectionsViewController : UITableViewController
 
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UITableView *calculationTableView;
 
 @end

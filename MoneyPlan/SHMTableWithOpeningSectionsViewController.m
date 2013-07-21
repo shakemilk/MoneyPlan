@@ -11,16 +11,16 @@
 
 @interface SHMTableWithOpeningSectionsViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
-@property (nonatomic, strong) NSArray *namesOfPeople;   // тут имена из plist
-@property (nonatomic, strong) NSArray *numberOfRowsToShow;    //number for each section
+@property (nonatomic, strong) NSArray *namesOfPeopleArray;   // тут имена из plist
+@property (nonatomic, strong) NSArray *numberOfRowsToShowForSection;    //number of rows for each section
 @property (nonatomic, strong) NSDictionary *listOfDebts;    //тут список долгов, кто кому что должен
 @end
 
 @implementation SHMTableWithOpeningSectionsViewController
 
-@synthesize tableView = _tableView;
-@synthesize namesOfPeople = _namesOfPeople;
-@synthesize numberOfRowsToShow = _numberOfRowsToShow;
+#define SHM_HEADER_HEIGHT 45
+#define SHM_ROW_HEIGHT 45
+#define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -33,62 +33,79 @@
 }
 
 
-#define SHM_HEADER_HEIGHT 45
-#define SHM_ROW_HEIGHT 45
 
-#define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
-
--(UITableView *) tableView{
+-(UITableView *) calculationTableView{
     
-    if (!_tableView){
+    if (!_calculationTableView){
         CGFloat x = 0.0;
         CGFloat y = 0.0;
         CGFloat width = self.view.frame.size.width;
         CGFloat height = self.view.frame.size.height - SHM_SPACE_FOR_TABBAR - 45; //без 45 при полностью раскрытых секциях сверху и закрытой последней секции нельзя увидеть ее заголовок. на нем не тормозится.
         CGRect rect = CGRectMake(x, y, width, height);
         
-        _tableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
+        _calculationTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
         
-        _tableView.rowHeight = SHM_ROW_HEIGHT;
-        _tableView.sectionHeaderHeight = SHM_HEADER_HEIGHT;
-        _tableView.scrollEnabled = YES;
-        _tableView.showsVerticalScrollIndicator = YES;
-        _tableView.userInteractionEnabled = YES;
-        _tableView.bounces = YES;
+        _calculationTableView.rowHeight = SHM_ROW_HEIGHT;
+        _calculationTableView.sectionHeaderHeight = SHM_HEADER_HEIGHT;
+        _calculationTableView.scrollEnabled = YES;
+        _calculationTableView.showsVerticalScrollIndicator = YES;
+        _calculationTableView.userInteractionEnabled = YES;
+        _calculationTableView.bounces = YES;
         
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        
+        _calculationTableView.delegate = self;
+        _calculationTableView.dataSource = self;
+                
+        [_calculationTableView registerNib:[UINib nibWithNibName:@"SHMCalculationScreenTableCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"Cell"]; //делаем через registerNib, потому что иначе регистрируется ячейка с дефолтным стилем. Выход - либо использовать xib, либо кастомный класс
     }
     
-    return _tableView;
+    return _calculationTableView;
 }
 
+
+-(NSArray *) namesOfPeopleArray
+{
+    if (!_namesOfPeopleArray)
+    {
+        NSURL *urlForArray = [[NSBundle mainBundle] URLForResource:@"names" withExtension:@"plist"];
+        NSDictionary  *namesDictionary = [[NSDictionary alloc] initWithContentsOfURL:urlForArray];
+    
+        _namesOfPeopleArray = [namesDictionary objectForKey:@"Names"];
+    }
+    return _namesOfPeopleArray;
+}
+
+
+-(NSDictionary *) listOfDebts
+{
+    if (!_listOfDebts)
+    {
+        NSURL *urlForArray = [[NSBundle mainBundle] URLForResource:@"names" withExtension:@"plist"];
+        NSDictionary  *namesDictionary = [[NSDictionary alloc] initWithContentsOfURL:urlForArray];
+        
+        _listOfDebts = [namesDictionary objectForKey:@"DebtsByName"];
+    }
+    return _listOfDebts;
+}
+
+-(NSArray *) numberOfRowsToShow
+{
+    if(!_numberOfRowsToShowForSection)
+    {
+        NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
+        for (NSInteger i = 0; i < self.namesOfPeopleArray.count; i++) {
+            NSNumber *num = [[NSNumber alloc]initWithInteger:self.namesOfPeopleArray.count];
+            [array addObject:num];
+        }
+        _numberOfRowsToShowForSection = array;
+    }
+    return _numberOfRowsToShowForSection;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    NSURL *urlForArray = [[NSBundle mainBundle] URLForResource:@"names" withExtension:@"plist"];
-    NSDictionary  *namesDictionary = [[NSDictionary alloc] initWithContentsOfURL:urlForArray];
+    self.tableView = self.calculationTableView; //lazily instantiate tableView
     
-    self.namesOfPeople = [namesDictionary objectForKey:@"Names"];
-
-    self.listOfDebts = [namesDictionary objectForKey:@"DebtsByName"];
-    
-    
-    NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
-    for (NSInteger i = 0; i < self.namesOfPeople.count; i++) {
-        NSNumber *num = [[NSNumber alloc]initWithInteger:self.namesOfPeople.count];
-        [array addObject:num];
-    }
-    self.numberOfRowsToShow = array;
-    
-    //lazily instantiate tableView
-    [self.view addSubview:self.tableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,23 +131,17 @@
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     //и тут проверки на объект надо воткнуть на то, какой объект мы передаем
-    return [self.namesOfPeople objectAtIndex:section];
+    return [self.namesOfPeopleArray objectAtIndex:section];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
-    if (!cell) //если доступных ячеек нет, создаем новую ячейку
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-    }
-    
-    //тут нужна проверка на пустоту namesOfPeople
-    cell.textLabel.text = [self.namesOfPeople objectAtIndex:indexPath.row];
+    //тут нужна проверка на пустоту namesOfPeopleArray
+    cell.textLabel.text = [self.namesOfPeopleArray objectAtIndex:indexPath.row];
     
     NSString *titleForHeader = [self tableView:tableView titleForHeaderInSection:indexPath.section];
     NSNumber *debt = [[self.listOfDebts objectForKey:titleForHeader] objectForKey:cell.textLabel.text];
@@ -145,20 +156,10 @@
 {
     //lazily instatniate headers
     
-    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[self.namesOfPeople objectAtIndex:section] section:section delegate:self];
-    //it works!!!
+    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[self.namesOfPeopleArray objectAtIndex:section] section:section delegate:self];
     
     return sectionHeader;
 }
-
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:14];   // also required
-    //cell.textLabel.backgroundColor=[UIColor whiteColor];
-       
-}
-
 
 #pragma mark - Table view delegate
 
@@ -177,7 +178,7 @@
 {
     NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
     
-    for (NSInteger i = 0; i < self.namesOfPeople.count; i++) {
+    for (NSInteger i = 0; i < self.namesOfPeopleArray.count; i++) {
         [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionOpened]];
     }
     
@@ -188,12 +189,12 @@
     NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToAdd];
     
     [array replaceObjectAtIndex:sectionOpened withObject:rows];
-    self.numberOfRowsToShow = array;
+    self.numberOfRowsToShowForSection = array;
     
     // Apply the updates.
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
-    [self.tableView endUpdates];
+    [self.calculationTableView beginUpdates];
+    [self.calculationTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
+    [self.calculationTableView endUpdates];
 }
 
 -(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionClosed:(NSInteger)sectionClosed
@@ -203,7 +204,7 @@
     //test
     NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
     
-    for (NSInteger i = 0; i < self.namesOfPeople.count; i++) {
+    for (NSInteger i = 0; i < self.namesOfPeopleArray.count; i++) {
         [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionClosed]];
     }
     
@@ -227,12 +228,12 @@
     NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToDelete];
     
     [array replaceObjectAtIndex:sectionClosed withObject:rows];
-    self.numberOfRowsToShow = array;
+    self.numberOfRowsToShowForSection = array;
     
     // Apply the updates.
-    [self.tableView beginUpdates];  //между begin и end не должно
-    [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
-    [self.tableView endUpdates];
+    [self.calculationTableView beginUpdates];  //между begin и end не должно
+    [self.calculationTableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
+    [self.calculationTableView endUpdates];
 }
 
 @end

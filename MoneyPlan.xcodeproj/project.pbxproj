@@ -10,6 +10,7 @@
 		271B79F91787116B008427F0 /* SHMCalculationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B79F81787116B008427F0 /* SHMCalculationScreenViewController.m */; };
 		271B79FC17871213008427F0 /* names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 271B79FB17871213008427F0 /* names.plist */; };
 		271B7A0517895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B7A0417895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m */; };
+		27B0AE65179B366000B03B01 /* SHMCalculationScreenTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27B0AE64179B366000B03B01 /* SHMCalculationScreenTableCell.xib */; };
 		27BC4BAF1795215E006DD809 /* SHMTableWithOpeningSectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BC4BAE1795215E006DD809 /* SHMTableWithOpeningSectionsViewController.m */; };
 		74EC6F481783FF3E0066D122 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EC6F471783FF3E0066D122 /* UIKit.framework */; };
 		74EC6F4A1783FF3E0066D122 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EC6F491783FF3E0066D122 /* Foundation.framework */; };
@@ -30,6 +31,7 @@
 		271B79FB17871213008427F0 /* names.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = names.plist; sourceTree = "<group>"; };
 		271B7A0317895881008427F0 /* SHMTableWithOpeningSectionsSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMTableWithOpeningSectionsSectionView.h; sourceTree = "<group>"; };
 		271B7A0417895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMTableWithOpeningSectionsSectionView.m; sourceTree = "<group>"; };
+		27B0AE64179B366000B03B01 /* SHMCalculationScreenTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHMCalculationScreenTableCell.xib; sourceTree = "<group>"; };
 		27BC4BAD1795215E006DD809 /* SHMTableWithOpeningSectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMTableWithOpeningSectionsViewController.h; sourceTree = "<group>"; };
 		27BC4BAE1795215E006DD809 /* SHMTableWithOpeningSectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMTableWithOpeningSectionsViewController.m; sourceTree = "<group>"; };
 		74EC6F441783FF3E0066D122 /* MoneyPlan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyPlan.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +115,7 @@
 				271B79F81787116B008427F0 /* SHMCalculationScreenViewController.m */,
 				27BC4BAD1795215E006DD809 /* SHMTableWithOpeningSectionsViewController.h */,
 				27BC4BAE1795215E006DD809 /* SHMTableWithOpeningSectionsViewController.m */,
+				27B0AE64179B366000B03B01 /* SHMCalculationScreenTableCell.xib */,
 				271B79FA178711F4008427F0 /* Resources */,
 				74EC6F4E1783FF3E0066D122 /* Supporting Files */,
 			);
@@ -191,6 +194,7 @@
 				74EC6F5E1783FF3E0066D122 /* Default-568h@2x.png in Resources */,
 				74EC6F611783FF3E0066D122 /* MainStoryboard.storyboard in Resources */,
 				271B79FC17871213008427F0 /* names.plist in Resources */,
+				27B0AE65179B366000B03B01 /* SHMCalculationScreenTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
