@@ -14,7 +14,7 @@
 
 @interface SHMTableWithOpeningSectionsSectionView : UIView
 
-@property (nonatomic, weak) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, assign) NSInteger section;    //а зачем assign?
 @property (nonatomic, weak) id <SHMTableWithOpeningSectionsSectionViewDelegate> delegate;
 

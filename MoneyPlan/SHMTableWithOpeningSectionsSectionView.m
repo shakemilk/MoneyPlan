@@ -26,6 +26,28 @@
     return self;
 }
 
+
+-(void)drawRect:(CGRect)rect
+{
+    
+    //// Color Declarations
+    UIColor* fillColor = [UIColor whiteColor];
+    UIColor* strokeColor = [UIColor blueColor];
+    
+    //// Rounded Rectangle Drawing
+    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(5, 5, 310, 35) cornerRadius: 4];
+    
+    UIBezierPath *fullCellRect = [UIBezierPath bezierPathWithRect:rect];
+    
+    [fillColor setFill];
+    [fullCellRect fill];
+    [strokeColor setStroke];
+    roundedRectanglePath.lineWidth = 2.5;
+    [roundedRectanglePath stroke];
+
+
+}
+
 -(id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)sectionNumber delegate:(id<SHMTableWithOpeningSectionsSectionViewDelegate>)delegate
 {
     self = [super initWithFrame:frame];
@@ -42,17 +64,21 @@
         [self addGestureRecognizer:tapRecognizer];
         
         _delegate = delegate;
-        self.userInteractionEnabled = YES;
         
         _section = sectionNumber;   //передали номер секции
         CGRect titleLabelFrame = self.bounds;
         titleLabelFrame.origin.x += 15.0;   //взято из проекта apple. подредактировать размеры
-        titleLabelFrame.size.width -= 15.0;
-        //CGRectInset(titleLabelFrame, 0.0, 5.0); //возвращает прямоугольник с тем же центром, но меньше по размеру
+        titleLabelFrame.origin.y += 7.5;
+        titleLabelFrame.size.width -= 25.0;
+        //CGRectInset(titleLabelFrame, 45.0, 15.0); //возвращает прямоугольник с тем же центром, но меньше по размеру
+        
+        titleLabelFrame.size.height -=15.0;
+        
         UILabel *label = [[UILabel alloc] initWithFrame:titleLabelFrame];
         label.text = title;
         label.font = [UIFont boldSystemFontOfSize:20.0];
         label.textColor = [UIColor blueColor];
+        
         //label.textAlignment =
         [self addSubview:label];
         _titleLabel = label;
