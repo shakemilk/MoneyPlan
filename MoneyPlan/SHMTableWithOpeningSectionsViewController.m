@@ -8,6 +8,7 @@
 
 #import "SHMTableWithOpeningSectionsViewController.h"
 #import "SHMTableWithOpeningSectionsSectionView.h"
+#import "SHMCalculationScreenTableCell.h"
 
 @interface SHMTableWithOpeningSectionsViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
@@ -54,8 +55,10 @@
         
         _calculationTableView.delegate = self;
         _calculationTableView.dataSource = self;
-                
-        [_calculationTableView registerNib:[UINib nibWithNibName:@"SHMCalculationScreenTableCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"Cell"]; //делаем через registerNib, потому что иначе регистрируется ячейка с дефолтным стилем. Выход - либо использовать xib, либо кастомный класс
+        
+        [_calculationTableView registerClass:[SHMCalculationScreenTableCell class] forCellReuseIdentifier:@"Cell"];
+        
+        //[_calculationTableView registerNib:[UINib nibWithNibName:@"SHMCalculationScreenTableCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"Cell"]; //делаем через registerNib, потому что иначе регистрируется ячейка с дефолтным стилем. Выход - либо использовать xib, либо кастомный класс
     }
     
     return _calculationTableView;
