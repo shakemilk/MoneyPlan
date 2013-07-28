@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Shakemilk. All rights reserved.
 //
 
-#import "SHMTableWithOpeningSectionsViewController.h"
+#import "SHMCalculationScreenViewController.h"
 #import "SHMTableWithOpeningSectionsSectionView.h"
 #import "SHMCalculationScreenTableCell.h"
 
-@interface SHMTableWithOpeningSectionsViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
+@interface SHMCalculationScreenViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
 @property (nonatomic, strong) NSArray *numberOfRowsToShowForSection;    //number of rows for each section
 @property (nonatomic, strong) NSDictionary *listOfDebts;    //тут список долгов, кто кому что должен
@@ -19,21 +19,12 @@
 
 @end
 
-@implementation SHMTableWithOpeningSectionsViewController
+@implementation SHMCalculationScreenViewController
 
 #define SHM_HEADER_HEIGHT 45
 #define SHM_ROW_HEIGHT 45
 #define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
 
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 -(UITableView *) calculationTableView{
     
@@ -77,9 +68,9 @@
     return _openedSectionsArray;
 }
  
-/*
+
 -(NSDictionary *) deleteElementsWithZeroDebtFromDictionary: (NSDictionary *) dictionary
-//метод удаляет элементы с пустыми значениями из dictionary. Пока не нужен, но понадобится при скрытии нулевых ячеек
+//метод удаляет элементы с пустыми значениями из dictionary
 {
     
     NSMutableDictionary *dict = [dictionary mutableCopy];
@@ -102,7 +93,7 @@
     dictionary = dict;
     return dictionary;
 }
-*/
+
 
 -(NSDictionary *) receiveDictionaryFromCalculationModule
 {
@@ -167,7 +158,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView = self.calculationTableView; //lazily instantiate tableView
+    [self.view addSubview:self.calculationTableView];
+    
+    //self.tableView = self.calculationTableView; //lazily instantiate tableView
 }
 
 - (void)didReceiveMemoryWarning
@@ -225,7 +218,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     //lazily instatniate headers    
-    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[[self.listOfDebts allKeys] objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
+    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.calculationTableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[[self.listOfDebts allKeys] objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
     
     return sectionHeader;
 }

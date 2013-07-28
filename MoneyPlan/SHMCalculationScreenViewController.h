@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SHMTableWithOpeningSectionsViewController : UITableViewController
+@interface SHMCalculationScreenViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *calculationTableView;
 
