@@ -12,7 +12,6 @@
 
 @interface SHMTableWithOpeningSectionsViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
-@property (nonatomic, strong) NSArray *namesOfPeopleArray;   // тут имена из plist, для упрощения доступа
 @property (nonatomic, strong) NSArray *numberOfRowsToShowForSection;    //number of rows for each section
 @property (nonatomic, strong) NSDictionary *listOfDebts;    //тут список долгов, кто кому что должен
 @property (nonatomic, strong) NSArray *debtsArray;  //массив долгов
@@ -77,16 +76,33 @@
     }
     return _openedSectionsArray;
 }
-
--(NSArray *) namesOfPeopleArray
+ 
+/*
+-(NSDictionary *) deleteElementsWithZeroDebtFromDictionary: (NSDictionary *) dictionary
+//метод удаляет элементы с пустыми значениями из dictionary. Пока не нужен, но понадобится при скрытии нулевых ячеек
 {
-    if (!_namesOfPeopleArray)
+    
+    NSMutableDictionary *dict = [dictionary mutableCopy];
+    
+    for (NSString *key in dictionary)
     {
-        _namesOfPeopleArray = [self.listOfDebts allKeys];
+        NSDictionary *value = [dictionary objectForKey:key];
+        NSMutableDictionary *tempDict = [value mutableCopy];
+        for (NSString *key2 in value)
+        {
+            if ([[value objectForKey:key2] integerValue] == 0)
+            {
+                [tempDict removeObjectForKey:key2]; 
+            }
+        }
+    [dict removeObjectForKey:key];
+    [dict setObject:tempDict forKey:key];
+    
     }
-    return _namesOfPeopleArray;
+    dictionary = dict;
+    return dictionary;
 }
-
+*/
 
 -(NSDictionary *) receiveDictionaryFromCalculationModule
 {
@@ -177,8 +193,8 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    //и тут проверки на объект надо воткнуть на то, какой объект мы передаем
-    return [self.namesOfPeopleArray objectAtIndex:section];
+    //и тут проверки на объект надо воткнуть на то, какой объект мы передаем    
+    return [[self.listOfDebts allKeys] objectAtIndex:section];
 }
 
 
@@ -198,7 +214,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     //тут нужна проверка на пустоту namesOfPeopleArray
-    cell.textLabel.text = [self.namesOfPeopleArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[self.listOfDebts allKeys] objectAtIndex:indexPath.row];
     NSNumber *debt = [self findDebtForIndexPath:indexPath inTableView:tableView];
     cell.detailTextLabel.text = [debt stringValue];
     
@@ -209,7 +225,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     //lazily instatniate headers    
-    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[self.namesOfPeopleArray objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
+    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.tableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[[self.listOfDebts allKeys] objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
     
     return sectionHeader;
 }
