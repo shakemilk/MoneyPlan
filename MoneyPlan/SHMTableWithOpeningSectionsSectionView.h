@@ -18,10 +18,7 @@
 @property (nonatomic, assign) NSInteger section;    //а зачем assign?
 @property (nonatomic, weak) id <SHMTableWithOpeningSectionsSectionViewDelegate> delegate;
 
-@property (nonatomic) BOOL opened;   // открыта или закрыта секция
-
-
--(id)initWithFrame:(CGRect)frame title:(NSString*)title section:(NSInteger)sectionNumber delegate:(id <SHMTableWithOpeningSectionsSectionViewDelegate>)delegate;
+-(id)initWithFrame:(CGRect)frame title:(NSString*)title section:(NSInteger)sectionNumber state:(BOOL)isOpened delegate:(id <SHMTableWithOpeningSectionsSectionViewDelegate>)delegate;
 -(void) toggleOpenWithUserAction:(BOOL)userAction;
 
 @end

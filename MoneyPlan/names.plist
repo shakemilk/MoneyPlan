@@ -2,41 +2,70 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Names</key>
-	<array>
-		<string>Mikhail Pogosskiy</string>
-		<string>Mikhail Grushin</string>
-		<string>Nadezhda Shmakova</string>
-	</array>
-	<key>DebtsByName</key>
+	<key>Nadezhda Shmakova</key>
 	<dict>
+		<key>Yuri Bondar</key>
+		<integer>0</integer>
+		<key>Andrew Oveshnikov</key>
+		<integer>435</integer>
 		<key>Mikhail Pogosskiy</key>
-		<dict>
-			<key>Mikhail Pogosskiy</key>
-			<integer>0</integer>
-			<key>Mikhail Grushin</key>
-			<integer>0</integer>
-			<key>Nadezhda Shmakova</key>
-			<integer>0</integer>
-		</dict>
+		<integer>1100</integer>
 		<key>Mikhail Grushin</key>
-		<dict>
-			<key>Mikhail Pogosskiy</key>
-			<integer>600</integer>
-			<key>Mikhail Grushin</key>
-			<integer>0</integer>
-			<key>Nadezhda Shmakova</key>
-			<integer>550</integer>
-		</dict>
+		<integer>0</integer>
 		<key>Nadezhda Shmakova</key>
-		<dict>
-			<key>Mikhail Pogosskiy</key>
-			<integer>1100</integer>
-			<key>Mikhail Grushin</key>
-			<integer>0</integer>
-			<key>Nadezhda Shmakova</key>
-			<integer>0</integer>
-		</dict>
+		<integer>0</integer>
+	</dict>
+	<key>Mikhail Grushin</key>
+	<dict>
+		<key>Yuri Bondar</key>
+		<integer>444</integer>
+		<key>Andrew Oveshnikov</key>
+		<integer>879</integer>
+		<key>Mikhail Pogosskiy</key>
+		<integer>0</integer>
+		<key>Mikhail Grushin</key>
+		<integer>0</integer>
+		<key>Nadezhda Shmakova</key>
+		<integer>550</integer>
+	</dict>
+	<key>Mikhail Pogosskiy</key>
+	<dict>
+		<key>Yuri Bondar</key>
+		<integer>0</integer>
+		<key>Andrew Oveshnikov</key>
+		<integer>23</integer>
+		<key>Mikhail Pogosskiy</key>
+		<integer>0</integer>
+		<key>Mikhail Grushin</key>
+		<integer>0</integer>
+		<key>Nadezhda Shmakova</key>
+		<integer>300</integer>
+	</dict>
+	<key>Yuri Bondar</key>
+	<dict>
+		<key>Yuri Bondar</key>
+		<integer>0</integer>
+		<key>Andrew Oveshnikov</key>
+		<integer>0</integer>
+		<key>Mikhail Pogosskiy</key>
+		<integer>1100</integer>
+		<key>Mikhail Grushin</key>
+		<integer>0</integer>
+		<key>Nadezhda Shmakova</key>
+		<integer>0</integer>
+	</dict>
+	<key>Andrew Oveshnikov</key>
+	<dict>
+		<key>Andrew Oveshnikov</key>
+		<integer>0</integer>
+		<key>Yuri Bondar</key>
+		<integer>546</integer>
+		<key>Mikhail Pogosskiy</key>
+		<integer>1100</integer>
+		<key>Mikhail Grushin</key>
+		<integer>0</integer>
+		<key>Nadezhda Shmakova</key>
+		<integer>324</integer>
 	</dict>
 </dict>
 </plist>

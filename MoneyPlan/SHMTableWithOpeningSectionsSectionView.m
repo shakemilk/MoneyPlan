@@ -9,14 +9,13 @@
 #import "SHMTableWithOpeningSectionsSectionView.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface SHMTableWithOpeningSectionsSectionView()
+@property (atomic) BOOL isOpened;   // открыта или закрыта секция
+
+@end
 
 @implementation SHMTableWithOpeningSectionsSectionView
-
-@synthesize titleLabel = _titleLabel;
-@synthesize delegate = _delegate;
-@synthesize section = _section;
-@synthesize opened = _opened;
-
+ 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -48,7 +47,7 @@
 
 }
 
--(id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)sectionNumber delegate:(id<SHMTableWithOpeningSectionsSectionViewDelegate>)delegate
+-(id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)sectionNumber state:(BOOL)isOpened delegate:(id<SHMTableWithOpeningSectionsSectionViewDelegate>)delegate
 {
     self = [super initWithFrame:frame];
 
@@ -57,7 +56,7 @@
     if (self!=nil)
     {
         
-        self.opened = YES;    //заглушка. Cписок изначально открыт
+        self.isOpened = isOpened;    //заглушка. Cписок изначально открыт
         
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOpen:)];  //почему тут ничего не надо передавать в toggleOpen?
     
@@ -70,7 +69,6 @@
         titleLabelFrame.origin.x += 15.0;   //взято из проекта apple. подредактировать размеры
         titleLabelFrame.origin.y += 7.5;
         titleLabelFrame.size.width -= 25.0;
-        //CGRectInset(titleLabelFrame, 45.0, 15.0); //возвращает прямоугольник с тем же центром, но меньше по размеру
         
         titleLabelFrame.size.height -=15.0;
         
@@ -79,7 +77,6 @@
         label.font = [UIFont boldSystemFontOfSize:20.0];
         label.textColor = [UIColor blueColor];
         
-        //label.textAlignment =
         [self addSubview:label];
         _titleLabel = label;
 
@@ -103,16 +100,16 @@
     if(userAction)
     {
         
-        if (self.opened == NO){
+        if (self.isOpened == NO){
             if([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]){
                 [self.delegate sectionHeaderView:self sectionOpened:self.section];
-                self.opened = YES; //а если метод как-то странно выполнился? может надо из делегата менять флаг?
+                self.isOpened = YES; //а если метод как-то странно выполнился? может надо из делегата менять флаг?
             }
         }
         else{
             if([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionClosed:)]){
                 [self.delegate sectionHeaderView:self sectionClosed:self.section];
-                self.opened = NO;
+                self.isOpened = NO;
             }
         }
     }
