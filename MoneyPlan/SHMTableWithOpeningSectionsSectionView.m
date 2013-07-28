@@ -15,37 +15,6 @@
 @end
 
 @implementation SHMTableWithOpeningSectionsSectionView
- 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-
--(void)drawRect:(CGRect)rect
-{
-    
-    //// Color Declarations
-    UIColor* fillColor = [UIColor whiteColor];
-    UIColor* strokeColor = [UIColor blueColor];
-    
-    //// Rounded Rectangle Drawing
-    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(5, 5, 310, 35) cornerRadius: 4];
-    
-    UIBezierPath *fullCellRect = [UIBezierPath bezierPathWithRect:rect];
-    
-    [fillColor setFill];
-    [fullCellRect fill];
-    [strokeColor setStroke];
-    roundedRectanglePath.lineWidth = 2.5;
-    [roundedRectanglePath stroke];
-
-
-}
 
 -(id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)sectionNumber state:(BOOL)isOpened delegate:(id<SHMTableWithOpeningSectionsSectionViewDelegate>)delegate
 {
@@ -55,7 +24,6 @@
     
     if (self!=nil)
     {
-        
         self.isOpened = isOpened;    //заглушка. Cписок изначально открыт
         
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOpen:)];  //почему тут ничего не надо передавать в toggleOpen?
@@ -79,7 +47,11 @@
         
         [self addSubview:label];
         _titleLabel = label;
-
+        
+        self.layer.borderColor = [UIColor blueColor].CGColor;
+        self.layer.borderWidth = 2.5f;
+        self.layer.cornerRadius = 6.f;
+        self.backgroundColor = [UIColor whiteColor];
     }
     
     return self;
