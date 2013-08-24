@@ -109,6 +109,12 @@
         </scene>
     </scenes>
     <classes>
+        <class className="SHMCalculationScreenViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SHMCalculationScreenViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="calculationTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
         <class className="SHMViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SHMViewController.h"/>
         </class>

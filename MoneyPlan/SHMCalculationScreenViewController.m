@@ -204,7 +204,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    SHMCalculationScreenTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     //тут нужна проверка на пустоту namesOfPeopleArray
     cell.textLabel.text = [[self.listOfDebts allKeys] objectAtIndex:indexPath.row];
