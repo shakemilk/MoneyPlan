@@ -41,16 +41,16 @@
             </objects>
             <point key="canvasLocation" x="-286" y="5"/>
         </scene>
-        <!--View Controller - Item-->
+        <!--Folks List View Controller - Участники-->
         <scene sceneID="tpe-V1-epZ">
             <objects>
-                <viewController id="7wK-m3-pAO" sceneMemberID="viewController">
+                <viewController id="7wK-m3-pAO" customClass="SHMFolksListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QwL-ae-KvY">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="e6R-Pi-aaR"/>
+                    <tabBarItem key="tabBarItem" title="Участники" id="e6R-Pi-aaR"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qie-rN-h3n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -109,6 +109,15 @@
         </scene>
     </scenes>
     <classes>
+        <class className="SHMCalculationScreenViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SHMCalculationScreenViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="calculationTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="SHMFolksListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SHMFolksListViewController.h"/>
+        </class>
         <class className="SHMViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SHMViewController.h"/>
         </class>
