@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SHMFolksListViewController : UIViewController
+@interface SHMFolksListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+
 
 @end
