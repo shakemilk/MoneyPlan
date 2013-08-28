@@ -5,6 +5,13 @@
 //  Created by Mikhail Pogosskiy on 24.08.13.
 //  Copyright (c) 2013 Shakemilk. All rights reserved.
 //
+
+//Каждому новодобавленному участнику присваивается номер на единицу больший, чем максимальный номер
+//в списке имен участников folksNamesDictionary. При удалении строки НОМЕРА НЕ МЕНЯЮТСЯ, т.е.
+//список номеров после удаления строк может стать непоследовательным
+//как синхронизировать перемену номеров? Может права на задание номеров давать только администратору встречи?
+
+
 #import "SHMFolksListViewController.h"
 
 #define SHM_HEADER_HEIGHT 45
@@ -13,12 +20,8 @@
 
 #define kTextFieldWidth	280.0
 #define kTextFieldHeight 30.0
-
 #define kLeftMargin 20.0
-//#define kTopMargin	20.0
-//#define kRightMargin	20.0
-//#define kTweenMargin	6.0
-
+#define kTopMargin 5.0
 
 const NSInteger kViewTag = 1;
 
@@ -35,22 +38,14 @@ const NSInteger kViewTag = 1;
 
 @synthesize folksNamesDictionary = _folksNamesDictionary;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 
 -(UITableView *) folksListTableView{
     
-    if (!_folksListTableView){
+    if (_folksListTableView == nil){
         CGFloat x = 0.0;
-        CGFloat y = kTextFieldHeight;
+        CGFloat y = kTopMargin + kTextFieldHeight;
         CGFloat width = self.view.frame.size.width;
+#warning TODO: Поправить размеры таблицы когда будет дизайн
         CGFloat height = self.view.frame.size.height - SHM_SPACE_FOR_TABBAR - 45;
         CGRect rect = CGRectMake(x, y, width, height);
         
@@ -79,15 +74,15 @@ const NSInteger kViewTag = 1;
 
 - (UITextField *) textField
 {
-	if (!_textField)
+	if (_textField == nil)
 	{
-		CGRect frame = CGRectMake(kLeftMargin, 0.0, kTextFieldWidth, kTextFieldHeight);
+		CGRect frame = CGRectMake(kLeftMargin, kTopMargin, kTextFieldWidth, kTextFieldHeight);
 		_textField = [[UITextField alloc] initWithFrame:frame];
 		
-		_textField.borderStyle = UITextBorderStyleBezel;
+		_textField.borderStyle = UITextBorderStyleRoundedRect;
 		_textField.textColor = [UIColor blackColor];
 		_textField.font = [UIFont systemFontOfSize:17.0];
-		_textField.placeholder = @"<enter text>";
+		_textField.placeholder = @"<add a new man>";
 		_textField.backgroundColor = [UIColor whiteColor];
 		_textField.autocorrectionType = UITextAutocorrectionTypeNo;	// no auto correction support
 		
@@ -100,7 +95,7 @@ const NSInteger kViewTag = 1;
 		_textField.delegate = self;	// let us be the delegate so we know when the keyboard's "Done" button is pressed
 		
 		// Add an accessibility label that describes what the text field is for.
-		[_textField setAccessibilityLabel:NSLocalizedString(@"NormalTextField", @"")];
+		[_textField setAccessibilityLabel:NSLocalizedString(@"AddNewParticipantField", @"")];
 	}
 	return _textField;
 }
@@ -143,6 +138,25 @@ const NSInteger kViewTag = 1;
 
 
 #pragma mark -
+#pragma mark public methods returning the names of participants
+
+- (NSArray *) getNamesOfParticipants
+{
+    return [[self.folksNamesDictionary allKeys] copy];
+}
+
+- (NSDictionary *) getNamesOfParticipantsWithNumbers
+{
+    return [self.folksNamesDictionary copy];
+}
+
+- (NSInteger) getParticipantNumberForName:(NSString *)Name
+{
+    return [[self.folksNamesDictionary valueForKey:Name] integerValue];
+}
+
+
+#pragma mark -
 #pragma mark UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -155,7 +169,9 @@ const NSInteger kViewTag = 1;
     [self.folksNamesDictionary setObject:[NSNumber numberWithInteger:(max + 1)] forKey:textField.text];
     NSLog(@"after:%@", self.folksNamesDictionary);
     
+    textField.text = nil;
     [self.folksListTableView reloadData];
+    
     
 	return YES;
 }
@@ -172,7 +188,6 @@ const NSInteger kViewTag = 1;
 {
     NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
     cell.textLabel.text = [[self.folksNamesDictionary allKeys] objectAtIndex:indexPath.row];
     
     return cell;
@@ -182,6 +197,16 @@ const NSInteger kViewTag = 1;
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [[self.folksNamesDictionary allKeys] count];
+}
+
+-(void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [self.folksNamesDictionary removeObjectForKey:[tableView cellForRowAtIndexPath:indexPath].textLabel.text];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    }
+    
 }
 
 
