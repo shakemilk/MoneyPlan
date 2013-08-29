@@ -341,14 +341,14 @@
 		74EC6F681783FF3E0066D122 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mihail Grushin (NVD9NMZMNS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mihail Grushin (NVD9NMZMNS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MoneyPlan/MoneyPlan-Prefix.pch";
 				INFOPLIST_FILE = "MoneyPlan/MoneyPlan-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F86AC297-3316-4A90-818B-A1EB706490BB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F86AC297-3316-4A90-818B-A1EB706490BB";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -356,12 +356,12 @@
 		74EC6F691783FF3E0066D122 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mihail Grushin (NVD9NMZMNS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MoneyPlan/MoneyPlan-Prefix.pch";
 				INFOPLIST_FILE = "MoneyPlan/MoneyPlan-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F86AC297-3316-4A90-818B-A1EB706490BB";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
