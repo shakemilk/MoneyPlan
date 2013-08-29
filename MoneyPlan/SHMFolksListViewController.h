@@ -13,5 +13,6 @@
 - (NSArray *)getNamesOfParticipants;
 - (NSDictionary *)getNamesOfParticipantsWithNumbers;
 - (NSInteger)getParticipantNumberForName: (NSString *) Name;
+-(void)addNewFriendWithMaxNumberAndName:(NSString *)name;
 
 @end

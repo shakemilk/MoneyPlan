@@ -148,6 +148,9 @@ const NSInteger kViewTag = 1;
 - (NSDictionary *) getNamesOfParticipantsWithNumbers
 {
     return [self.folksNamesDictionary copy];
+-(void)addNewFriendWithMaxNumberAndName:(NSString *)name {
+    NSInteger maxNumber = [self maxValueInDictionaryWithPositiveIntegerValues:self.folksNamesDictionary];
+    [self.folksNamesDictionary setValue:@(maxNumber+1) forKey:name];
 }
 
 - (NSInteger) getParticipantNumberForName:(NSString *)Name

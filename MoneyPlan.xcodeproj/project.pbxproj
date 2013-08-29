@@ -23,6 +23,8 @@
 		74EC6F5E1783FF3E0066D122 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 74EC6F5D1783FF3E0066D122 /* Default-568h@2x.png */; };
 		74EC6F611783FF3E0066D122 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74EC6F5F1783FF3E0066D122 /* MainStoryboard.storyboard */; };
 		74EC6F641783FF3E0066D122 /* SHMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74EC6F631783FF3E0066D122 /* SHMViewController.m */; };
+		86CC714217CFC17C00B53EA1 /* SHMVKFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86CC714017CFC17B00B53EA1 /* SHMVKFriendsViewController.m */; };
+		86CC714817CFC1A400B53EA1 /* SHMFBFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86CC714617CFC1A400B53EA1 /* SHMFBFriendsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,10 @@
 		74EC6F601783FF3E0066D122 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		74EC6F621783FF3E0066D122 /* SHMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHMViewController.h; sourceTree = "<group>"; };
 		74EC6F631783FF3E0066D122 /* SHMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHMViewController.m; sourceTree = "<group>"; };
+		86CC713F17CFC17B00B53EA1 /* SHMVKFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMVKFriendsViewController.h; sourceTree = "<group>"; };
+		86CC714017CFC17B00B53EA1 /* SHMVKFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMVKFriendsViewController.m; sourceTree = "<group>"; };
+		86CC714517CFC1A400B53EA1 /* SHMFBFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMFBFriendsViewController.h; sourceTree = "<group>"; };
+		86CC714617CFC1A400B53EA1 /* SHMFBFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMFBFriendsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,8 @@
 		279F616317C8D6AB00674081 /* FolksListScreen */ = {
 			isa = PBXGroup;
 			children = (
+				86CC714C17CFC1B300B53EA1 /* FB Friends */,
+				86CC714A17CFC1A800B53EA1 /* VK Friends */,
 				279F616417C8D6D200674081 /* SHMFolksListViewController.h */,
 				279F616517C8D6D200674081 /* SHMFolksListViewController.m */,
 			);
@@ -152,6 +160,24 @@
 				74EC6F5D1783FF3E0066D122 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		86CC714A17CFC1A800B53EA1 /* VK Friends */ = {
+			isa = PBXGroup;
+			children = (
+				86CC713F17CFC17B00B53EA1 /* SHMVKFriendsViewController.h */,
+				86CC714017CFC17B00B53EA1 /* SHMVKFriendsViewController.m */,
+			);
+			name = "VK Friends";
+			sourceTree = "<group>";
+		};
+		86CC714C17CFC1B300B53EA1 /* FB Friends */ = {
+			isa = PBXGroup;
+			children = (
+				86CC714517CFC1A400B53EA1 /* SHMFBFriendsViewController.h */,
+				86CC714617CFC1A400B53EA1 /* SHMFBFriendsViewController.m */,
+			);
+			name = "FB Friends";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,6 +255,8 @@
 				27BC4BAF1795215E006DD809 /* SHMCalculationScreenViewController.m in Sources */,
 				279B97FE179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.m in Sources */,
 				279F616617C8D6D200674081 /* SHMFolksListViewController.m in Sources */,
+				86CC714217CFC17C00B53EA1 /* SHMVKFriendsViewController.m in Sources */,
+				86CC714817CFC1A400B53EA1 /* SHMFBFriendsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,10 +341,14 @@
 		74EC6F681783FF3E0066D122 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mihail Grushin (NVD9NMZMNS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mihail Grushin (NVD9NMZMNS)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MoneyPlan/MoneyPlan-Prefix.pch";
 				INFOPLIST_FILE = "MoneyPlan/MoneyPlan-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F86AC297-3316-4A90-818B-A1EB706490BB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F86AC297-3316-4A90-818B-A1EB706490BB";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -324,10 +356,12 @@
 		74EC6F691783FF3E0066D122 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mihail Grushin (NVD9NMZMNS)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MoneyPlan/MoneyPlan-Prefix.pch";
 				INFOPLIST_FILE = "MoneyPlan/MoneyPlan-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F86AC297-3316-4A90-818B-A1EB706490BB";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
