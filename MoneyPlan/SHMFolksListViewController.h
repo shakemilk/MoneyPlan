@@ -10,9 +10,8 @@
 
 @interface SHMFolksListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
-- (NSArray *)getNamesOfParticipants;
-- (NSDictionary *)getNamesOfParticipantsWithNumbers;
-- (NSInteger)getParticipantNumberForName: (NSString *) Name;
+@property (nonatomic, strong) NSMutableDictionary *folksNamesDictionary; //имена участников. Состоит из имени участника (Key) и присвоенного ему номера (Value)
+
 -(void)addNewFriendWithMaxNumberAndName:(NSString *)name;
 
 @end
