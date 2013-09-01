@@ -21,8 +21,8 @@
 @interface SHMCalculationModule : NSObject
 
 + ( SHMCalculationModule* ) sharedInstance;
-- (NSValue *) debtOfPerson: (NSString *) debtor toPerson: (NSString *)owner;
-- (NSValue *) debtOfPersonWithId: (NSInteger) debtorId toPersonWithId: (NSInteger)ownerId;
+- (NSNumber *) debtOfPerson: (NSString *) debtor toPerson: (NSString *)owner;
+- (NSNumber *) debtOfPersonWithId: (NSInteger) debtorId toPersonWithId: (NSInteger)ownerId;
 
 
 @end

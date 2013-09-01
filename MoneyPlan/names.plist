@@ -4,8 +4,6 @@
 <dict>
 	<key>Nadezhda Shmakova</key>
 	<dict>
-		<key>Yuri Bondar</key>
-		<integer>0</integer>
 		<key>Andrew Oveshnikov</key>
 		<integer>435</integer>
 		<key>Mikhail Pogosskiy</key>
@@ -17,8 +15,6 @@
 	</dict>
 	<key>Mikhail Grushin</key>
 	<dict>
-		<key>Yuri Bondar</key>
-		<integer>444</integer>
 		<key>Andrew Oveshnikov</key>
 		<integer>879</integer>
 		<key>Mikhail Pogosskiy</key>
@@ -30,8 +26,6 @@
 	</dict>
 	<key>Mikhail Pogosskiy</key>
 	<dict>
-		<key>Yuri Bondar</key>
-		<integer>0</integer>
 		<key>Andrew Oveshnikov</key>
 		<integer>23</integer>
 		<key>Mikhail Pogosskiy</key>
@@ -41,25 +35,10 @@
 		<key>Nadezhda Shmakova</key>
 		<integer>300</integer>
 	</dict>
-	<key>Yuri Bondar</key>
-	<dict>
-		<key>Yuri Bondar</key>
-		<integer>0</integer>
-		<key>Andrew Oveshnikov</key>
-		<integer>0</integer>
-		<key>Mikhail Pogosskiy</key>
-		<integer>1100</integer>
-		<key>Mikhail Grushin</key>
-		<integer>0</integer>
-		<key>Nadezhda Shmakova</key>
-		<integer>0</integer>
-	</dict>
 	<key>Andrew Oveshnikov</key>
 	<dict>
 		<key>Andrew Oveshnikov</key>
 		<integer>0</integer>
-		<key>Yuri Bondar</key>
-		<integer>546</integer>
 		<key>Mikhail Pogosskiy</key>
 		<integer>1100</integer>
 		<key>Mikhail Grushin</key>

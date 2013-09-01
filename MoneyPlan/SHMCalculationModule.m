@@ -24,12 +24,58 @@
 
 @interface SHMCalculationModule()
 
-@property (nonatomic, weak) NSDictionary* namesOfParticipantsWithId;
+@property (nonatomic, strong) NSMutableDictionary* namesOfParticipantsWithId;
+@property (nonatomic, strong) NSDictionary* eventTable; //царь-таблица. Здесь транзакции ВСЕХ участников. Ключ - имя участника. вернет dictionary по ключу
 
 
 @end
 
 @implementation SHMCalculationModule
+
+
+- (NSDictionary *) namesOfParticipantsWithId{
+    if (_namesOfParticipantsWithId == nil) {
+        
+#warning TODO change when Core Data is implemented
+        NSArray *names = [NSArray arrayWithObjects:@"Nadezhda Shmakova", @"Mikhail Grushin", @"Andrey Oveshnikov", @"Mikhail Pogosskiy", nil];
+        NSInteger num = 0;
+        NSArray *keys = [NSArray arrayWithObjects:[NSNumber numberWithInteger:num],[NSNumber numberWithInteger:num+1],[NSNumber  numberWithInteger:num+2],[NSNumber numberWithInteger:num+3], nil];
+//change until here
+        
+        _namesOfParticipantsWithId =  [[NSMutableDictionary alloc] initWithObjects:keys forKeys:names];
+    }
+    
+    return _namesOfParticipantsWithId;
+}
+
+
+- (NSDictionary *) eventTable{
+    if (_eventTable == nil)
+    {
+        NSURL *urlForPlist = [[NSBundle mainBundle] URLForResource:@"TempListForGettingTransactions" withExtension:@"plist"];
+        _eventTable = [[NSDictionary alloc] initWithContentsOfURL:urlForPlist];
+    }
+    
+    return _eventTable;
+}
+
+#pragma mark -
+#pragma mark Temporary methods before Core Data
+
+
+-(NSArray *) getTransactionsOfPerson: (NSString *) Person
+//читает транзакции человека из базы
+{
+    
+    NSArray *transactionsOfPerson = [[NSArray alloc] initWithArray:[self.eventTable valueForKey:Person]];
+    //если такого человека нет, то это ненормально и мы должны здесь падать. Имя Person формируется программой
+    return transactionsOfPerson;
+}
+
+
+
+#pragma mark -
+#pragma mark Singleton
 
 + ( SHMCalculationModule* ) sharedInstance
 {
@@ -43,24 +89,47 @@
     return sMySingleton;
 }
 
--(NSDictionary *) getTransactionsOfPerson: (NSString *) Person
-//вот этот метод должен быть в контроллере списка покупок
+
+- (NSNumber *) summTransactionsMadeByPerson: (NSString *) Person forDebtor: (NSString *) Debtor
+//метод проходит по всем транзакциям, сделанным Person и смотрит, в каких из них участвует Debtor.
+//Возвращает сумму частей этих транзакций, относящихся к Debtor
+{
+    NSArray *TransactionsMadeByPerson = [NSArray arrayWithArray:[self.eventTable valueForKey:Person]];
+    
+    double Summ = 0.0;
+    NSNumber *DebtorKey = [self.namesOfParticipantsWithId valueForKey:Debtor];
+    
+    for (NSDictionary *transaction in TransactionsMadeByPerson) {
+        double Expense = [[transaction objectForKey:@"SelfExpense"] doubleValue];
+        NSDictionary *Flags = [transaction objectForKey:@"Flags"];
+        
+        NSInteger numberOfParts = 0;
+        for (NSString *key in Flags) {
+            if ([[Flags objectForKey:key] boolValue] == YES)
+                numberOfParts++;
+        }
+        
+        double EachPersonDebt = Expense/(double)numberOfParts;
+#warning чем грозит преобразование типа в стиле C?
+        Summ += EachPersonDebt*[[Flags valueForKey:[DebtorKey stringValue]] boolValue];
+    }
+    
+    return [[NSNumber alloc] initWithDouble:Summ];
+}
+
+
+- (NSNumber *) debtOfPerson:(NSString *)debtor toPerson:(NSString *)owner
+{
+    NSNumber *DebtorToOwner = [self summTransactionsMadeByPerson:owner forDebtor:debtor];
+    NSNumber *OwnerToDebtor = [self summTransactionsMadeByPerson:debtor forDebtor:owner];
+    
+    return ([DebtorToOwner doubleValue] - [OwnerToDebtor doubleValue]) > 0? DebtorToOwner: [[NSNumber alloc] initWithDouble:0.0];
+}
+
+
+/*- (NSNumber *) debtOfPersonWithId:(NSInteger)debtorId toPersonWithId:(NSInteger)ownerId
 {
     
 }
-
-- (NSValue *) debtOfPerson:(NSString *)debtor toPerson:(NSString *)owner
-{
-    
-}
-
-
-- (NSValue *) debtOfPersonWithId:(NSInteger)debtorId toPersonWithId:(NSInteger)ownerId
-{
-    
-}
-
-
-
-
+*/
 @end

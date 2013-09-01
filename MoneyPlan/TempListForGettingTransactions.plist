@@ -5,7 +5,9 @@
 	<key>Nadezhda Shmakova</key>
 	<array>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Булка</string>
+			<key>SelfExpense</key>
 			<integer>500</integer>
 			<key>Flags</key>
 			<dict>
@@ -20,7 +22,9 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Молоко</string>
+			<key>SelfExpense</key>
 			<integer>320</integer>
 			<key>Flags</key>
 			<dict>
@@ -35,7 +39,9 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Печенье Юбилейное</string>
+			<key>SelfExpense</key>
 			<integer>1100</integer>
 			<key>Flags</key>
 			<dict>
@@ -50,7 +56,9 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Артишок</string>
+			<key>SelfExpense</key>
 			<integer>200</integer>
 			<key>Flags</key>
 			<dict>
@@ -68,7 +76,9 @@
 	<key>Mikhail Grushin</key>
 	<array>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Сосиски</string>
+			<key>SelfExpense</key>
 			<integer>500</integer>
 			<key>Flags</key>
 			<dict>
@@ -83,7 +93,9 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Сметана</string>
+			<key>SelfExpense</key>
 			<integer>320</integer>
 			<key>Flags</key>
 			<dict>
@@ -98,7 +110,9 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Водка</string>
+			<key>SelfExpense</key>
 			<integer>1100</integer>
 			<key>Flags</key>
 			<dict>
@@ -113,7 +127,9 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Сыр</string>
+			<key>SelfExpense</key>
 			<integer>200</integer>
 			<key>Flags</key>
 			<dict>
@@ -131,8 +147,10 @@
 	<key>Andrey Oveshnikov</key>
 	<array>
 		<dict>
-			<key>Summ</key>
-			<integer>500</integer>
+			<key>Description</key>
+			<string>Чипсы</string>
+			<key>SelfExpense</key>
+			<integer>570</integer>
 			<key>Flags</key>
 			<dict>
 				<key>0</key>
@@ -146,7 +164,9 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Сухарики</string>
+			<key>SelfExpense</key>
 			<integer>320</integer>
 			<key>Flags</key>
 			<dict>
@@ -161,23 +181,10 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>Summ</key>
+			<key>Description</key>
+			<string>Газировка</string>
+			<key>SelfExpense</key>
 			<integer>1100</integer>
-			<key>Flags</key>
-			<dict>
-				<key>0</key>
-				<true/>
-				<key>1</key>
-				<true/>
-				<key>2</key>
-				<true/>
-				<key>3</key>
-				<true/>
-			</dict>
-		</dict>
-		<dict>
-			<key>Summ</key>
-			<integer>200</integer>
 			<key>Flags</key>
 			<dict>
 				<key>0</key>
@@ -194,8 +201,10 @@
 	<key>Mikhail Pogosskiy</key>
 	<array>
 		<dict>
-			<key>Summ</key>
-			<integer>500</integer>
+			<key>Description</key>
+			<string>Масло</string>
+			<key>SelfExpense</key>
+			<integer>220</integer>
 			<key>Flags</key>
 			<dict>
 				<key>0</key>
@@ -209,44 +218,16 @@
 			</dict>
 		</dict>
 		<dict>
-			<key>Summ</key>
-			<integer>320</integer>
+			<key>Description</key>
+			<string>Самбука</string>
+			<key>SelfExpense</key>
+			<integer>1</integer>
 			<key>Flags</key>
 			<dict>
 				<key>0</key>
-				<true/>
+				<false/>
 				<key>1</key>
 				<false/>
-				<key>2</key>
-				<true/>
-				<key>3</key>
-				<true/>
-			</dict>
-		</dict>
-		<dict>
-			<key>Summ</key>
-			<integer>1100</integer>
-			<key>Flags</key>
-			<dict>
-				<key>0</key>
-				<true/>
-				<key>1</key>
-				<true/>
-				<key>2</key>
-				<true/>
-				<key>3</key>
-				<true/>
-			</dict>
-		</dict>
-		<dict>
-			<key>Summ</key>
-			<integer>200</integer>
-			<key>Flags</key>
-			<dict>
-				<key>0</key>
-				<true/>
-				<key>1</key>
-				<true/>
 				<key>2</key>
 				<true/>
 				<key>3</key>

@@ -9,6 +9,7 @@
 #import "SHMCalculationScreenViewController.h"
 #import "SHMTableWithOpeningSectionsSectionView.h"
 #import "SHMCalculationScreenTableCell.h"
+#import "SHMCalculationModule.h"
 
 @interface SHMCalculationScreenViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
@@ -16,6 +17,8 @@
 @property (nonatomic, strong) NSDictionary *listOfDebts;    //тут список долгов, кто кому что должен
 @property (nonatomic, strong) NSArray *debtsArray;  //массив долгов
 @property (nonatomic, strong) NSArray *openedSectionsArray; //YES - секция открыта, NO - закрыта
+
+@property (nonatomic, strong) SHMCalculationModule *calculationModule;
 
 @end
 
@@ -25,6 +28,14 @@
 #define SHM_ROW_HEIGHT 45
 #define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
 
+-(SHMCalculationModule *) calculationModule{
+    
+    if (_calculationModule == nil) {
+        _calculationModule = [SHMCalculationModule sharedInstance];
+    }
+    
+    return _calculationModule;
+}
 
 -(UITableView *) calculationTableView{
     
@@ -160,6 +171,8 @@
     [super viewDidLoad];
     [self.view addSubview:self.calculationTableView];
     
+    //NSNumber* m = [self.calculationModule debtOfPerson:@"Mikhail Pogosskiy" toPerson:@"Andrey Oveshnikov"]; //works! WOW!
+
     //self.tableView = self.calculationTableView; //lazily instantiate tableView
 }
 
