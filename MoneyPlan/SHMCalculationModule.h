@@ -22,7 +22,8 @@
 
 + ( SHMCalculationModule* ) sharedInstance;
 - (NSNumber *) debtOfPerson: (NSString *) debtor toPerson: (NSString *)owner;
-- (NSNumber *) debtOfPersonWithId: (NSInteger) debtorId toPersonWithId: (NSInteger)ownerId;
+//- (NSNumber *) debtOfPersonWithId: (NSInteger) debtorId toPersonWithId: (NSInteger)ownerId; //нужно вообще?
+-(NSArray *) getNamesOfParticipants;
 
 
 @end

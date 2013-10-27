@@ -14,9 +14,10 @@
 @interface SHMCalculationScreenViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
 @property (nonatomic, strong) NSArray *numberOfRowsToShowForSection;    //number of rows for each section
-@property (nonatomic, strong) NSDictionary *listOfDebts;    //тут список долгов, кто кому что должен
-@property (nonatomic, strong) NSArray *debtsArray;  //массив долгов
+@property (nonatomic, strong) NSArray *debtsArray;  //массив долгов. что за хрень? как он формируется?
 @property (nonatomic, strong) NSArray *openedSectionsArray; //YES - секция открыта, NO - закрыта
+
+@property (nonatomic, strong) NSArray *namesOfParticipants; //массив имен участников (массив строк)
 
 @property (nonatomic, strong) SHMCalculationModule *calculationModule;
 
@@ -28,13 +29,29 @@
 #define SHM_ROW_HEIGHT 45
 #define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
 
+-(NSArray *) namesOfParticipants
+{
+    if (_namesOfParticipants == nil){
+        _namesOfParticipants = [self.calculationModule getNamesOfParticipants];
+    }
+    return _namesOfParticipants;
+}
+
 -(SHMCalculationModule *) calculationModule{
     
-    if (_calculationModule == nil) {
+    if (_calculationModule == nil){
         _calculationModule = [SHMCalculationModule sharedInstance];
     }
     
     return _calculationModule;
+}
+
+-(NSArray *) debtsArray
+{
+    if(_debtsArray == nil){
+        _debtsArray = [self receiveArrayFromCalculationModule];
+    }
+    return _debtsArray;
 }
 
 -(UITableView *) calculationTableView{
@@ -67,11 +84,9 @@
 
 -(NSArray *) openedSectionsArray
 {
-    if (!_openedSectionsArray)
-    {
+    if (!_openedSectionsArray){
         NSMutableArray *tempArray = [[NSMutableArray alloc] initWithObjects: nil];
-        for (NSInteger i = 0; i < [self.listOfDebts count]; ++i)
-        {
+        for (NSInteger i = 0; i < [self.namesOfParticipants count]; ++i){
             [tempArray addObject:[[NSNumber alloc] initWithBool:YES]];
         }
         _openedSectionsArray = [tempArray copy];
@@ -82,6 +97,7 @@
 
 -(NSDictionary *) deleteElementsWithZeroDebtFromDictionary: (NSDictionary *) dictionary
 //метод удаляет элементы с пустыми значениями из dictionary
+//пока не используется
 {
     
     NSMutableDictionary *dict = [dictionary mutableCopy];
@@ -106,7 +122,8 @@
 }
 
 
--(NSDictionary *) receiveDictionaryFromCalculationModule
+-(NSArray *) receiveArrayFromCalculationModule
+//непонятно, что точно делает этот метод
 {
     NSURL *urlForArray = [[NSBundle mainBundle] URLForResource:@"names" withExtension:@"plist"];
     NSMutableDictionary  *namesDictionary = [[NSMutableDictionary alloc] initWithContentsOfURL:urlForArray];
@@ -134,33 +151,18 @@
         [temp setObject:dict forKey:key];
     }
     
-    self.debtsArray = testMass;
-    return temp;
+    return testMass;
 }
 
-
--(NSDictionary *) listOfDebts
-{
-    if (!_listOfDebts)
-    {
-        _listOfDebts = [self receiveDictionaryFromCalculationModule];
-    }
-    return _listOfDebts;
-}
 
 -(NSArray *) numberOfRowsToShowForSection
 {
+    //в каждой секции будет изначально число строк равное числу участников
     if(!_numberOfRowsToShowForSection)
     {
         NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
-        
-        NSArray *keysFromListOfDebts = [self.listOfDebts allKeys];
-        for (NSString *key in keysFromListOfDebts)
-        {
-            NSDictionary *dict = [self.listOfDebts objectForKey:key];
-            NSNumber *num = [[NSNumber alloc]initWithInteger:dict.count];
-            [array addObject:num];
-        }
+        for (NSString *key in self.namesOfParticipants)
+            [array addObject:[[NSNumber alloc] initWithInteger:self.namesOfParticipants.count]];
         _numberOfRowsToShowForSection = array;
     }
     return _numberOfRowsToShowForSection;
@@ -170,10 +172,6 @@
 {
     [super viewDidLoad];
     [self.view addSubview:self.calculationTableView];
-    
-    //NSNumber* m = [self.calculationModule debtOfPerson:@"Mikhail Pogosskiy" toPerson:@"Andrey Oveshnikov"]; //works! WOW!
-
-    //self.tableView = self.calculationTableView; //lazily instantiate tableView
 }
 
 - (void)didReceiveMemoryWarning
@@ -188,7 +186,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return self.listOfDebts.count;
+    return self.namesOfParticipants.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -199,29 +197,33 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    //и тут проверки на объект надо воткнуть на то, какой объект мы передаем    
-    return [[self.listOfDebts allKeys] objectAtIndex:section];
+    //и тут проверки на объект надо воткнуть на то, какой объект мы передаем
+    return [self.namesOfParticipants objectAtIndex:section];
 }
 
-
+/*
 -(NSNumber *) findDebtForIndexPath:(NSIndexPath *)indexPath inTableView: (UITableView *) tableView
 {
-    NSString *titleForHeader = [self tableView:tableView titleForHeaderInSection:indexPath.section];
-    NSDictionary *debtor = [self.listOfDebts objectForKey:titleForHeader];
+    //продолжать
+    NSString *debtor = [self.namesOfParticipants objectAtIndex:indexPath.section];
+
     NSArray *names = [debtor allKeys];
     NSInteger indexInDebtsArray = [[debtor objectForKey:[names objectAtIndex:indexPath.row]] integerValue];
     NSNumber *debt = [self.debtsArray objectAtIndex:indexInDebtsArray];
     return debt;
 }
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = @"Cell";
     SHMCalculationScreenTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    NSString *owner = [self.namesOfParticipants objectAtIndex:indexPath.row];
+    NSString *debtor = [self.namesOfParticipants objectAtIndex:indexPath.section];
     //тут нужна проверка на пустоту namesOfPeopleArray
-    cell.textLabel.text = [[self.listOfDebts allKeys] objectAtIndex:indexPath.row];
-    NSNumber *debt = [self findDebtForIndexPath:indexPath inTableView:tableView];
+    cell.textLabel.text = owner;
+    NSNumber *debt = [self.calculationModule debtOfPerson:debtor toPerson:owner];
     cell.detailTextLabel.text = [debt stringValue];
     
     return cell;
@@ -231,7 +233,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     //lazily instatniate headers    
-    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.calculationTableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[[self.listOfDebts allKeys] objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
+    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.calculationTableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[self.namesOfParticipants     objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
     
     return sectionHeader;
 }
@@ -253,7 +255,7 @@
 {
     NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
     
-    for (NSInteger i = 0; i < [self.listOfDebts count]; i++)
+    for (NSInteger i = 0; i < [self.namesOfParticipants count]; i++)
     {
         [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionOpened]];
     }
@@ -281,7 +283,7 @@
 //method launches for the section that was just closed by the user
 {
     NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
-    for (NSInteger i = 0; i < [self.listOfDebts count]; i++)
+    for (NSInteger i = 0; i < [self.namesOfParticipants count]; i++)
     {
         [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionClosed]];
     }
