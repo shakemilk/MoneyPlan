@@ -25,6 +25,7 @@
 		74EC6F5E1783FF3E0066D122 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 74EC6F5D1783FF3E0066D122 /* Default-568h@2x.png */; };
 		74EC6F611783FF3E0066D122 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74EC6F5F1783FF3E0066D122 /* MainStoryboard.storyboard */; };
 		74EC6F641783FF3E0066D122 /* SHMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74EC6F631783FF3E0066D122 /* SHMViewController.m */; };
+		86BB9C8C181D17A70094B912 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86BB9C8B181D17A70094B912 /* Images.xcassets */; };
 		86CC714217CFC17C00B53EA1 /* SHMVKFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86CC714017CFC17B00B53EA1 /* SHMVKFriendsViewController.m */; };
 		86CC714817CFC1A400B53EA1 /* SHMFBFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86CC714617CFC1A400B53EA1 /* SHMFBFriendsViewController.m */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		74EC6F601783FF3E0066D122 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		74EC6F621783FF3E0066D122 /* SHMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHMViewController.h; sourceTree = "<group>"; };
 		74EC6F631783FF3E0066D122 /* SHMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHMViewController.m; sourceTree = "<group>"; };
+		86BB9C8B181D17A70094B912 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		86CC713F17CFC17B00B53EA1 /* SHMVKFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMVKFriendsViewController.h; sourceTree = "<group>"; };
 		86CC714017CFC17B00B53EA1 /* SHMVKFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMVKFriendsViewController.m; sourceTree = "<group>"; };
 		86CC714517CFC1A400B53EA1 /* SHMFBFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMFBFriendsViewController.h; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				279F616317C8D6AB00674081 /* FolksListScreen */,
 				279B97FB179EE11800BE1D0A /* CalculationScreen */,
 				271B79FA178711F4008427F0 /* Resources */,
+				86BB9C8B181D17A70094B912 /* Images.xcassets */,
 				74EC6F4E1783FF3E0066D122 /* Supporting Files */,
 			);
 			path = MoneyPlan;
@@ -250,6 +253,7 @@
 			files = (
 				74EC6F521783FF3E0066D122 /* InfoPlist.strings in Resources */,
 				74EC6F5A1783FF3E0066D122 /* Default.png in Resources */,
+				86BB9C8C181D17A70094B912 /* Images.xcassets in Resources */,
 				74EC6F5C1783FF3E0066D122 /* Default@2x.png in Resources */,
 				74EC6F5E1783FF3E0066D122 /* Default-568h@2x.png in Resources */,
 				74EC6F611783FF3E0066D122 /* MainStoryboard.storyboard in Resources */,
@@ -359,6 +363,8 @@
 		74EC6F681783FF3E0066D122 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -374,6 +380,8 @@
 		74EC6F691783FF3E0066D122 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MoneyPlan/MoneyPlan-Prefix.pch";
