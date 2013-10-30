@@ -38,4 +38,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)newPartyAction:(id)sender {
+    
+}
 @end
