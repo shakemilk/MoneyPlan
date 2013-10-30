@@ -24,8 +24,7 @@
 		74EC6F611783FF3E0066D122 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74EC6F5F1783FF3E0066D122 /* MainStoryboard.storyboard */; };
 		74EC6F641783FF3E0066D122 /* SHMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74EC6F631783FF3E0066D122 /* SHMViewController.m */; };
 		86BB9C8C181D17A70094B912 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86BB9C8B181D17A70094B912 /* Images.xcassets */; };
-		86CC714217CFC17C00B53EA1 /* SHMVKFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86CC714017CFC17B00B53EA1 /* SHMVKFriendsViewController.m */; };
-		86CC714817CFC1A400B53EA1 /* SHMFBFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86CC714617CFC1A400B53EA1 /* SHMFBFriendsViewController.m */; };
+		86EA4C591821599A00B87A82 /* SHMAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C581821599A00B87A82 /* SHMAppearance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,10 +54,8 @@
 		74EC6F621783FF3E0066D122 /* SHMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHMViewController.h; sourceTree = "<group>"; };
 		74EC6F631783FF3E0066D122 /* SHMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHMViewController.m; sourceTree = "<group>"; };
 		86BB9C8B181D17A70094B912 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		86CC713F17CFC17B00B53EA1 /* SHMVKFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMVKFriendsViewController.h; sourceTree = "<group>"; };
-		86CC714017CFC17B00B53EA1 /* SHMVKFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMVKFriendsViewController.m; sourceTree = "<group>"; };
-		86CC714517CFC1A400B53EA1 /* SHMFBFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMFBFriendsViewController.h; sourceTree = "<group>"; };
-		86CC714617CFC1A400B53EA1 /* SHMFBFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMFBFriendsViewController.m; sourceTree = "<group>"; };
+		86EA4C571821599A00B87A82 /* SHMAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMAppearance.h; sourceTree = "<group>"; };
+		86EA4C581821599A00B87A82 /* SHMAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMAppearance.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +96,6 @@
 		279F616317C8D6AB00674081 /* FolksListScreen */ = {
 			isa = PBXGroup;
 			children = (
-				86CC714C17CFC1B300B53EA1 /* FB Friends */,
-				86CC714A17CFC1A800B53EA1 /* VK Friends */,
 				279F616417C8D6D200674081 /* SHMFolksListViewController.h */,
 				279F616517C8D6D200674081 /* SHMFolksListViewController.m */,
 			);
@@ -137,6 +132,7 @@
 		74EC6F4D1783FF3E0066D122 /* MoneyPlan */ = {
 			isa = PBXGroup;
 			children = (
+				86EA4C561821598400B87A82 /* Helpers */,
 				74EC6F561783FF3E0066D122 /* SHMAppDelegate.h */,
 				74EC6F571783FF3E0066D122 /* SHMAppDelegate.m */,
 				74EC6F5F1783FF3E0066D122 /* MainStoryboard.storyboard */,
@@ -165,22 +161,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		86CC714A17CFC1A800B53EA1 /* VK Friends */ = {
+		86EA4C561821598400B87A82 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				86CC713F17CFC17B00B53EA1 /* SHMVKFriendsViewController.h */,
-				86CC714017CFC17B00B53EA1 /* SHMVKFriendsViewController.m */,
+				86EA4C571821599A00B87A82 /* SHMAppearance.h */,
+				86EA4C581821599A00B87A82 /* SHMAppearance.m */,
 			);
-			name = "VK Friends";
-			sourceTree = "<group>";
-		};
-		86CC714C17CFC1B300B53EA1 /* FB Friends */ = {
-			isa = PBXGroup;
-			children = (
-				86CC714517CFC1A400B53EA1 /* SHMFBFriendsViewController.h */,
-				86CC714617CFC1A400B53EA1 /* SHMFBFriendsViewController.m */,
-			);
-			name = "FB Friends";
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,13 +241,12 @@
 			files = (
 				74EC6F541783FF3E0066D122 /* main.m in Sources */,
 				74EC6F581783FF3E0066D122 /* SHMAppDelegate.m in Sources */,
+				86EA4C591821599A00B87A82 /* SHMAppearance.m in Sources */,
 				74EC6F641783FF3E0066D122 /* SHMViewController.m in Sources */,
 				271B7A0517895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m in Sources */,
 				27BC4BAF1795215E006DD809 /* SHMCalculationScreenViewController.m in Sources */,
 				279B97FE179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.m in Sources */,
 				279F616617C8D6D200674081 /* SHMFolksListViewController.m in Sources */,
-				86CC714217CFC17C00B53EA1 /* SHMVKFriendsViewController.m in Sources */,
-				86CC714817CFC1A400B53EA1 /* SHMFBFriendsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

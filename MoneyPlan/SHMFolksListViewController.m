@@ -13,8 +13,7 @@
 
 
 #import "SHMFolksListViewController.h"
-#import "SHMVKFriendsViewController.h"
-#import "SHMFBFriendsViewController.h"
+#import "SHMAppearance.h"
 
 #define SHM_HEADER_HEIGHT 45
 #define SHM_ROW_HEIGHT 45
@@ -66,6 +65,7 @@ const NSInteger kViewTag = 1;
 //    [self.view addSubview:self.folksListTableView];
 //    [self.view addSubview:self.textField];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    self.view.backgroundColor = [SHMAppearance defaultBackgroundColor];
 }
 
 - (void)didReceiveMemoryWarning

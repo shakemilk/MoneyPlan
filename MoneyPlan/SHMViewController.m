@@ -7,6 +7,7 @@
 //
 
 #import "SHMViewController.h"
+#import "SHMAppearance.h"
 
 @interface SHMViewController ()
 
@@ -18,6 +19,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.view.backgroundColor = [SHMAppearance defaultBackgroundColor];
 }
 
 - (void)didReceiveMemoryWarning

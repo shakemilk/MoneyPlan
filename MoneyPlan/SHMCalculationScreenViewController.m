@@ -9,6 +9,7 @@
 #import "SHMCalculationScreenViewController.h"
 #import "SHMTableWithOpeningSectionsSectionView.h"
 #import "SHMCalculationScreenTableCell.h"
+#import "SHMAppearance.h"
 
 @interface SHMCalculationScreenViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
@@ -160,7 +161,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.calculationTableView];
     
-    //self.tableView = self.calculationTableView; //lazily instantiate tableView
+    self.view.backgroundColor = [SHMAppearance defaultBackgroundColor];
 }
 
 - (void)didReceiveMemoryWarning
