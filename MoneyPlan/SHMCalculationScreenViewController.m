@@ -26,6 +26,13 @@
 #define SHM_ROW_HEIGHT 45
 #define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        self.tabBarItem.title = @"Calculations";
+    }
+    
+    return self;
+}
 
 -(UITableView *) calculationTableView{
     

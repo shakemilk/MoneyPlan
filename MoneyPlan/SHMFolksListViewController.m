@@ -24,13 +24,19 @@ const NSInteger kViewTag = 1;
 @interface SHMFolksListViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIButton *vkFriendsButton;
-@property (weak, nonatomic) IBOutlet UIButton *fbFriendsButton;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
 @end
 
 @implementation SHMFolksListViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        self.tabBarItem.title = @"Folks";
+    }
+    
+    return self;
+}
 
 - (NSMutableDictionary *) folksNamesDictionary{
     NSLog(@"method: %@", NSStringFromSelector(_cmd));
