@@ -28,6 +28,10 @@
 		86EA4C631821834B00B87A82 /* SHMTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C621821834B00B87A82 /* SHMTabBarController.m */; };
 		86EA4C651821879800B87A82 /* SHMFolksListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86EA4C641821879800B87A82 /* SHMFolksListViewController.xib */; };
 		86EA4C67182188BC00B87A82 /* SHMCalculationScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86EA4C66182188BC00B87A82 /* SHMCalculationScreenViewController.xib */; };
+		86EA4C6A18218BB800B87A82 /* SHMPartyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C6918218BB800B87A82 /* SHMPartyCollectionViewCell.m */; };
+		86EA4C6C18218BCF00B87A82 /* SHMPartyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86EA4C6B18218BCF00B87A82 /* SHMPartyCollectionViewCell.xib */; };
+		86EA4C711822CCCD00B87A82 /* SHMButtonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C701822CCCD00B87A82 /* SHMButtonCollectionViewCell.m */; };
+		86EA4C731822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86EA4C721822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +67,12 @@
 		86EA4C621821834B00B87A82 /* SHMTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMTabBarController.m; sourceTree = "<group>"; };
 		86EA4C641821879800B87A82 /* SHMFolksListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHMFolksListViewController.xib; sourceTree = "<group>"; };
 		86EA4C66182188BC00B87A82 /* SHMCalculationScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHMCalculationScreenViewController.xib; sourceTree = "<group>"; };
+		86EA4C6818218BB800B87A82 /* SHMPartyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMPartyCollectionViewCell.h; sourceTree = "<group>"; };
+		86EA4C6918218BB800B87A82 /* SHMPartyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMPartyCollectionViewCell.m; sourceTree = "<group>"; };
+		86EA4C6B18218BCF00B87A82 /* SHMPartyCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHMPartyCollectionViewCell.xib; sourceTree = "<group>"; };
+		86EA4C6F1822CCCD00B87A82 /* SHMButtonCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMButtonCollectionViewCell.h; sourceTree = "<group>"; };
+		86EA4C701822CCCD00B87A82 /* SHMButtonCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMButtonCollectionViewCell.m; sourceTree = "<group>"; };
+		86EA4C721822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHMButtonCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +194,12 @@
 				86EA4C5B18215E2E00B87A82 /* SHMPartiesViewController.h */,
 				86EA4C5C18215E2E00B87A82 /* SHMPartiesViewController.m */,
 				86EA4C5E182181C500B87A82 /* SHMPartiesViewController.xib */,
+				86EA4C6818218BB800B87A82 /* SHMPartyCollectionViewCell.h */,
+				86EA4C6B18218BCF00B87A82 /* SHMPartyCollectionViewCell.xib */,
+				86EA4C6918218BB800B87A82 /* SHMPartyCollectionViewCell.m */,
+				86EA4C6F1822CCCD00B87A82 /* SHMButtonCollectionViewCell.h */,
+				86EA4C701822CCCD00B87A82 /* SHMButtonCollectionViewCell.m */,
+				86EA4C721822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib */,
 			);
 			name = PartiesScreen;
 			sourceTree = "<group>";
@@ -253,6 +269,8 @@
 				86EA4C651821879800B87A82 /* SHMFolksListViewController.xib in Resources */,
 				86EA4C67182188BC00B87A82 /* SHMCalculationScreenViewController.xib in Resources */,
 				74EC6F5A1783FF3E0066D122 /* Default.png in Resources */,
+				86EA4C731822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib in Resources */,
+				86EA4C6C18218BCF00B87A82 /* SHMPartyCollectionViewCell.xib in Resources */,
 				86EA4C5F182181C500B87A82 /* SHMPartiesViewController.xib in Resources */,
 				86BB9C8C181D17A70094B912 /* Images.xcassets in Resources */,
 				74EC6F5C1783FF3E0066D122 /* Default@2x.png in Resources */,
@@ -271,7 +289,9 @@
 				74EC6F541783FF3E0066D122 /* main.m in Sources */,
 				74EC6F581783FF3E0066D122 /* SHMAppDelegate.m in Sources */,
 				86EA4C591821599A00B87A82 /* SHMAppearance.m in Sources */,
+				86EA4C711822CCCD00B87A82 /* SHMButtonCollectionViewCell.m in Sources */,
 				86EA4C5D18215E2E00B87A82 /* SHMPartiesViewController.m in Sources */,
+				86EA4C6A18218BB800B87A82 /* SHMPartyCollectionViewCell.m in Sources */,
 				271B7A0517895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m in Sources */,
 				27BC4BAF1795215E006DD809 /* SHMCalculationScreenViewController.m in Sources */,
 				279B97FE179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.m in Sources */,

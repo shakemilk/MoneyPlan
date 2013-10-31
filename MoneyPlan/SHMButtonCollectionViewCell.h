@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class SHMButtonCollectionViewCell;
+
+@protocol SHMButtonCollectionViewCellDelegate <NSObject>
+
+-(void)buttonCellWasTappedForNewEvent:(SHMButtonCollectionViewCell *)cell;
+
+@end
+
 @interface SHMButtonCollectionViewCell : UICollectionViewCell
+
+@property (weak, nonatomic) id<SHMButtonCollectionViewCellDelegate> delegate;
 
 @end

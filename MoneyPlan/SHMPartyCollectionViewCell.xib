@@ -1,17 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4469" systemVersion="13A476u" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3694"/>
+        <deployment defaultVersion="1552" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-        </view>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="o26-Os-Hd6" customClass="SHMPartyCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="95" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="95" height="100"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.07" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LIl-2x-tsm" userLabel="date">
+                        <rect key="frame" x="4" y="4" width="87" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="День рождения Маши" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="87" translatesAutoresizingMaskIntoConstraints="NO" id="tTe-Bw-2L3" userLabel="description">
+                        <rect key="frame" x="4" y="32" width="87" height="68"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.94117647059999998" green="0.31764705879999999" blue="0.39607843139999999" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="tTe-Bw-2L3" firstAttribute="leading" secondItem="o26-Os-Hd6" secondAttribute="leading" constant="4" id="65C-WV-rYl"/>
+                <constraint firstItem="LIl-2x-tsm" firstAttribute="top" secondItem="o26-Os-Hd6" secondAttribute="top" constant="4" id="dJZ-85-q0x"/>
+                <constraint firstItem="tTe-Bw-2L3" firstAttribute="top" secondItem="LIl-2x-tsm" secondAttribute="bottom" constant="8" id="h1A-st-xAW"/>
+                <constraint firstAttribute="bottom" secondItem="LIl-2x-tsm" secondAttribute="bottom" constant="76" id="hJH-mL-ozd"/>
+                <constraint firstAttribute="bottom" secondItem="tTe-Bw-2L3" secondAttribute="bottom" id="iil-B9-I7Q"/>
+                <constraint firstItem="LIl-2x-tsm" firstAttribute="leading" secondItem="o26-Os-Hd6" secondAttribute="leading" constant="4" id="jCn-N3-weP"/>
+                <constraint firstAttribute="trailing" secondItem="tTe-Bw-2L3" secondAttribute="trailing" constant="4" id="oWG-7v-rsD"/>
+                <constraint firstAttribute="trailing" secondItem="LIl-2x-tsm" secondAttribute="trailing" constant="4" id="zCt-Hg-K08"/>
+            </constraints>
+            <connections>
+                <outlet property="dateLabel" destination="LIl-2x-tsm" id="dl9-7u-C4M"/>
+                <outlet property="descriptionLabel" destination="tTe-Bw-2L3" id="v9j-58-Dmx"/>
+            </connections>
+        </collectionViewCell>
     </objects>
 </document>

@@ -8,24 +8,23 @@
 
 #import "SHMButtonCollectionViewCell.h"
 
+@interface SHMButtonCollectionViewCell()
+@property (weak, nonatomic) IBOutlet UIButton *button;
+@end
+
 @implementation SHMButtonCollectionViewCell
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
+    UINib *nib = [UINib nibWithNibName:@"SHMButtonCollectionViewCell" bundle:[NSBundle mainBundle]];
+    self = [[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+- (IBAction)tapToNewEvent:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(buttonCellWasTappedForNewEvent:)]) {
+        [self.delegate buttonCellWasTappedForNewEvent:self];
+    }
 }
-*/
 
 @end

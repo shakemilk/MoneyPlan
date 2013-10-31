@@ -8,24 +8,32 @@
 
 #import "SHMPartyCollectionViewCell.h"
 
+@interface SHMPartyCollectionViewCell()
+
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+
+
+@end
+
 @implementation SHMPartyCollectionViewCell
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
+    UINib *nib = [UINib nibWithNibName:@"SHMPartyCollectionViewCell" bundle:[NSBundle mainBundle]];
+    self = [[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
+    
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+//-(void)prepareForReuse {
+//    self.dateLabel.text = @"";
+//    self.descriptionLabel.text = @"";
+//}
+
+-(void)configureWithEventName:(NSString *)name description:(NSString *)description {
+    self.dateLabel.text = name;
+    self.descriptionLabel.text = description;
 }
-*/
 
 @end
