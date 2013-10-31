@@ -66,6 +66,17 @@
     return self.numberOfEvents + 1;
 }
 
+#pragma mark - Collection view delegate
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row) {
+        SHMTabBarController *tabBarController = [[SHMTabBarController alloc] initWithNibName:nil bundle:nil];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
+        navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:navController animated:YES completion:nil];
+    }
+}
+
 #pragma mark - Collection view flow layout delegate
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

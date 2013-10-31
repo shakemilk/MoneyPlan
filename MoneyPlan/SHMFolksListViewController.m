@@ -59,19 +59,22 @@ const NSInteger kViewTag = 1;
     return maxValue;
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self.tableView reloadData];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-//    [self.view addSubview:self.folksListTableView];
-//    [self.view addSubview:self.textField];
+    // Do any additional setup after loading the view.
+    //    [self.view addSubview:self.folksListTableView];
+    //    [self.view addSubview:self.textField];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     self.view.backgroundColor = [SHMAppearance defaultBackgroundColor];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.tabBarController.navigationItem setTitle:@"Folks"];
+    
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning

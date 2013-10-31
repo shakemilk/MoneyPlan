@@ -171,6 +171,12 @@
     self.view.backgroundColor = [SHMAppearance defaultBackgroundColor];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.navigationItem.title = @"Calculations";
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
