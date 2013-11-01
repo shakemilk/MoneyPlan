@@ -64,9 +64,10 @@
 
 @end
 
-@interface SHMAlertView()
+@interface SHMAlertView() <UITextFieldDelegate>
 @property (nonatomic, strong) SHMBackgroundView *backgroundView;
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UITextField *eventTextField;
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UIButton *okButton;
 @end
@@ -81,13 +82,21 @@
         _alertViewType = type;
         
         [self addSubview:self.titleLabel];
+        [self addSubview:self.eventTextField];
         [self addSubview:self.cancelButton];
         [self addSubview:self.okButton];
         
         self.clipsToBounds = YES;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
     }
     
     return self;
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)show {
@@ -107,6 +116,7 @@
         [self.delegate alertViewWillDismiss:self];
     }
     
+    [self.eventTextField resignFirstResponder];
     [UIView animateWithDuration:.5f animations:^{
         self.backgroundView.alpha = 0.f;
     } completion:^(BOOL finished) {
@@ -127,6 +137,9 @@
     self.titleLabel.frame = CGRectMake(0.f, 0.f,
                                        self.bounds.size.width,
                                        55.f);
+    self.eventTextField.frame = CGRectMake(0.f, CGRectGetMaxY(self.titleLabel.frame),
+                                           self.bounds.size.width,
+                                           45.f);
     self.cancelButton.frame = CGRectMake(0.f, self.bounds.size.height - kButtonHeight,
                                    self.bounds.size.width/2.f,
                                    kButtonHeight);
@@ -165,6 +178,28 @@
     return _titleLabel;
 }
 
+-(UITextField *)eventTextField {
+    if (!_eventTextField) {
+        _eventTextField = [[UITextField alloc] init];
+        if (self.alertViewType == SHMAlertViewTypeCreateNewEvent) {
+            _eventTextField.placeholder = @"Название";
+        } else {
+            _eventTextField.placeholder = @"ID события";
+        }
+        _eventTextField.clearButtonMode = UITextFieldViewModeAlways;
+        _eventTextField.backgroundColor = [UIColor whiteColor];
+        _eventTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 15.f, _eventTextField.bounds.size.height)];
+        _eventTextField.leftViewMode = UITextFieldViewModeAlways;
+        _eventTextField.rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 15.f, _eventTextField.bounds.size.height)];
+        _eventTextField.rightViewMode = UITextFieldViewModeAlways;
+        _eventTextField.returnKeyType = UIReturnKeyDone;
+        _eventTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        _eventTextField.delegate = self;
+    }
+    
+    return _eventTextField;
+}
+
 -(UIButton *)cancelButton {
     if (!_cancelButton) {
         _cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -201,6 +236,33 @@
     _title = title;
     self.titleLabel.text = title;
     [self.titleLabel sizeToFit];
+}
+
+#pragma mark - Keyboard notifications
+
+- (void)keyboardWillShow {
+    if (self.backgroundView.hidden) return;
+    [UIView animateWithDuration:.2f animations:^{
+        self.center = CGPointMake(self.center.x, self.center.y - 50.f);
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)keyboardWillHide {
+    if (self.backgroundView.hidden) return;
+    [UIView animateWithDuration:.2f animations:^{
+        self.center = CGPointMake(self.center.x, CGRectGetMidY(self.backgroundView.bounds));
+    } completion:^(BOOL finished) {
+    }];
+}
+
+
+#pragma mark - Text Field delegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return NO;
 }
 
 @end
