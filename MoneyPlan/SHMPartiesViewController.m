@@ -11,6 +11,7 @@
 #import "SHMTabBarController.h"
 #import "SHMButtonCollectionViewCell.h"
 #import "SHMPartyCollectionViewCell.h"
+#import "SHMAlertView.h"
 
 @interface SHMPartiesViewController () <UIActionSheetDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SHMButtonCollectionViewCellDelegate>
 
@@ -83,7 +84,7 @@
     return CGSizeMake(95.f, 100.f);
 }
 
-#pragma mark - Button cell delegate 
+#pragma mark - Button cell delegate
 
 -(void)buttonCellWasTappedForNewEvent:(SHMButtonCollectionViewCell *)cell {
     [self.collectionView performBatchUpdates:^{
@@ -102,8 +103,13 @@
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex != actionSheet.cancelButtonIndex) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Событие" message:@"Это событие" delegate:nil cancelButtonTitle:@"Отмена" otherButtonTitles: nil];
-        [alert show];
+        SHMAlertView *alertView;
+        if (buttonIndex == 0) {
+            alertView = [[SHMAlertView alloc] initWithTitle:@"Создание события"];
+        } else {
+            alertView = [[SHMAlertView alloc] initWithTitle:@"Участие в событии"];
+        }
+        [alertView show];
     }
 }
 
