@@ -13,7 +13,7 @@
 #import "SHMPartyCollectionViewCell.h"
 #import "SHMAlertView.h"
 
-@interface SHMPartiesViewController () <UIActionSheetDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SHMButtonCollectionViewCellDelegate>
+@interface SHMPartiesViewController () <UIActionSheetDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SHMButtonCollectionViewCellDelegate, SHMAlertViewDelegate>
 
 @property (nonatomic, strong) SHMTabBarController *tabBarController;
 @property (nonatomic, strong) UINavigationController *navigationController;
@@ -87,16 +87,8 @@
 #pragma mark - Button cell delegate
 
 -(void)buttonCellWasTappedForNewEvent:(SHMButtonCollectionViewCell *)cell {
-    [self.collectionView performBatchUpdates:^{
-        self.numberOfEvents++;
-        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:self.numberOfEvents inSection:0];
-        [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-    } completion:^(BOOL finished) {
-        [self.collectionView reloadData];
-        
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Новое событие" delegate:self cancelButtonTitle:@"Отмена" destructiveButtonTitle:nil otherButtonTitles:@"Создать новое событие", @"Присоединиться к событию", nil];
-        [actionSheet showInView:self.view];
-    }];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Новое событие" delegate:self cancelButtonTitle:@"Отмена" destructiveButtonTitle:nil otherButtonTitles:@"Создать новое событие", @"Присоединиться к событию", nil];
+    [actionSheet showInView:self.view];
 }
 
 #pragma mark - Action Sheet delegate
@@ -105,12 +97,29 @@
     if (buttonIndex != actionSheet.cancelButtonIndex) {
         SHMAlertView *alertView;
         if (buttonIndex == 0) {
-            alertView = [[SHMAlertView alloc] initWithTitle:@"Создание события"];
+            alertView = [[SHMAlertView alloc] initWithTitle:@"Создание события" type:SHMAlertViewTypeCreateNewEvent];
         } else {
-            alertView = [[SHMAlertView alloc] initWithTitle:@"Участие в событии"];
+            alertView = [[SHMAlertView alloc] initWithTitle:@"Участие в событии" type:SHMAlertViewTypeJoinExistingEvent];
         }
+        alertView.delegate = self;
         [alertView show];
     }
+}
+
+#pragma mark - SHMAlertView delegate
+
+-(void)alertView:(SHMAlertView *)alertView didOKWithType:(SHMAlertViewType)type {
+    [self.collectionView performBatchUpdates:^{
+        self.numberOfEvents++;
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:self.numberOfEvents inSection:0];
+        [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+    } completion:^(BOOL finished) {
+        [self.collectionView reloadData];
+    }];
+}
+
+-(void)alertView:(SHMAlertView *)alertView didCancelWithType:(SHMAlertViewType)type {
+    
 }
 
 @end
