@@ -32,6 +32,7 @@
 		86EA4C6C18218BCF00B87A82 /* SHMPartyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86EA4C6B18218BCF00B87A82 /* SHMPartyCollectionViewCell.xib */; };
 		86EA4C711822CCCD00B87A82 /* SHMButtonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C701822CCCD00B87A82 /* SHMButtonCollectionViewCell.m */; };
 		86EA4C731822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86EA4C721822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib */; };
+		86EA4C7E1824199600B87A82 /* SHMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C7D1824199600B87A82 /* SHMAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,8 @@
 		86EA4C6F1822CCCD00B87A82 /* SHMButtonCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMButtonCollectionViewCell.h; sourceTree = "<group>"; };
 		86EA4C701822CCCD00B87A82 /* SHMButtonCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMButtonCollectionViewCell.m; sourceTree = "<group>"; };
 		86EA4C721822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHMButtonCollectionViewCell.xib; sourceTree = "<group>"; };
+		86EA4C7C1824199600B87A82 /* SHMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMAlertView.h; sourceTree = "<group>"; };
+		86EA4C7D1824199600B87A82 /* SHMAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,13 +154,11 @@
 		74EC6F4D1783FF3E0066D122 /* MoneyPlan */ = {
 			isa = PBXGroup;
 			children = (
-				86EA4C601821832C00B87A82 /* TabBar */,
-				86EA4C5A18215E0A00B87A82 /* PartiesScreen */,
+				86EA4C7B1824195800B87A82 /* CustomViews */,
+				86EA4C7A1824194500B87A82 /* ViewControllers */,
 				86EA4C561821598400B87A82 /* Helpers */,
 				74EC6F561783FF3E0066D122 /* SHMAppDelegate.h */,
 				74EC6F571783FF3E0066D122 /* SHMAppDelegate.m */,
-				279F616317C8D6AB00674081 /* FolksListScreen */,
-				279B97FB179EE11800BE1D0A /* CalculationScreen */,
 				271B79FA178711F4008427F0 /* Resources */,
 				86BB9C8B181D17A70094B912 /* Images.xcassets */,
 				74EC6F4E1783FF3E0066D122 /* Supporting Files */,
@@ -211,6 +212,26 @@
 				86EA4C621821834B00B87A82 /* SHMTabBarController.m */,
 			);
 			name = TabBar;
+			sourceTree = "<group>";
+		};
+		86EA4C7A1824194500B87A82 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				86EA4C601821832C00B87A82 /* TabBar */,
+				86EA4C5A18215E0A00B87A82 /* PartiesScreen */,
+				279F616317C8D6AB00674081 /* FolksListScreen */,
+				279B97FB179EE11800BE1D0A /* CalculationScreen */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		86EA4C7B1824195800B87A82 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				86EA4C7C1824199600B87A82 /* SHMAlertView.h */,
+				86EA4C7D1824199600B87A82 /* SHMAlertView.m */,
+			);
+			name = CustomViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,6 +315,7 @@
 				86EA4C6A18218BB800B87A82 /* SHMPartyCollectionViewCell.m in Sources */,
 				271B7A0517895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m in Sources */,
 				27BC4BAF1795215E006DD809 /* SHMCalculationScreenViewController.m in Sources */,
+				86EA4C7E1824199600B87A82 /* SHMAlertView.m in Sources */,
 				279B97FE179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.m in Sources */,
 				279F616617C8D6D200674081 /* SHMFolksListViewController.m in Sources */,
 				86EA4C631821834B00B87A82 /* SHMTabBarController.m in Sources */,
