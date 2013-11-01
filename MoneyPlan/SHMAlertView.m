@@ -246,7 +246,10 @@
 - (void)keyboardWillShow {
     if (self.backgroundView.hidden) return;
     [UIView animateWithDuration:.2f animations:^{
-        self.center = CGPointMake(self.center.x, self.center.y - 50.f);
+        if (IS_WIDESCREEN)
+            self.center = CGPointMake(self.center.x, self.center.y - 50.f);
+        else
+            self.center = CGPointMake(self.center.x, self.center.y - 100.f);
     } completion:^(BOOL finished) {
     }];
 }
