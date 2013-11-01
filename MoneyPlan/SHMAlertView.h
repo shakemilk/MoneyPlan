@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface SHMAlertView : UIView
+@property (nonatomic, copy) NSString *title;
+
+- (instancetype)initWithTitle:(NSString *)title;
+- (void)show;
+- (void)dismiss;
 
 @end
