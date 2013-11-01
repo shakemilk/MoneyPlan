@@ -92,6 +92,9 @@
         [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
     } completion:^(BOOL finished) {
         [self.collectionView reloadData];
+        
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Новое событие" delegate:self cancelButtonTitle:@"Отмена" destructiveButtonTitle:nil otherButtonTitles:@"Создать новое событие", @"Присоединиться к событию", nil];
+        [actionSheet showInView:self.view];
     }];
 }
 
@@ -99,9 +102,8 @@
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex != actionSheet.cancelButtonIndex) {
-        self.tabBarController = [[SHMTabBarController alloc] initWithNibName:nil bundle:nil];
-        self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.tabBarController];
-        [self presentViewController:self.navigationController animated:YES completion:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Событие" message:@"Это событие" delegate:nil cancelButtonTitle:@"Отмена" otherButtonTitles: nil];
+        [alert show];
     }
 }
 
