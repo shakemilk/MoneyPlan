@@ -106,6 +106,9 @@
     self.backgroundView.alpha = 0.f;
     self.backgroundView.hidden = NO;
     
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandler:)];
+    [self.backgroundView addGestureRecognizer:tapRecognizer];
+    
     [UIView animateWithDuration:.5f animations:^{
         self.backgroundView.alpha = 1.f;
     }];
@@ -256,6 +259,14 @@
     }];
 }
 
+#pragma mark - Gesture handler 
+
+- (void)tapHandler:(UITapGestureRecognizer *)recognizer {
+    CGPoint tapPoint = [recognizer locationInView:self];
+    if (!CGRectContainsPoint(self.bounds, tapPoint)) {
+        [self tappedCancelButton];
+    }
+}
 
 #pragma mark - Text Field delegate
 
