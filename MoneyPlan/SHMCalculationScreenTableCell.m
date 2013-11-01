@@ -13,6 +13,9 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
+    //self.layer.borderWidth = 0.5f;
+    
+    
     if (self) {
         // Initialization code
         

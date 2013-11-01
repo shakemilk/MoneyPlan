@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-
+#import "SHMAppearance.h"
 
 @protocol SHMTableWithOpeningSectionsSectionViewDelegate;
 
 @interface SHMTableWithOpeningSectionsSectionView : UIView
 
 @property (nonatomic, strong) UILabel *titleLabel;
+
 @property (nonatomic, assign) NSInteger section;    //а зачем assign?
 @property (nonatomic, weak) id <SHMTableWithOpeningSectionsSectionViewDelegate> delegate;
 

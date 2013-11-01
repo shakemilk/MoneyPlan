@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
 
     //set up tap gesture recognizer
-    
+
     if (self!=nil)
     {
         self.isOpened = isOpened;    //заглушка. Cписок изначально открыт
@@ -33,30 +33,72 @@
         _delegate = delegate;
         
         _section = sectionNumber;   //передали номер секции
-        CGRect titleLabelFrame = self.bounds;
-        titleLabelFrame.origin.x += 15.0;   //взято из проекта apple. подредактировать размеры
-        titleLabelFrame.origin.y += 7.5;
-        titleLabelFrame.size.width -= 25.0;
         
-        titleLabelFrame.size.height -=15.0;
+        //Имя человека в секции
+        //starts here
+        CGRect personLabelFrame = self.bounds;
         
-        UILabel *label = [[UILabel alloc] initWithFrame:titleLabelFrame];
-        label.text = title;
-        label.font = [UIFont boldSystemFontOfSize:20.0];
-        label.textColor = [UIColor blueColor];
+        personLabelFrame.origin.x += 15.0;
+        personLabelFrame.origin.y += 7.5;
+        personLabelFrame.size.height = 25;
+        personLabelFrame.size.width = 200;
         
-        [self addSubview:label];
-        _titleLabel = label;
+        UILabel *personLabel = [[UILabel alloc] initWithFrame:personLabelFrame];
+        personLabel.text = title;
+        personLabel.font = [UIFont boldSystemFontOfSize:20.0];
+        personLabel.textColor = [UIColor blackColor];
+        [personLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:18.0]];
         
-        self.layer.borderColor = [UIColor blueColor].CGColor;
-        self.layer.borderWidth = 2.5f;
-        self.layer.cornerRadius = 6.f;
-        self.backgroundColor = [UIColor whiteColor];
+        [self addSubview:personLabel];
+        //UIRectFill(personLabelFrame);
+        _titleLabel = personLabel;
+        //ends here
+        
+        //подпись, "суммарно потратил"
+        //starts here
+        CGRect personSpentTextLabelFrame = CGRectMake(personLabelFrame.origin.x + 15.0, personLabelFrame.origin.y + personLabelFrame.size.height, 90.0, self.bounds.size.height - personLabelFrame.size.height - 15.0);
+        
+        UILabel *personSpentTextLabel = [[UILabel alloc] initWithFrame:personSpentTextLabelFrame];
+        personSpentTextLabel.text = @"Потратил(а):";
+        personSpentTextLabel.font = [UIFont boldSystemFontOfSize:20.0];
+        personSpentTextLabel.textColor = [UIColor grayColor];
+        [personSpentTextLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:14.0]];
+        
+        [self addSubview:personSpentTextLabel];
+        //ends here
+
+        //подпись, сколько он всего потратил
+        //starts here
+        CGRect personSpentSumLabelFrame = CGRectMake(personSpentTextLabelFrame.origin.x + personSpentTextLabelFrame.size.width + 10.0, personSpentTextLabelFrame.origin.y, 80.0, personSpentTextLabelFrame.size.height);
+        
+        UILabel *personSpentSumLabel = [[UILabel alloc] initWithFrame:personSpentSumLabelFrame];
+        personSpentSumLabel.text = @"1400р.";
+        personSpentSumLabel.font = [UIFont boldSystemFontOfSize:20.0];
+        personSpentSumLabel.textColor = [UIColor redColor];
+        [personSpentSumLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:14.0]];
+        
+        [self addSubview:personSpentSumLabel];
+        //ends here
+        
+        //подпись, сколько он суммарно должен
+        //starts here
+        CGRect debtLabelFrame = CGRectMake(self.bounds.size.width - 60.0, personLabelFrame.origin.y, 60.0, self.bounds.size.height - 15.0);
+        
+        UILabel *debtLabel = [[UILabel alloc] initWithFrame:debtLabelFrame];
+        debtLabel.text = @"300р.";
+        debtLabel.font = [UIFont boldSystemFontOfSize:20.0];
+        debtLabel.textColor = [UIColor redColor];
+        [debtLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:18.0]];
+        
+        [self addSubview:debtLabel];
+        //ends here
+     
+        //self.layer.borderColor = [UIColor blackColor].CGColor;
+        self.layer.borderWidth = 0.5f;
+        self.backgroundColor = [SHMAppearance defaultBackgroundColor];
     }
     
     return self;
-    
-    
 }
 
 -(IBAction) toggleOpen:(id)sender
@@ -64,6 +106,36 @@
     [self toggleOpenWithUserAction:YES];
 }
 
+
+-(void) drawRect:(CGRect)rect
+{
+    //для тестирования ввожу окантовывающие текст прямоугольники, больше ни для чего drawrect пока не нужен
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGRect personLabelFrame = self.bounds;
+    
+    personLabelFrame.origin.x += 15.0;
+    personLabelFrame.origin.y += 7.5;
+    personLabelFrame.size.height = 25;
+    personLabelFrame.size.width = 200;
+    CGContextAddRect(context, personLabelFrame);
+    
+    CGRect personSpentTextLabelFrame = CGRectMake(personLabelFrame.origin.x + 15.0, personLabelFrame.origin.y + personLabelFrame.size.height, 90, self.bounds.size.height - personLabelFrame.size.height - 15.0);
+    CGContextAddRect(context, personSpentTextLabelFrame);
+
+    CGRect personSpentSumLabelFrame = CGRectMake(personSpentTextLabelFrame.origin.x + personSpentTextLabelFrame.size.width + 10.0, personSpentTextLabelFrame.origin.y, 80.0, personSpentTextLabelFrame.size.height);
+    CGContextAddRect(context, personSpentSumLabelFrame);
+
+    CGRect debtLabelFrame = CGRectMake(self.bounds.size.width - 60.0, personLabelFrame.origin.y, 60.0, self.bounds.size.height - 15.0);
+    CGContextAddRect(context, debtLabelFrame);
+
+    CGContextSetLineWidth(context, 0.5);
+    [[UIColor blueColor] setStroke];
+    
+    CGContextStrokePath(context);
+
+}
 
 
 -(void) toggleOpenWithUserAction:(BOOL)userAction
@@ -75,12 +147,14 @@
         if (self.isOpened == NO){
             if([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]){
                 [self.delegate sectionHeaderView:self sectionOpened:self.section];
-                self.isOpened = YES; //а если метод как-то странно выполнился? может надо из делегата менять флаг?
+                //self.layer.borderWidth = 1.0f;  //меняем ширину границы, может быть не нужно. Все равно видно
+                self.isOpened = YES;
             }
         }
         else{
             if([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionClosed:)]){
                 [self.delegate sectionHeaderView:self sectionClosed:self.section];
+                //self.layer.borderWidth = 0.5f;
                 self.isOpened = NO;
             }
         }

@@ -22,9 +22,10 @@
 
 @implementation SHMCalculationScreenViewController
 
-#define SHM_HEADER_HEIGHT 45
-#define SHM_ROW_HEIGHT 45
+#define SHM_HEADER_HEIGHT 64
+#define SHM_ROW_HEIGHT 44
 #define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
+#define SHM_NAVIGATION_BAR_HEIGHT 64
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
@@ -56,7 +57,8 @@
         _calculationTableView.dataSource = self;
         
         [_calculationTableView registerClass:[SHMCalculationScreenTableCell class] forCellReuseIdentifier:@"Cell"];
-        
+        [_calculationTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        [_calculationTableView setBackgroundColor:[SHMAppearance defaultBackgroundColor]];
     }
     
     return _calculationTableView;
