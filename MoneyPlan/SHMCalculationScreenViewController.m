@@ -71,7 +71,7 @@
         NSMutableArray *tempArray = [[NSMutableArray alloc] initWithObjects: nil];
         for (NSInteger i = 0; i < [self.listOfDebts count]; ++i)
         {
-            [tempArray addObject:[[NSNumber alloc] initWithBool:YES]];
+            [tempArray addObject:[[NSNumber alloc] initWithBool:NO]];
         }
         _openedSectionsArray = [tempArray copy];
     }
@@ -151,18 +151,34 @@
 {
     if(!_numberOfRowsToShowForSection)
     {
-        NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
         
+        NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
         NSArray *keysFromListOfDebts = [self.listOfDebts allKeys];
         for (NSString *key in keysFromListOfDebts)
         {
-            NSDictionary *dict = [self.listOfDebts objectForKey:key];
-            NSNumber *num = [[NSNumber alloc]initWithInteger:dict.count];
+            NSNumber *num = [[NSNumber alloc]initWithInteger:0];
             [array addObject:num];
         }
         _numberOfRowsToShowForSection = array;
     }
     return _numberOfRowsToShowForSection;
+}
+
+-(NSArray *)arrayOfOpenedSectionsAtAppStart
+//метод подгружает число строк для каждой секции при старте приложения
+//Нужно использовать внутри numberOfRowsToShowForSection lazy inst. если при старте приложения
+//все секции должны быть открыты
+{
+    NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
+    
+    NSArray *keysFromListOfDebts = [self.listOfDebts allKeys];
+    for (NSString *key in keysFromListOfDebts)
+    {
+        NSDictionary *dict = [self.listOfDebts objectForKey:key];
+        NSNumber *num = [[NSNumber alloc]initWithInteger:dict.count];
+        [array addObject:num];
+    }
+    return array;
 }
 
 - (void)viewDidLoad
@@ -197,7 +213,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[self.numberOfRowsToShowForSection objectAtIndex:section] integerValue]; //тест вообще надо следить чтоб там NSInteger был
+    return [[self.numberOfRowsToShowForSection objectAtIndex:section] integerValue]; //вообще надо следить, наверное, чтоб там NSInteger был
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -264,7 +280,7 @@
     UITableViewRowAnimation insertAnimation = UITableViewRowAnimationTop;
     
     NSMutableArray *array = [self.numberOfRowsToShowForSection mutableCopy];
-    NSInteger rowsNumberToAdd = [[array objectAtIndex:sectionOpened] integerValue] + [indexPathsToInsert count];
+    NSInteger rowsNumberToAdd = /*[[array objectAtIndex:sectionOpened] integerValue] +*/ [indexPathsToInsert count];
     NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToAdd];
     
     [array replaceObjectAtIndex:sectionOpened withObject:rows];
