@@ -33,6 +33,7 @@
 		86EA4C711822CCCD00B87A82 /* SHMButtonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C701822CCCD00B87A82 /* SHMButtonCollectionViewCell.m */; };
 		86EA4C731822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86EA4C721822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib */; };
 		86EA4C7E1824199600B87A82 /* SHMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C7D1824199600B87A82 /* SHMAlertView.m */; };
+		86EA4C82182672B300B87A82 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86EA4C81182672B300B87A82 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		86EA4C721822CCDE00B87A82 /* SHMButtonCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHMButtonCollectionViewCell.xib; sourceTree = "<group>"; };
 		86EA4C7C1824199600B87A82 /* SHMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMAlertView.h; sourceTree = "<group>"; };
 		86EA4C7D1824199600B87A82 /* SHMAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMAlertView.m; sourceTree = "<group>"; };
+		86EA4C81182672B300B87A82 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86EA4C82182672B300B87A82 /* QuartzCore.framework in Frameworks */,
 				74EC6F481783FF3E0066D122 /* UIKit.framework in Frameworks */,
 				74EC6F4A1783FF3E0066D122 /* Foundation.framework in Frameworks */,
 				74EC6F4C1783FF3E0066D122 /* CoreGraphics.framework in Frameworks */,
@@ -144,6 +147,7 @@
 		74EC6F461783FF3E0066D122 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				86EA4C81182672B300B87A82 /* QuartzCore.framework */,
 				74EC6F471783FF3E0066D122 /* UIKit.framework */,
 				74EC6F491783FF3E0066D122 /* Foundation.framework */,
 				74EC6F4B1783FF3E0066D122 /* CoreGraphics.framework */,

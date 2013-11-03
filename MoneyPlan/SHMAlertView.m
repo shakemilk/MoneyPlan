@@ -8,6 +8,7 @@
 
 #import "SHMAlertView.h"
 #import "SHMAppearance.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define kButtonHeight 44.f
 
@@ -216,7 +217,7 @@
 
 -(UITextField *)dateTextField {
     if (!_dateTextField) {
-        _dateTextField = [[UITextField alloc] init];
+        _dateTextField = [[UITextField alloc] initWithFrame:CGRectMake(0.f, 0.f, self.bounds.size.width, 45.f)];
         _dateTextField.backgroundColor = [UIColor whiteColor];
         _dateTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 15.f, _dateTextField.bounds.size.height)];
         _dateTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -224,11 +225,17 @@
         _dateTextField.rightViewMode = UITextFieldViewModeAlways;
         _dateTextField.placeholder = @"Дата";
         _dateTextField.inputView = self.datePicker;
+        
         UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, self.bounds.size.width, 44.f)];
         UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Готово" style:UIBarButtonItemStylePlain target:self action:@selector(doneAction)];
         [toolbar setItems:@[barButton]];
         toolbar.backgroundColor = [UIColor whiteColor];
         _dateTextField.inputAccessoryView = toolbar;
+
+        CALayer *borderLayer = [CALayer layer];
+        borderLayer.frame = CGRectMake(0.f, 0.f, _dateTextField.bounds.size.width, .5f);
+        borderLayer.backgroundColor = [UIColor colorWithRed:200.f/255 green:200.f/255 blue:206.f/255 alpha:1.f].CGColor;
+        [_dateTextField.layer addSublayer:borderLayer];
     }
     
     return _dateTextField;
@@ -250,12 +257,24 @@
 -(UIButton *)cancelButton {
     if (!_cancelButton) {
         _cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        _cancelButton.frame = CGRectMake(0.f, 0.f,
+                                         self.bounds.size.width/2.f, self.bounds.size.height - kButtonHeight);
         _cancelButton.backgroundColor = [SHMAppearance defaultBackgroundColor];
         [_cancelButton setTitle:@"Отменить" forState:UIControlStateNormal];
         [_cancelButton setTitleColor:[SHMAppearance rosyTitleColor] forState:UIControlStateNormal];
         _cancelButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:18.f];
-        _cancelButton.layer.borderWidth = .5f;
-        _cancelButton.layer.borderColor = [UIColor colorWithRed:200.f/255 green:200.f/255 blue:206.f/255 alpha:1.f].CGColor;
+        
+        CALayer *topBorderLayer = [CALayer layer];
+        topBorderLayer.frame = CGRectMake(0.f, 0.f, _cancelButton.bounds.size.width, 0.5f);
+        topBorderLayer.backgroundColor = [UIColor colorWithRed:200.f/255 green:200.f/255 blue:206.f/255 alpha:1.f].CGColor;
+        [_cancelButton.layer addSublayer:topBorderLayer];
+        
+        CALayer *rightSideBorderLayer = [CALayer layer];
+        rightSideBorderLayer.frame = CGRectMake(_cancelButton.bounds.size.width-.5f, 0.f,
+                                                .5f, _cancelButton.bounds.size.height);
+        rightSideBorderLayer.backgroundColor = topBorderLayer.backgroundColor;
+        [_cancelButton.layer addSublayer:rightSideBorderLayer];
+        
         [_cancelButton addTarget:self action:@selector(tappedCancelButton) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -265,12 +284,18 @@
 -(UIButton *)okButton {
     if (!_okButton) {
         _okButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        _okButton.frame = CGRectMake(0.f, 0.f,
+                                     self.bounds.size.width/2.f, self.bounds.size.height - kButtonHeight);
         _okButton.backgroundColor = [SHMAppearance defaultBackgroundColor];
         [_okButton setTitle:@"Готово" forState:UIControlStateNormal];
         [_okButton setTitleColor:[SHMAppearance rosyTitleColor] forState:UIControlStateNormal];
         _okButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.f];
-        _okButton.layer.borderWidth = .5f;
-        _okButton.layer.borderColor = [UIColor colorWithRed:200.f/255 green:200.f/255 blue:206.f/255 alpha:1.f].CGColor;
+
+        CALayer *topBorderLayer = [CALayer layer];
+        topBorderLayer.frame = CGRectMake(0.f, 0.f, _okButton.bounds.size.width, 0.5f);
+        topBorderLayer.backgroundColor = [UIColor colorWithRed:200.f/255 green:200.f/255 blue:206.f/255 alpha:1.f].CGColor;
+        [_okButton.layer addSublayer:topBorderLayer];
+        
         [_okButton addTarget:self action:@selector(tappedOKButton) forControlEvents:UIControlEventTouchUpInside];
     }
     
