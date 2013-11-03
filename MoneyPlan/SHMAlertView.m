@@ -163,8 +163,12 @@
 }
 
 - (void)tappedOKButton {
-    if ([self.delegate respondsToSelector:@selector(alertView:didOKWithType:)]) {
-        [self.delegate alertView:self didOKWithType:self.alertViewType];
+    if (self.alertViewType == SHMAlertViewTypeCreateNewEvent &&
+        [self.delegate respondsToSelector:@selector(alertView:createEventWithName:date:)]) {
+        [self.delegate alertView:self createEventWithName:self.eventTextField.text date:self.datePicker.date];
+    } else if (self.alertViewType == SHMAlertViewTypeJoinExistingEvent &&
+               [self.delegate respondsToSelector:@selector(alertView:joinEventWithID:)]) {
+        [self.delegate alertView:self joinEventWithID:self.eventTextField.text];
     }
     
     [self dismiss];

@@ -13,14 +13,38 @@
 #import "SHMPartyCollectionViewCell.h"
 #import "SHMAlertView.h"
 
+@interface SHMParty : NSObject
+@property (nonatomic, strong) NSString *partyName;
+@property (nonatomic, strong) NSDate *partyDate;
+@property (nonatomic, strong) NSString *partyDateString;
+
+-(instancetype)initWithName:(NSString *)name date:(NSDate *)date;
+@end
+
+@implementation SHMParty
+
+-(instancetype)initWithName:(NSString *)name date:(NSDate *)date {
+    if (self = [super init]) {
+        self.partyName = name;
+        self.partyDate = date;
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"dd.MM.yy";
+        self.partyDateString = [dateFormatter stringFromDate:date];
+    }
+    
+    return self;
+}
+
+@end
+
 @interface SHMPartiesViewController () <UIActionSheetDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SHMButtonCollectionViewCellDelegate, SHMAlertViewDelegate>
 
 @property (nonatomic, strong) SHMTabBarController *tabBarController;
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (nonatomic) NSUInteger numberOfEvents;
-
+@property (nonatomic, strong) NSMutableArray *partiesArray;
 @end
 
 @implementation SHMPartiesViewController
@@ -50,6 +74,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(NSMutableArray *)partiesArray {
+    if (!_partiesArray) {
+        _partiesArray = @[].mutableCopy;
+    }
+    
+    return _partiesArray;
+}
+
 #pragma mark - Collection view data source
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -64,7 +96,7 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.numberOfEvents + 1;
+    return self.partiesArray.count + 1;
 }
 
 #pragma mark - Collection view delegate
@@ -108,10 +140,22 @@
 
 #pragma mark - SHMAlertView delegate
 
--(void)alertView:(SHMAlertView *)alertView didOKWithType:(SHMAlertViewType)type {
+-(void)alertView:(SHMAlertView *)alertView createEventWithName:(NSString *)name date:(NSDate *)date {
     [self.collectionView performBatchUpdates:^{
-        self.numberOfEvents++;
-        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:self.numberOfEvents inSection:0];
+        SHMParty *newParty = [[SHMParty alloc] initWithName:name date:date];
+        [self.partiesArray addObject:newParty];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:self.partiesArray.count inSection:0];
+        [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+    } completion:^(BOOL finished) {
+        [self.collectionView reloadData];
+    }];
+}
+
+-(void)alertView:(SHMAlertView *)alertView joinEventWithID:(NSString *)eventID {
+    [self.collectionView performBatchUpdates:^{
+        SHMParty *newParty = [[SHMParty alloc] initWithName:@"День рождения Маши" date:[NSDate date]];
+        [self.partiesArray addObject:newParty];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:self.partiesArray.count inSection:0];
         [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
     } completion:^(BOOL finished) {
         [self.collectionView reloadData];

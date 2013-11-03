@@ -17,8 +17,11 @@ typedef NS_ENUM(NSUInteger, SHMAlertViewType) {
 
 @protocol SHMAlertViewDelegate <NSObject>
 
--(void)alertView:(SHMAlertView *)alertView didOKWithType:(SHMAlertViewType)type;
+-(void)alertView:(SHMAlertView *)alertView createEventWithName:(NSString *)name date:(NSDate *)date;
+-(void)alertView:(SHMAlertView *)alertView joinEventWithID:(NSString *)eventID;
 -(void)alertView:(SHMAlertView *)alertView didCancelWithType:(SHMAlertViewType)type;
+
+@optional
 -(void)alertViewWillDismiss:(SHMAlertView *)alertView;
 -(void)alertViewDidDismiss:(SHMAlertView *)alertView;
 
