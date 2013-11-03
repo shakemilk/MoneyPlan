@@ -10,7 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface SHMTableWithOpeningSectionsSectionView()
-@property (atomic) BOOL isOpened;   // открыта или закрыта секция
 
 @end
 
@@ -141,21 +140,18 @@
 -(void) toggleOpenWithUserAction:(BOOL)userAction
 //здесь запускается функция открытия/закрытия списка
 {
-    if(userAction)
-    {
-        
-        if (self.isOpened == NO){
+    self.isOpened = !self.isOpened;
+    if(userAction){
+        if (self.isOpened == YES){
             if([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]){
                 [self.delegate sectionHeaderView:self sectionOpened:self.section];
                 //self.layer.borderWidth = 1.0f;  //меняем ширину границы, может быть не нужно. Все равно видно
-                self.isOpened = YES;
             }
         }
         else{
             if([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionClosed:)]){
                 [self.delegate sectionHeaderView:self sectionClosed:self.section];
                 //self.layer.borderWidth = 0.5f;
-                self.isOpened = NO;
             }
         }
     }

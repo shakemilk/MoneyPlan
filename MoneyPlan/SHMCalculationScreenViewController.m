@@ -17,6 +17,9 @@
 @property (nonatomic, strong) NSDictionary *listOfDebts;    //тут список долгов, кто кому что должен
 @property (nonatomic, strong) NSArray *debtsArray;  //массив долгов
 @property (nonatomic, strong) NSArray *openedSectionsArray; //YES - секция открыта, NO - закрыта
+@property (nonatomic, weak) NSNumber *lastOpenedSection; //последняя открытая секция
+@property (nonatomic, strong) NSMutableArray* sectionViewsArray; //массив из элементов SHMCalculationScreenSectionInfo, в которых хранятся указатели на UIView секции.
+
 
 @end
 
@@ -24,8 +27,9 @@
 
 #define SHM_HEADER_HEIGHT 64
 #define SHM_ROW_HEIGHT 44
-#define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
-#define SHM_NAVIGATION_BAR_HEIGHT 64
+#define SHM_TAB_BAR_HEIGHT 49     //странные размеры, почему-то не сходятся
+#define SHM_NAVIGATION_BAR_HEIGHT 44
+#define SHM_STATUS_BAR_HEIGHT 20
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
@@ -41,7 +45,9 @@
         CGFloat x = 0.0;
         CGFloat y = 0.0;
         CGFloat width = self.view.frame.size.width;
-        CGFloat height = self.view.frame.size.height - SHM_SPACE_FOR_TABBAR - 45; //без 45 при полностью раскрытых секциях сверху и закрытой последней секции нельзя увидеть ее заголовок. на нем не тормозится.
+        
+#warning размеры таблицы не подгоняются нормально по высоте
+        CGFloat height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT-SHM_NAVIGATION_BAR_HEIGHT-SHM_STATUS_BAR_HEIGHT;
         CGRect rect = CGRectMake(x, y, width, height);
         
         _calculationTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
@@ -77,7 +83,27 @@
     }
     return _openedSectionsArray;
 }
- 
+
+-(NSMutableArray *) sectionViewsArray
+//нужно забить нулями по количеству секций
+//потом нули в коде будут заменены на view секций
+//надо будет потом предусмотреть возможность добавления новых людей,
+//что ведет к добывлению секций и расширению массива
+#warning впоследствии возможна сортировка этого массива (сортировка людей в списке). Надо будет проверить
+{
+    if (_sectionViewsArray == nil){
+        _sectionViewsArray = [[NSMutableArray alloc] init];
+        
+        NSInteger NumberOfSections = [self.listOfDebts count];
+        for (NSInteger i = 0; i < NumberOfSections; ++i)
+        {
+            [_sectionViewsArray insertObject:[[NSNull alloc] init] atIndex:i];
+        }
+    }
+    
+    return _sectionViewsArray;
+}
+
 
 -(NSDictionary *) deleteElementsWithZeroDebtFromDictionary: (NSDictionary *) dictionary
 //метод удаляет элементы с пустыми значениями из dictionary
@@ -151,7 +177,6 @@
 {
     if(!_numberOfRowsToShowForSection)
     {
-        
         NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
         NSArray *keysFromListOfDebts = [self.listOfDebts allKeys];
         for (NSString *key in keysFromListOfDebts)
@@ -163,7 +188,7 @@
     }
     return _numberOfRowsToShowForSection;
 }
-
+/*
 -(NSArray *)arrayOfOpenedSectionsAtAppStart
 //метод подгружает число строк для каждой секции при старте приложения
 //Нужно использовать внутри numberOfRowsToShowForSection lazy inst. если при старте приложения
@@ -180,6 +205,7 @@
     }
     return array;
 }
+ */
 
 - (void)viewDidLoad
 {
@@ -247,16 +273,37 @@
 }
 
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+-(SHMTableWithOpeningSectionsSectionView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     //lazily instatniate headers    
     SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.calculationTableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[[self.listOfDebts allKeys] objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
+    [self.sectionViewsArray replaceObjectAtIndex:section withObject:sectionHeader];
     
     return sectionHeader;
 }
 
+#pragma mark -
+#pragma mark Focus at chosen cell
 
-#pragma mark - Table view delegate
+-(NSIndexPath *)firstIndexPathInOpenedSection
+//поиск строки в таблице
+//для фокуса на нее при открытии секции
+{
+    NSInteger SectionIndex = [self.lastOpenedSection integerValue];
+    NSInteger RowIndex = 4;
+    return [NSIndexPath indexPathForRow:RowIndex inSection:SectionIndex];
+}
+
+-(void)goToCell
+//автоматический скролл к нужной ячейке
+{
+    NSIndexPath *certainIndexPath = [self firstIndexPathInOpenedSection];
+    [self.calculationTableView scrollToRowAtIndexPath:certainIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
+
+#pragma mark -
+#pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -270,6 +317,32 @@
 -(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionOpened:(NSInteger)sectionOpened
 //method launches for the section that was just opened by the user
 {
+    //нужно закрыть единственную открытую секцию и затем открыть новую
+    NSInteger previousOpenedSection = -1;   //если тут останется -1, все секции закрыты
+    for (NSInteger i = 0; i < [self.openedSectionsArray count]; i++)
+    {
+        if ([[self.openedSectionsArray objectAtIndex:i]boolValue] == YES ) {
+            previousOpenedSection = i; //запомнили открытую секцию. Работать будет только если секции при старте все закрыты! в этом методе закрывается лишь одна секция - нижняя из открытых
+        }
+    }
+    
+    NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
+
+    if (previousOpenedSection > -1)
+    {
+        for (NSInteger i = 0; i < [self.listOfDebts count]; i++)
+        {
+            [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:previousOpenedSection]];
+        }
+        
+        if(previousOpenedSection!=sectionOpened){
+            SHMTableWithOpeningSectionsSectionView *headerView =[self.sectionViewsArray objectAtIndex:previousOpenedSection];
+            [self sectionHeaderView: headerView sectionClosed:previousOpenedSection];
+            [headerView toggleOpenWithUserAction:NO];
+        }
+    }
+
+    //открываем секцию
     NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
     
     for (NSInteger i = 0; i < [self.listOfDebts count]; i++)
