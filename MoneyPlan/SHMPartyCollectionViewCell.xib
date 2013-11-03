@@ -22,7 +22,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="День рождения Маши" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="87" translatesAutoresizingMaskIntoConstraints="NO" id="tTe-Bw-2L3" userLabel="description">
-                        <rect key="frame" x="4" y="32" width="87" height="68"/>
+                        <rect key="frame" x="4" y="32" width="87" height="61"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -35,9 +35,8 @@
             <constraints>
                 <constraint firstItem="tTe-Bw-2L3" firstAttribute="leading" secondItem="o26-Os-Hd6" secondAttribute="leading" constant="4" id="65C-WV-rYl"/>
                 <constraint firstItem="LIl-2x-tsm" firstAttribute="top" secondItem="o26-Os-Hd6" secondAttribute="top" constant="4" id="dJZ-85-q0x"/>
-                <constraint firstItem="tTe-Bw-2L3" firstAttribute="top" secondItem="LIl-2x-tsm" secondAttribute="bottom" constant="8" id="h1A-st-xAW"/>
                 <constraint firstAttribute="bottom" secondItem="LIl-2x-tsm" secondAttribute="bottom" constant="76" id="hJH-mL-ozd"/>
-                <constraint firstAttribute="bottom" secondItem="tTe-Bw-2L3" secondAttribute="bottom" id="iil-B9-I7Q"/>
+                <constraint firstAttribute="bottom" secondItem="tTe-Bw-2L3" secondAttribute="bottom" constant="7" id="iil-B9-I7Q"/>
                 <constraint firstItem="LIl-2x-tsm" firstAttribute="leading" secondItem="o26-Os-Hd6" secondAttribute="leading" constant="4" id="jCn-N3-weP"/>
                 <constraint firstAttribute="trailing" secondItem="tTe-Bw-2L3" secondAttribute="trailing" constant="4" id="oWG-7v-rsD"/>
                 <constraint firstAttribute="trailing" secondItem="LIl-2x-tsm" secondAttribute="trailing" constant="4" id="zCt-Hg-K08"/>

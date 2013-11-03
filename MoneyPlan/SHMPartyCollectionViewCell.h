@@ -10,6 +10,6 @@
 
 @interface SHMPartyCollectionViewCell : UICollectionViewCell
 
--(void)configureWithEventName:(NSString *)name description:(NSString *)description;
+-(void)configureWithEventName:(NSString *)name dateString:(NSString *)dateString;
 
 @end
