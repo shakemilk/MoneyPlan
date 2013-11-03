@@ -68,6 +68,8 @@
 @property (nonatomic, strong) SHMBackgroundView *backgroundView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UITextField *eventTextField;
+@property (nonatomic, strong) UITextField *dateTextField;
+@property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UIButton *okButton;
 @end
@@ -85,6 +87,10 @@
         [self addSubview:self.eventTextField];
         [self addSubview:self.cancelButton];
         [self addSubview:self.okButton];
+        
+        if (self.alertViewType == SHMAlertViewTypeCreateNewEvent) {
+            [self addSubview:self.dateTextField];
+        }
         
         self.clipsToBounds = YES;
         
@@ -120,6 +126,7 @@
     }
     
     [self.eventTextField resignFirstResponder];
+    [self.dateTextField resignFirstResponder];
     [UIView animateWithDuration:.5f animations:^{
         self.backgroundView.alpha = 0.f;
     } completion:^(BOOL finished) {
@@ -143,6 +150,9 @@
     self.eventTextField.frame = CGRectMake(0.f, CGRectGetMaxY(self.titleLabel.frame),
                                            self.bounds.size.width,
                                            45.f);
+    self.dateTextField.frame = CGRectMake(0.f, CGRectGetMaxY(self.eventTextField.frame),
+                                          self.bounds.size.width,
+                                          45.f);
     self.cancelButton.frame = CGRectMake(0.f, self.bounds.size.height - kButtonHeight,
                                    self.bounds.size.width/2.f,
                                    kButtonHeight);
@@ -186,8 +196,10 @@
         _eventTextField = [[UITextField alloc] init];
         if (self.alertViewType == SHMAlertViewTypeCreateNewEvent) {
             _eventTextField.placeholder = @"Название";
+            _eventTextField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         } else {
             _eventTextField.placeholder = @"ID события";
+            _eventTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         }
         _eventTextField.clearButtonMode = UITextFieldViewModeAlways;
         _eventTextField.backgroundColor = [UIColor whiteColor];
@@ -196,11 +208,43 @@
         _eventTextField.rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 15.f, _eventTextField.bounds.size.height)];
         _eventTextField.rightViewMode = UITextFieldViewModeAlways;
         _eventTextField.returnKeyType = UIReturnKeyDone;
-        _eventTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _eventTextField.delegate = self;
     }
     
     return _eventTextField;
+}
+
+-(UITextField *)dateTextField {
+    if (!_dateTextField) {
+        _dateTextField = [[UITextField alloc] init];
+        _dateTextField.backgroundColor = [UIColor whiteColor];
+        _dateTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 15.f, _dateTextField.bounds.size.height)];
+        _dateTextField.leftViewMode = UITextFieldViewModeAlways;
+        _dateTextField.rightView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 15.f, _dateTextField.bounds.size.height)];
+        _dateTextField.rightViewMode = UITextFieldViewModeAlways;
+        _dateTextField.placeholder = @"Дата";
+        _dateTextField.inputView = self.datePicker;
+        UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, self.bounds.size.width, 44.f)];
+        UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Готово" style:UIBarButtonItemStylePlain target:self action:@selector(doneAction)];
+        [toolbar setItems:@[barButton]];
+        toolbar.backgroundColor = [UIColor whiteColor];
+        _dateTextField.inputAccessoryView = toolbar;
+    }
+    
+    return _dateTextField;
+}
+
+-(UIDatePicker *)datePicker {
+    if (!_datePicker) {
+        _datePicker = [[UIDatePicker alloc] init];
+        _datePicker.datePickerMode = UIDatePickerModeDate;
+        _datePicker.date = [NSDate date];
+        _datePicker.minimumDate = [NSDate date];
+        [_datePicker addTarget:self action:@selector(pickerValueChanged) forControlEvents:UIControlEventValueChanged];
+        _datePicker.backgroundColor = [UIColor whiteColor];
+    }
+    
+    return _datePicker;
 }
 
 -(UIButton *)cancelButton {
@@ -246,10 +290,11 @@
 - (void)keyboardWillShow {
     if (self.backgroundView.hidden) return;
     [UIView animateWithDuration:.2f animations:^{
-        if (IS_WIDESCREEN)
-            self.center = CGPointMake(self.center.x, self.center.y - 50.f);
-        else
-            self.center = CGPointMake(self.center.x, self.center.y - 100.f);
+        CGFloat deltaY;
+        deltaY = IS_WIDESCREEN?50.f:100.f;
+        if ([self.dateTextField isFirstResponder])
+            deltaY += 44.f;
+        self.center = CGPointMake(self.center.x, self.center.y - deltaY);
     } completion:^(BOOL finished) {
     }];
 }
@@ -273,10 +318,22 @@
 
 #pragma mark - Text Field delegate
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
     return NO;
+}
+
+#pragma mark - Picker view action
+
+- (void)pickerValueChanged {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"dd.MM.yy";
+    self.dateTextField.text = [dateFormatter stringFromDate:self.datePicker.date];
+}
+
+- (void)doneAction {
+    [self.dateTextField resignFirstResponder];
 }
 
 @end
