@@ -227,7 +227,9 @@
         _dateTextField.leftViewMode = UITextFieldViewModeAlways;
         _dateTextField.rightView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 15.f, _dateTextField.bounds.size.height)];
         _dateTextField.rightViewMode = UITextFieldViewModeAlways;
-        _dateTextField.placeholder = @"Дата";
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"dd.MM.yy";
+        _dateTextField.placeholder = [dateFormatter stringFromDate:[NSDate date]];
         _dateTextField.inputView = self.datePicker;
         
         UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.f, 0.f, self.bounds.size.width, 44.f)];
