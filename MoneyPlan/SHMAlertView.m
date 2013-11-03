@@ -316,9 +316,10 @@
     if (self.backgroundView.hidden) return;
     [UIView animateWithDuration:.2f animations:^{
         CGFloat deltaY;
-        deltaY = IS_WIDESCREEN?50.f:100.f;
+        deltaY = IS_WIDESCREEN?50.f:84.f;
         if ([self.dateTextField isFirstResponder])
             deltaY += 44.f;
+        deltaY -= CGRectGetMidY(self.backgroundView.bounds) - self.center.y;
         self.center = CGPointMake(self.center.x, self.center.y - deltaY);
     } completion:^(BOOL finished) {
     }];
