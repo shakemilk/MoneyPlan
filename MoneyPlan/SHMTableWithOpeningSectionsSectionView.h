@@ -15,7 +15,6 @@
 @interface SHMTableWithOpeningSectionsSectionView : UIView
 
 @property (nonatomic, strong) UILabel *titleLabel;
-
 @property (nonatomic, assign) NSInteger section;    //а зачем assign?
 @property (nonatomic, weak) id <SHMTableWithOpeningSectionsSectionViewDelegate> delegate;
 @property (atomic) BOOL isOpened;   // открыта или закрыта секция

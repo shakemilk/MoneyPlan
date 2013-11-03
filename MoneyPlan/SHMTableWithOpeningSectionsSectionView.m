@@ -23,14 +23,10 @@
 
     if (self!=nil)
     {
-        self.isOpened = isOpened;    //заглушка. Cписок изначально открыт
-        
+        self.isOpened = isOpened;
         UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOpen:)];  //почему тут ничего не надо передавать в toggleOpen?
-    
         [self addGestureRecognizer:tapRecognizer];
-        
         _delegate = delegate;
-        
         _section = sectionNumber;   //передали номер секции
         
         //Имя человека в секции
@@ -47,9 +43,7 @@
         personLabel.font = [UIFont boldSystemFontOfSize:20.0];
         personLabel.textColor = [UIColor blackColor];
         [personLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:18.0]];
-        
         [self addSubview:personLabel];
-        //UIRectFill(personLabelFrame);
         _titleLabel = personLabel;
         //ends here
         
@@ -62,7 +56,6 @@
         personSpentTextLabel.font = [UIFont boldSystemFontOfSize:20.0];
         personSpentTextLabel.textColor = [UIColor grayColor];
         [personSpentTextLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:14.0]];
-        
         [self addSubview:personSpentTextLabel];
         //ends here
 
@@ -75,7 +68,6 @@
         personSpentSumLabel.font = [UIFont boldSystemFontOfSize:20.0];
         personSpentSumLabel.textColor = [UIColor redColor];
         [personSpentSumLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:14.0]];
-        
         [self addSubview:personSpentSumLabel];
         //ends here
         
@@ -88,7 +80,6 @@
         debtLabel.font = [UIFont boldSystemFontOfSize:20.0];
         debtLabel.textColor = [UIColor redColor];
         [debtLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:18.0]];
-        
         [self addSubview:debtLabel];
         //ends here
      
@@ -96,7 +87,6 @@
         self.layer.borderWidth = 0.5f;
         self.backgroundColor = [SHMAppearance defaultBackgroundColor];
     }
-    
     return self;
 }
 
@@ -109,11 +99,8 @@
 -(void) drawRect:(CGRect)rect
 {
     //для тестирования ввожу окантовывающие текст прямоугольники, больше ни для чего drawrect пока не нужен
-    
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
     CGRect personLabelFrame = self.bounds;
-    
     personLabelFrame.origin.x += 15.0;
     personLabelFrame.origin.y += 7.5;
     personLabelFrame.size.height = 25;
@@ -133,7 +120,6 @@
     [[UIColor blueColor] setStroke];
     
     CGContextStrokePath(context);
-
 }
 
 
@@ -141,6 +127,7 @@
 //здесь запускается функция открытия/закрытия списка
 {
     self.isOpened = !self.isOpened;
+    
     if(userAction){
         if (self.isOpened == YES){
             if([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]){
@@ -155,7 +142,6 @@
             }
         }
     }
-    
 }
 
 @end

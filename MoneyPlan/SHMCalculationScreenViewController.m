@@ -47,7 +47,7 @@
         CGFloat width = self.view.frame.size.width;
         
 #warning размеры таблицы не подгоняются нормально по высоте
-        CGFloat height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT-SHM_NAVIGATION_BAR_HEIGHT-SHM_STATUS_BAR_HEIGHT;
+        CGFloat height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT-SHM_NAVIGATION_BAR_HEIGHT-SHM_STATUS_BAR_HEIGHT-24;
         CGRect rect = CGRectMake(x, y, width, height);
         
         _calculationTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
@@ -188,24 +188,6 @@
     }
     return _numberOfRowsToShowForSection;
 }
-/*
--(NSArray *)arrayOfOpenedSectionsAtAppStart
-//метод подгружает число строк для каждой секции при старте приложения
-//Нужно использовать внутри numberOfRowsToShowForSection lazy inst. если при старте приложения
-//все секции должны быть открыты
-{
-    NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
-    
-    NSArray *keysFromListOfDebts = [self.listOfDebts allKeys];
-    for (NSString *key in keysFromListOfDebts)
-    {
-        NSDictionary *dict = [self.listOfDebts objectForKey:key];
-        NSNumber *num = [[NSNumber alloc]initWithInteger:dict.count];
-        [array addObject:num];
-    }
-    return array;
-}
- */
 
 - (void)viewDidLoad
 {
@@ -290,6 +272,7 @@
 //для фокуса на нее при открытии секции
 {
     NSInteger SectionIndex = [self.lastOpenedSection integerValue];
+#warning 4 - временное значение (сейчас ячеек 5). Потом надо будет переходить к последней в секции ячейке, наверное
     NSInteger RowIndex = 4;
     return [NSIndexPath indexPathForRow:RowIndex inSection:SectionIndex];
 }
@@ -319,62 +302,73 @@
 {
     //нужно закрыть единственную открытую секцию и затем открыть новую
     NSInteger previousOpenedSection = -1;   //если тут останется -1, все секции закрыты
-    for (NSInteger i = 0; i < [self.openedSectionsArray count]; i++)
-    {
+    for (NSInteger i = 0; i < [self.openedSectionsArray count]; i++){
         if ([[self.openedSectionsArray objectAtIndex:i]boolValue] == YES ) {
             previousOpenedSection = i; //запомнили открытую секцию. Работать будет только если секции при старте все закрыты! в этом методе закрывается лишь одна секция - нижняя из открытых
         }
     }
     
     NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
-
     if (previousOpenedSection > -1)
     {
-        for (NSInteger i = 0; i < [self.listOfDebts count]; i++)
-        {
+        SHMTableWithOpeningSectionsSectionView *headerView = [self.sectionViewsArray objectAtIndex:previousOpenedSection];
+
+        for (NSInteger i = 0; i < [self.listOfDebts count]; i++){
             [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:previousOpenedSection]];
         }
-        
-        if(previousOpenedSection!=sectionOpened){
-            SHMTableWithOpeningSectionsSectionView *headerView =[self.sectionViewsArray objectAtIndex:previousOpenedSection];
-            [self sectionHeaderView: headerView sectionClosed:previousOpenedSection];
-            [headerView toggleOpenWithUserAction:NO];
-        }
-    }
 
+        NSMutableArray *tempArray1 = [self.numberOfRowsToShowForSection mutableCopy];
+        NSInteger rowsNumberToDelete = [[tempArray1 objectAtIndex:previousOpenedSection] integerValue];
+        rowsNumberToDelete -= [indexPathsToDelete count];
+        NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToDelete];
+        [tempArray1 replaceObjectAtIndex:previousOpenedSection withObject:rows];
+        self.numberOfRowsToShowForSection = tempArray1;
+        //вносим изменения в массив открытых и закрытых секций
+        NSMutableArray *tempArray2 = [self.openedSectionsArray mutableCopy];
+        [tempArray2 replaceObjectAtIndex:previousOpenedSection withObject:[[NSNumber alloc] initWithBool:NO]];
+        self.openedSectionsArray = [tempArray2 copy];
+        
+        [headerView toggleOpenWithUserAction:NO];
+    }
+    
     //открываем секцию
     NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
     
-    for (NSInteger i = 0; i < [self.listOfDebts count]; i++)
-    {
+    for (NSInteger i = 0; i < [self.listOfDebts count]; i++){
         [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionOpened]];
     }
     
     UITableViewRowAnimation insertAnimation = UITableViewRowAnimationTop;
+    UITableViewRowAnimation deleteAnimation = UITableViewRowAnimationBottom;
     
     NSMutableArray *array = [self.numberOfRowsToShowForSection mutableCopy];
-    NSInteger rowsNumberToAdd = /*[[array objectAtIndex:sectionOpened] integerValue] +*/ [indexPathsToInsert count];
+    NSInteger rowsNumberToAdd = [indexPathsToInsert count];
     NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToAdd];
     
     [array replaceObjectAtIndex:sectionOpened withObject:rows];
     self.numberOfRowsToShowForSection = array;
-    
+
     // Apply the updates.
     [self.calculationTableView beginUpdates];
     [self.calculationTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
+    [self.calculationTableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
     [self.calculationTableView endUpdates];
     
     NSMutableArray *tempArray = [self.openedSectionsArray mutableCopy];
     [tempArray replaceObjectAtIndex:sectionOpened withObject:[[NSNumber alloc] initWithBool:YES]];
     self.openedSectionsArray = [tempArray copy];
+    
+    //запоминаем открытую секцию для фокусирования на ней
+    self.lastOpenedSection = [NSNumber numberWithInteger:sectionOpened];
+    [self performSelector:@selector(goToCell) withObject:nil afterDelay:0.0];   //фокусируемся
 }
 
 -(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionClosed:(NSInteger)sectionClosed
 //method launches for the section that was just closed by the user
 {
+    NSLog(@"TableViewController, sectionClosed(section=%d), Entered", sectionClosed);
     NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
-    for (NSInteger i = 0; i < [self.listOfDebts count]; i++)
-    {
+    for (NSInteger i = 0; i < [self.listOfDebts count]; i++){
         [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionClosed]];
     }
     
@@ -399,5 +393,6 @@
     [tempArray replaceObjectAtIndex:sectionClosed withObject:[[NSNumber alloc] initWithBool:NO]];
     self.openedSectionsArray = [tempArray copy];
 }
+
 
 @end
