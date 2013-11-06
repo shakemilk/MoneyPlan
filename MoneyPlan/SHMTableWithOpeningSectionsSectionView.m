@@ -63,17 +63,19 @@
         //starts here
         CGRect personSpentSumLabelFrame = CGRectMake(personSpentTextLabelFrame.origin.x + personSpentTextLabelFrame.size.width + 10.0, personSpentTextLabelFrame.origin.y, 80.0, personSpentTextLabelFrame.size.height);
         
-        UILabel *personSpentSumLabel = [[UILabel alloc] initWithFrame:personSpentSumLabelFrame];
-        personSpentSumLabel.text = @"1400р.";
-        personSpentSumLabel.font = [UIFont boldSystemFontOfSize:20.0];
-        personSpentSumLabel.textColor = [UIColor redColor];
-        [personSpentSumLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:14.0]];
-        [self addSubview:personSpentSumLabel];
+        _personSpentSumLabel = [[UILabel alloc] initWithFrame:personSpentSumLabelFrame];
+        _personSpentSumLabel.text = @"1400р.";
+        _personSpentSumLabel.font = [UIFont boldSystemFontOfSize:20.0];
+        _personSpentSumLabel.textColor = [UIColor redColor];
+        [_personSpentSumLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:14.0]];
+        [self addSubview:_personSpentSumLabel];
         //ends here
         
         //подпись, сколько он суммарно должен
         //starts here
-        CGRect debtLabelFrame = CGRectMake(self.bounds.size.width - 60.0, personLabelFrame.origin.y, 60.0, self.bounds.size.height - 15.0);
+        CGRect debtLabelFrame = CGRectMake(self.bounds.size.width - 60.0, personLabelFrame.origin.y
+                                           +20.0, 60.0, self.bounds.size.height - 35.0);
+#warning разметка примерная, числовая. Поправить на автоматическую
         
         UILabel *debtLabel = [[UILabel alloc] initWithFrame:debtLabelFrame];
         debtLabel.text = @"300р.";
@@ -82,7 +84,20 @@
         [debtLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:18.0]];
         [self addSubview:debtLabel];
         //ends here
-     
+        
+        CGRect stateOfDebtLabelFrame = CGRectMake(self.bounds.size.width - 70.0, personLabelFrame.origin.y, 70.0,
+                                                  20.0);
+        UILabel *stateOfDebtLabel = [[UILabel alloc] initWithFrame:stateOfDebtLabelFrame];
+        stateOfDebtLabel.text = @"Должен:";
+        stateOfDebtLabel.font = [UIFont boldSystemFontOfSize:20.0];
+        stateOfDebtLabel.textColor = [UIColor grayColor];
+        [stateOfDebtLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:16.0]];
+        [self addSubview:stateOfDebtLabel];
+#warning state должен изменяться, нужно сделать его свойством
+        //ends here
+
+        
+        
         //self.layer.borderColor = [UIColor blackColor].CGColor;
         self.layer.borderWidth = 0.5f;
         self.backgroundColor = [SHMAppearance defaultBackgroundColor];
@@ -96,40 +111,13 @@
 }
 
 
--(void) drawRect:(CGRect)rect
-{
-    //для тестирования ввожу окантовывающие текст прямоугольники, больше ни для чего drawrect пока не нужен
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGRect personLabelFrame = self.bounds;
-    personLabelFrame.origin.x += 15.0;
-    personLabelFrame.origin.y += 7.5;
-    personLabelFrame.size.height = 25;
-    personLabelFrame.size.width = 200;
-    CGContextAddRect(context, personLabelFrame);
-    
-    CGRect personSpentTextLabelFrame = CGRectMake(personLabelFrame.origin.x + 15.0, personLabelFrame.origin.y + personLabelFrame.size.height, 90, self.bounds.size.height - personLabelFrame.size.height - 15.0);
-    CGContextAddRect(context, personSpentTextLabelFrame);
-
-    CGRect personSpentSumLabelFrame = CGRectMake(personSpentTextLabelFrame.origin.x + personSpentTextLabelFrame.size.width + 10.0, personSpentTextLabelFrame.origin.y, 80.0, personSpentTextLabelFrame.size.height);
-    CGContextAddRect(context, personSpentSumLabelFrame);
-
-    CGRect debtLabelFrame = CGRectMake(self.bounds.size.width - 60.0, personLabelFrame.origin.y, 60.0, self.bounds.size.height - 15.0);
-    CGContextAddRect(context, debtLabelFrame);
-
-    CGContextSetLineWidth(context, 0.5);
-    [[UIColor blueColor] setStroke];
-    
-    CGContextStrokePath(context);
-}
-
-
 -(void) toggleOpenWithUserAction:(BOOL)userAction
 //здесь запускается функция открытия/закрытия списка
 {
     self.isOpened = !self.isOpened;
     
     if(userAction){
-        if (self.isOpened == YES){
+        if (self.isOpened){
             if([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]){
                 [self.delegate sectionHeaderView:self sectionOpened:self.section];
                 //self.layer.borderWidth = 1.0f;  //меняем ширину границы, может быть не нужно. Все равно видно

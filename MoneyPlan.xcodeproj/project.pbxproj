@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		271B79FC17871213008427F0 /* names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 271B79FB17871213008427F0 /* names.plist */; };
 		271B7A0517895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B7A0417895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m */; };
-		279B97FE179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 279B97FD179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.m */; };
+		27448CF8182A4FE600A794FF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27448CF7182A4FE600A794FF /* QuartzCore.framework */; };
+		279B97FE179EE1CB00BE1D0A /* SHMCalculationScreenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 279B97FD179EE1CB00BE1D0A /* SHMCalculationScreenTableViewCell.m */; };
 		279F616617C8D6D200674081 /* SHMFolksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279F616517C8D6D200674081 /* SHMFolksListViewController.m */; };
+		27BB5EDA1826A80A00659485 /* SHMCalculationScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27BB5ED91826A80A00659485 /* SHMCalculationScreenTableViewCell.xib */; };
 		27BC4BAF1795215E006DD809 /* SHMCalculationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BC4BAE1795215E006DD809 /* SHMCalculationScreenViewController.m */; };
 		74EC6F481783FF3E0066D122 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EC6F471783FF3E0066D122 /* UIKit.framework */; };
 		74EC6F4A1783FF3E0066D122 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EC6F491783FF3E0066D122 /* Foundation.framework */; };
@@ -38,10 +40,12 @@
 		271B79FB17871213008427F0 /* names.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = names.plist; sourceTree = "<group>"; };
 		271B7A0317895881008427F0 /* SHMTableWithOpeningSectionsSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMTableWithOpeningSectionsSectionView.h; sourceTree = "<group>"; };
 		271B7A0417895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMTableWithOpeningSectionsSectionView.m; sourceTree = "<group>"; };
-		279B97FC179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMCalculationScreenTableCell.h; sourceTree = "<group>"; };
-		279B97FD179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMCalculationScreenTableCell.m; sourceTree = "<group>"; };
+		27448CF7182A4FE600A794FF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		279B97FC179EE1CB00BE1D0A /* SHMCalculationScreenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMCalculationScreenTableViewCell.h; sourceTree = "<group>"; };
+		279B97FD179EE1CB00BE1D0A /* SHMCalculationScreenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMCalculationScreenTableViewCell.m; sourceTree = "<group>"; };
 		279F616417C8D6D200674081 /* SHMFolksListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMFolksListViewController.h; sourceTree = "<group>"; };
 		279F616517C8D6D200674081 /* SHMFolksListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMFolksListViewController.m; sourceTree = "<group>"; };
+		27BB5ED91826A80A00659485 /* SHMCalculationScreenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHMCalculationScreenTableViewCell.xib; sourceTree = "<group>"; };
 		27BC4BAD1795215E006DD809 /* SHMCalculationScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMCalculationScreenViewController.h; sourceTree = "<group>"; };
 		27BC4BAE1795215E006DD809 /* SHMCalculationScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMCalculationScreenViewController.m; sourceTree = "<group>"; };
 		74EC6F441783FF3E0066D122 /* MoneyPlan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyPlan.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27448CF8182A4FE600A794FF /* QuartzCore.framework in Frameworks */,
 				74EC6F481783FF3E0066D122 /* UIKit.framework in Frameworks */,
 				74EC6F4A1783FF3E0066D122 /* Foundation.framework in Frameworks */,
 				74EC6F4C1783FF3E0066D122 /* CoreGraphics.framework in Frameworks */,
@@ -104,8 +109,9 @@
 				271B7A0417895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m */,
 				27BC4BAD1795215E006DD809 /* SHMCalculationScreenViewController.h */,
 				27BC4BAE1795215E006DD809 /* SHMCalculationScreenViewController.m */,
-				279B97FC179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.h */,
-				279B97FD179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.m */,
+				279B97FC179EE1CB00BE1D0A /* SHMCalculationScreenTableViewCell.h */,
+				279B97FD179EE1CB00BE1D0A /* SHMCalculationScreenTableViewCell.m */,
+				27BB5ED91826A80A00659485 /* SHMCalculationScreenTableViewCell.xib */,
 				86EA4C66182188BC00B87A82 /* SHMCalculationScreenViewController.xib */,
 			);
 			name = CalculationScreen;
@@ -141,6 +147,7 @@
 		74EC6F461783FF3E0066D122 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				27448CF7182A4FE600A794FF /* QuartzCore.framework */,
 				74EC6F471783FF3E0066D122 /* UIKit.framework */,
 				74EC6F491783FF3E0066D122 /* Foundation.framework */,
 				74EC6F4B1783FF3E0066D122 /* CoreGraphics.framework */,
@@ -265,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27BB5EDA1826A80A00659485 /* SHMCalculationScreenTableViewCell.xib in Resources */,
 				74EC6F521783FF3E0066D122 /* InfoPlist.strings in Resources */,
 				86EA4C651821879800B87A82 /* SHMFolksListViewController.xib in Resources */,
 				86EA4C67182188BC00B87A82 /* SHMCalculationScreenViewController.xib in Resources */,
@@ -294,7 +302,7 @@
 				86EA4C6A18218BB800B87A82 /* SHMPartyCollectionViewCell.m in Sources */,
 				271B7A0517895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m in Sources */,
 				27BC4BAF1795215E006DD809 /* SHMCalculationScreenViewController.m in Sources */,
-				279B97FE179EE1CB00BE1D0A /* SHMCalculationScreenTableCell.m in Sources */,
+				279B97FE179EE1CB00BE1D0A /* SHMCalculationScreenTableViewCell.m in Sources */,
 				279F616617C8D6D200674081 /* SHMFolksListViewController.m in Sources */,
 				86EA4C631821834B00B87A82 /* SHMTabBarController.m in Sources */,
 			);

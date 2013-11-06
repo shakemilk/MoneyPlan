@@ -8,7 +8,7 @@
 
 #import "SHMCalculationScreenViewController.h"
 #import "SHMTableWithOpeningSectionsSectionView.h"
-#import "SHMCalculationScreenTableCell.h"
+#import "SHMCalculationScreenTableViewCell.h"
 #import "SHMAppearance.h"
 
 @interface SHMCalculationScreenViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
@@ -62,8 +62,10 @@
         _calculationTableView.delegate = self;
         _calculationTableView.dataSource = self;
         
-        [_calculationTableView registerClass:[SHMCalculationScreenTableCell class] forCellReuseIdentifier:@"Cell"];
-        [_calculationTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        //[_calculationTableView registerClass:[SHMCalculationScreenTableViewCell class] forCellReuseIdentifier:@"Cell"];
+        //[_calculationTableView registerNib:[UINib nibWithNibName:@"SHMCalculationScreenTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"Cell"];
+        [_calculationTableView registerClass:[SHMCalculationScreenTableViewCell class] forCellReuseIdentifier:@"Cell"];
+        //[_calculationTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [_calculationTableView setBackgroundColor:[SHMAppearance defaultBackgroundColor]];
     }
     
@@ -241,15 +243,16 @@
     return debt;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = @"Cell";
-    SHMCalculationScreenTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    SHMCalculationScreenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     //тут нужна проверка на пустоту namesOfPeopleArray
-    cell.textLabel.text = [[self.listOfDebts allKeys] objectAtIndex:indexPath.row];
     NSNumber *debt = [self findDebtForIndexPath:indexPath inTableView:tableView];
-    cell.detailTextLabel.text = [debt stringValue];
+    
+    [cell configureWithPersonName:[[self.listOfDebts allKeys] objectAtIndex:indexPath.row] andDebt:[debt stringValue]];
+    
     
     return cell;
 }
@@ -366,7 +369,6 @@
 -(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionClosed:(NSInteger)sectionClosed
 //method launches for the section that was just closed by the user
 {
-    NSLog(@"TableViewController, sectionClosed(section=%d), Entered", sectionClosed);
     NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < [self.listOfDebts count]; i++){
         [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionClosed]];
