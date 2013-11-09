@@ -1,2 +1,2 @@
-platform :ios, '6.1'
+platform :ios, :deployment_target => '6.1'
 pod 'HockeySDK'
