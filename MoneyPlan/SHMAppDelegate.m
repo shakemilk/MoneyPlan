@@ -9,11 +9,21 @@
 #import "SHMAppDelegate.h"
 #import "SHMPartiesViewController.h"
 
+#ifndef CONFIGURATION_Debug
+#import <HockeySDK/HockeySDK.h>
+#endif
+
 @implementation SHMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+#ifndef CONFIGURATION_Debug
+    BITHockeyManager *hockeyManager = [BITHockeyManager sharedHockeyManager];
+    [hockeyManager configureWithIdentifier:@"b88227f21712523bf43e7e02d590d83c"
+                                  delegate:nil];
+    [hockeyManager startManager];
+#endif
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     SHMPartiesViewController *controller = [[SHMPartiesViewController alloc] initWithNibName:nil bundle:nil];
     self.window.rootViewController = controller;
