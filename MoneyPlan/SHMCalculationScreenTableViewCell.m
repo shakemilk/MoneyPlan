@@ -16,11 +16,26 @@
 {
  UINib *nib = [UINib nibWithNibName:@"SHMCalculationScreenTableViewCell" bundle:[NSBundle mainBundle]];
  self = [[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
+    
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    
+    shapeLayer.backgroundColor = [UIColor grayColor].CGColor;
+    shapeLayer.frame = CGRectMake(0, 0, 5.0, self.frame.size.height);
+#warning линий надо по одной на каждую ячейку и для верхней не нужна верхняя линия
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathMoveToPoint(path, NULL, 20, 0);
+    CGPathAddLineToPoint(path, NULL, 360, 0);
+    CGPathMoveToPoint(path, NULL, 20, 44);
+    CGPathAddLineToPoint(path, NULL, 360, 44);
+#warning проверить размеры линий
+    [shapeLayer setStrokeColor:[[UIColor grayColor] CGColor]];
+    [shapeLayer setLineWidth:0.4f];
 
-    CALayer *sublayer = [CALayer layer];
-    sublayer.backgroundColor = [UIColor grayColor].CGColor;
-    sublayer.frame = CGRectMake(0, 0, 5.0, self.frame.size.height);
-    [self.layer addSublayer:sublayer];
+    [shapeLayer setPath:path];
+    CGPathRelease(path);
+    
+    //[self.layer addSublayer:sublayer];
+    [self.layer addSublayer:shapeLayer];
     
  return self;
 }

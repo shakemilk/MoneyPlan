@@ -98,7 +98,7 @@
 
         
         
-        //self.layer.borderColor = [UIColor blackColor].CGColor;
+        self.layer.borderColor = [UIColor grayColor].CGColor;
         self.layer.borderWidth = 0.5f;
         self.backgroundColor = [SHMAppearance defaultBackgroundColor];
     }
