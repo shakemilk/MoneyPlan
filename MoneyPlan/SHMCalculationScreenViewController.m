@@ -8,8 +8,9 @@
 
 #import "SHMCalculationScreenViewController.h"
 #import "SHMTableWithOpeningSectionsSectionView.h"
-#import "SHMCalculationScreenTableCell.h"
+#import "SHMCalculationScreenTableViewCell.h"
 #import "SHMAppearance.h"
+#import <sys/utsname.h>
 
 @interface SHMCalculationScreenViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
@@ -17,14 +18,29 @@
 @property (nonatomic, strong) NSDictionary *listOfDebts;    //тут список долгов, кто кому что должен
 @property (nonatomic, strong) NSArray *debtsArray;  //массив долгов
 @property (nonatomic, strong) NSArray *openedSectionsArray; //YES - секция открыта, NO - закрыта
+@property (nonatomic, weak) NSNumber *lastOpenedSection; //последняя открытая секция
+@property (nonatomic, strong) NSMutableArray* sectionViewsArray; //массив из элементов SHMCalculationScreenSectionInfo, в которых хранятся указатели на UIView секции.
+
 
 @end
 
 @implementation SHMCalculationScreenViewController
 
-#define SHM_HEADER_HEIGHT 45
-#define SHM_ROW_HEIGHT 45
-#define SHM_SPACE_FOR_TABBAR 49     //высота таб бара
+#define SHM_HEADER_HEIGHT 64
+#define SHM_ROW_HEIGHT 44
+#define SHM_TAB_BAR_HEIGHT 49     //странные размеры, почему-то не сходятся
+#define SHM_NAVIGATION_BAR_HEIGHT 44
+#define SHM_STATUS_BAR_HEIGHT 20
+
+
+NSString* machineName()
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
@@ -40,7 +56,17 @@
         CGFloat x = 0.0;
         CGFloat y = 0.0;
         CGFloat width = self.view.frame.size.width;
-        CGFloat height = self.view.frame.size.height - SHM_SPACE_FOR_TABBAR - 45; //без 45 при полностью раскрытых секциях сверху и закрытой последней секции нельзя увидеть ее заголовок. на нем не тормозится.
+        
+        
+        NSString *platform = machineName();
+        
+#warning размеры таблицы не подгоняются нормально по высоте. Переделать под autolayout.
+        CGFloat height;
+        if ([platform isEqualToString:@"iPhone4,1"])
+             height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT-SHM_NAVIGATION_BAR_HEIGHT-SHM_STATUS_BAR_HEIGHT-24;
+        else
+             height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT;
+        
         CGRect rect = CGRectMake(x, y, width, height);
         
         _calculationTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
@@ -55,8 +81,9 @@
         _calculationTableView.delegate = self;
         _calculationTableView.dataSource = self;
         
-        [_calculationTableView registerClass:[SHMCalculationScreenTableCell class] forCellReuseIdentifier:@"Cell"];
-        
+        [_calculationTableView registerClass:[SHMCalculationScreenTableViewCell class] forCellReuseIdentifier:@"Cell"];
+        [_calculationTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        [_calculationTableView setBackgroundColor:[SHMAppearance defaultBackgroundColor]];
     }
     
     return _calculationTableView;
@@ -69,13 +96,33 @@
         NSMutableArray *tempArray = [[NSMutableArray alloc] initWithObjects: nil];
         for (NSInteger i = 0; i < [self.listOfDebts count]; ++i)
         {
-            [tempArray addObject:[[NSNumber alloc] initWithBool:YES]];
+            [tempArray addObject:[[NSNumber alloc] initWithBool:NO]];
         }
         _openedSectionsArray = [tempArray copy];
     }
     return _openedSectionsArray;
 }
- 
+
+-(NSMutableArray *) sectionViewsArray
+//нужно забить нулями по количеству секций
+//потом нули в коде будут заменены на view секций
+//надо будет потом предусмотреть возможность добавления новых людей,
+//что ведет к добывлению секций и расширению массива
+#warning впоследствии возможна сортировка этого массива (сортировка людей в списке). Надо будет проверить
+{
+    if (_sectionViewsArray == nil){
+        _sectionViewsArray = [[NSMutableArray alloc] init];
+        
+        NSInteger NumberOfSections = [self.listOfDebts count];
+        for (NSInteger i = 0; i < NumberOfSections; ++i)
+        {
+            [_sectionViewsArray insertObject:[[NSNull alloc] init] atIndex:i];
+        }
+    }
+    
+    return _sectionViewsArray;
+}
+
 
 -(NSDictionary *) deleteElementsWithZeroDebtFromDictionary: (NSDictionary *) dictionary
 //метод удаляет элементы с пустыми значениями из dictionary
@@ -150,12 +197,10 @@
     if(!_numberOfRowsToShowForSection)
     {
         NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:nil];
-        
         NSArray *keysFromListOfDebts = [self.listOfDebts allKeys];
         for (NSString *key in keysFromListOfDebts)
         {
-            NSDictionary *dict = [self.listOfDebts objectForKey:key];
-            NSNumber *num = [[NSNumber alloc]initWithInteger:dict.count];
+            NSNumber *num = [[NSNumber alloc]initWithInteger:0];
             [array addObject:num];
         }
         _numberOfRowsToShowForSection = array;
@@ -195,7 +240,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[self.numberOfRowsToShowForSection objectAtIndex:section] integerValue]; //тест вообще надо следить чтоб там NSInteger был
+    return [[self.numberOfRowsToShowForSection objectAtIndex:section] integerValue]; //вообще надо следить, наверное, чтоб там NSInteger был
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -215,30 +260,53 @@
     return debt;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = @"Cell";
-    SHMCalculationScreenTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    SHMCalculationScreenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     //тут нужна проверка на пустоту namesOfPeopleArray
-    cell.textLabel.text = [[self.listOfDebts allKeys] objectAtIndex:indexPath.row];
     NSNumber *debt = [self findDebtForIndexPath:indexPath inTableView:tableView];
-    cell.detailTextLabel.text = [debt stringValue];
+    
+    [cell configureWithPersonName:[[self.listOfDebts allKeys] objectAtIndex:indexPath.row] andDebt:[debt stringValue]];
+    
     
     return cell;
 }
 
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+-(SHMTableWithOpeningSectionsSectionView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     //lazily instatniate headers    
     SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.calculationTableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[[self.listOfDebts allKeys] objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
+    [self.sectionViewsArray replaceObjectAtIndex:section withObject:sectionHeader];
     
     return sectionHeader;
 }
 
+#pragma mark -
+#pragma mark Focus at chosen cell
 
-#pragma mark - Table view delegate
+-(NSIndexPath *)firstIndexPathInOpenedSection
+//поиск строки в таблице
+//для фокуса на нее при открытии секции
+{
+    NSInteger SectionIndex = [self.lastOpenedSection integerValue];
+#warning 4 - временное значение (сейчас ячеек 5). Потом надо будет переходить к последней в секции ячейке, наверное
+    NSInteger RowIndex = 4;
+    return [NSIndexPath indexPathForRow:RowIndex inSection:SectionIndex];
+}
+
+-(void)goToCell
+//автоматический скролл к нужной ячейке
+{
+    NSIndexPath *certainIndexPath = [self firstIndexPathInOpenedSection];
+    [self.calculationTableView scrollToRowAtIndexPath:certainIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
+
+#pragma mark -
+#pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -252,38 +320,74 @@
 -(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionOpened:(NSInteger)sectionOpened
 //method launches for the section that was just opened by the user
 {
+    //нужно закрыть единственную открытую секцию и затем открыть новую
+    NSInteger previousOpenedSection = -1;   //если тут останется -1, все секции закрыты
+    for (NSInteger i = 0; i < [self.openedSectionsArray count]; i++){
+        if ([[self.openedSectionsArray objectAtIndex:i]boolValue] == YES ) {
+            previousOpenedSection = i; //запомнили открытую секцию. Работать будет только если секции при старте все закрыты! в этом методе закрывается лишь одна секция - нижняя из открытых
+        }
+    }
+    
+    NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
+    if (previousOpenedSection > -1)
+    {
+        SHMTableWithOpeningSectionsSectionView *headerView = [self.sectionViewsArray objectAtIndex:previousOpenedSection];
+
+        for (NSInteger i = 0; i < [self.listOfDebts count]; i++){
+            [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:previousOpenedSection]];
+        }
+
+        NSMutableArray *tempArray1 = [self.numberOfRowsToShowForSection mutableCopy];
+        NSInteger rowsNumberToDelete = [[tempArray1 objectAtIndex:previousOpenedSection] integerValue];
+        rowsNumberToDelete -= [indexPathsToDelete count];
+        NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToDelete];
+        [tempArray1 replaceObjectAtIndex:previousOpenedSection withObject:rows];
+        self.numberOfRowsToShowForSection = tempArray1;
+        //вносим изменения в массив открытых и закрытых секций
+        NSMutableArray *tempArray2 = [self.openedSectionsArray mutableCopy];
+        [tempArray2 replaceObjectAtIndex:previousOpenedSection withObject:[[NSNumber alloc] initWithBool:NO]];
+        self.openedSectionsArray = [tempArray2 copy];
+        
+        [headerView toggleOpenWithUserAction:NO];
+    }
+    
+    //открываем секцию
     NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
     
-    for (NSInteger i = 0; i < [self.listOfDebts count]; i++)
-    {
+    for (NSInteger i = 0; i < [self.listOfDebts count]; i++){
         [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:sectionOpened]];
     }
     
     UITableViewRowAnimation insertAnimation = UITableViewRowAnimationTop;
+    UITableViewRowAnimation deleteAnimation = UITableViewRowAnimationBottom;
     
     NSMutableArray *array = [self.numberOfRowsToShowForSection mutableCopy];
-    NSInteger rowsNumberToAdd = [[array objectAtIndex:sectionOpened] integerValue] + [indexPathsToInsert count];
+    NSInteger rowsNumberToAdd = [indexPathsToInsert count];
     NSNumber *rows = [[NSNumber alloc] initWithInteger:rowsNumberToAdd];
     
     [array replaceObjectAtIndex:sectionOpened withObject:rows];
     self.numberOfRowsToShowForSection = array;
-    
+
     // Apply the updates.
     [self.calculationTableView beginUpdates];
     [self.calculationTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
+    [self.calculationTableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
     [self.calculationTableView endUpdates];
     
     NSMutableArray *tempArray = [self.openedSectionsArray mutableCopy];
     [tempArray replaceObjectAtIndex:sectionOpened withObject:[[NSNumber alloc] initWithBool:YES]];
     self.openedSectionsArray = [tempArray copy];
+    
+    //запоминаем открытую секцию для фокусирования на ней
+    self.lastOpenedSection = [NSNumber numberWithInteger:sectionOpened];
+    [self performSelector:@selector(goToCell) withObject:nil afterDelay:0.1];   //фокусируемся
 }
 
 -(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionClosed:(NSInteger)sectionClosed
 //method launches for the section that was just closed by the user
 {
     NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
-    for (NSInteger i = 0; i < [self.listOfDebts count]; i++)
-    {
+    for (NSInteger i = 0; i < [self.listOfDebts count]; i++){
         [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:sectionClosed]];
     }
     
@@ -308,5 +412,6 @@
     [tempArray replaceObjectAtIndex:sectionClosed withObject:[[NSNumber alloc] initWithBool:NO]];
     self.openedSectionsArray = [tempArray copy];
 }
+
 
 @end

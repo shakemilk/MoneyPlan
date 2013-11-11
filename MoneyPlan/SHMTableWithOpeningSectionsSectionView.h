@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-
+#import "SHMAppearance.h"
 
 @protocol SHMTableWithOpeningSectionsSectionViewDelegate;
 
@@ -17,6 +17,10 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, assign) NSInteger section;    //а зачем assign?
 @property (nonatomic, weak) id <SHMTableWithOpeningSectionsSectionViewDelegate> delegate;
+@property (atomic) BOOL isOpened;   // открыта или закрыта секция
+
+@property (nonatomic, strong) IBOutlet UILabel *personSpentSumLabel;    //сколько человек всего потратил
+
 
 -(id)initWithFrame:(CGRect)frame title:(NSString*)title section:(NSInteger)sectionNumber state:(BOOL)isOpened delegate:(id <SHMTableWithOpeningSectionsSectionViewDelegate>)delegate;
 -(void) toggleOpenWithUserAction:(BOOL)userAction;
