@@ -10,6 +10,7 @@
 #import "SHMTableWithOpeningSectionsSectionView.h"
 #import "SHMCalculationScreenTableViewCell.h"
 #import "SHMAppearance.h"
+#import <sys/utsname.h>
 
 @interface SHMCalculationScreenViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
@@ -31,6 +32,16 @@
 #define SHM_NAVIGATION_BAR_HEIGHT 44
 #define SHM_STATUS_BAR_HEIGHT 20
 
+
+NSString* machineName()
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         self.tabBarItem.title = @"Calculations";
@@ -46,8 +57,16 @@
         CGFloat y = 0.0;
         CGFloat width = self.view.frame.size.width;
         
-#warning размеры таблицы не подгоняются нормально по высоте
-        CGFloat height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT-SHM_NAVIGATION_BAR_HEIGHT-SHM_STATUS_BAR_HEIGHT-24;
+        
+        NSString *platform = machineName();
+        
+#warning размеры таблицы не подгоняются нормально по высоте. Переделать под autolayout.
+        CGFloat height;
+        if ([platform isEqualToString:@"iPhone4,1"])
+             height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT-SHM_NAVIGATION_BAR_HEIGHT-SHM_STATUS_BAR_HEIGHT-24;
+        else
+             height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT;
+        
         CGRect rect = CGRectMake(x, y, width, height);
         
         _calculationTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
@@ -361,7 +380,7 @@
     
     //запоминаем открытую секцию для фокусирования на ней
     self.lastOpenedSection = [NSNumber numberWithInteger:sectionOpened];
-    [self performSelector:@selector(goToCell) withObject:nil afterDelay:0.0];   //фокусируемся
+    [self performSelector:@selector(goToCell) withObject:nil afterDelay:0.1];   //фокусируемся
 }
 
 -(void)sectionHeaderView:(SHMTableWithOpeningSectionsSectionView *)sectionHeaderView sectionClosed:(NSInteger)sectionClosed
