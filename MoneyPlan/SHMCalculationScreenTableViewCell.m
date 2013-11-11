@@ -28,7 +28,7 @@
     CGPathMoveToPoint(path, NULL, 20, 44);
     CGPathAddLineToPoint(path, NULL, 360, 44);
 #warning проверить размеры линий
-    [shapeLayer setStrokeColor:[[UIColor grayColor] CGColor]];
+    [shapeLayer setStrokeColor:[[UIColor colorWithRed:199.f/255 green:199.f/255 blue:205.f/255 alpha:1.f] CGColor]];
     [shapeLayer setLineWidth:0.4f];
 
     [shapeLayer setPath:path];
