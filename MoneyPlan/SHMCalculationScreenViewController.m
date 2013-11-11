@@ -62,10 +62,8 @@
         _calculationTableView.delegate = self;
         _calculationTableView.dataSource = self;
         
-        //[_calculationTableView registerClass:[SHMCalculationScreenTableViewCell class] forCellReuseIdentifier:@"Cell"];
-        //[_calculationTableView registerNib:[UINib nibWithNibName:@"SHMCalculationScreenTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"Cell"];
         [_calculationTableView registerClass:[SHMCalculationScreenTableViewCell class] forCellReuseIdentifier:@"Cell"];
-        //[_calculationTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        [_calculationTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [_calculationTableView setBackgroundColor:[SHMAppearance defaultBackgroundColor]];
     }
     
