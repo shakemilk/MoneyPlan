@@ -26,14 +26,9 @@
     return self;
 }
 
-//-(void)prepareForReuse {
-//    self.dateLabel.text = @"";
-//    self.descriptionLabel.text = @"";
-//}
-
--(void)configureWithEventName:(NSString *)name description:(NSString *)description {
-    self.dateLabel.text = name;
-    self.descriptionLabel.text = description;
+-(void)configureWithEventName:(NSString *)name dateString:(NSString *)dateString {
+    self.dateLabel.text = dateString;
+    self.descriptionLabel.text = name;
 }
 
 @end

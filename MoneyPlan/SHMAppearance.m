@@ -17,4 +17,11 @@
                            alpha:1.f];
 }
 
++ (UIColor *)rosyTitleColor {
+    return [UIColor colorWithRed:240.f/255
+                           green:81.f/255
+                            blue:101.f/255
+                           alpha:1.f];
+}
+
 @end

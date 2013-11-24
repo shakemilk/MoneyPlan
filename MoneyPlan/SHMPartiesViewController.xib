@@ -16,20 +16,28 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vacation Money Plan" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgO-If-L2Z">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vacation Money Plan" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgO-If-L2Z">
                     <rect key="frame" x="162" y="70" width="151" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="151" id="V3e-Hm-fVU"/>
+                        <constraint firstAttribute="height" constant="18" id="V5O-es-UYs"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="События" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDr-Er-K35">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="События" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDr-Er-K35">
                     <rect key="frame" x="93" y="20" width="220" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="220" id="Mhd-C9-dU6"/>
+                        <constraint firstAttribute="height" constant="50" id="y57-OH-VtE"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="55"/>
                     <color key="textColor" red="0.94117647059999998" green="0.31764705879999999" blue="0.39607843139999999" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" delaysContentTouches="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xjX-xW-8DA">
+                <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xjX-xW-8DA">
                     <rect key="frame" x="0.0" y="116" width="320" height="452"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -37,7 +45,7 @@
                         <size key="itemSize" width="95" height="100"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                        <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="10"/>
                     </collectionViewFlowLayout>
                     <cells/>
                     <connections>
@@ -47,6 +55,16 @@
                 </collectionView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="mgO-If-L2Z" firstAttribute="top" secondItem="uDr-Er-K35" secondAttribute="bottom" id="16h-bF-Zdt"/>
+                <constraint firstItem="uDr-Er-K35" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" id="7aX-oW-ohZ"/>
+                <constraint firstItem="xjX-xW-8DA" firstAttribute="top" secondItem="mgO-If-L2Z" secondAttribute="bottom" constant="28" id="NIr-l7-2E5"/>
+                <constraint firstAttribute="bottom" secondItem="xjX-xW-8DA" secondAttribute="bottom" id="TDs-6c-Pp4"/>
+                <constraint firstAttribute="trailing" secondItem="xjX-xW-8DA" secondAttribute="trailing" id="dfD-Oe-1pU"/>
+                <constraint firstAttribute="trailing" secondItem="mgO-If-L2Z" secondAttribute="trailing" constant="7" id="kpb-hC-YZG"/>
+                <constraint firstItem="xjX-xW-8DA" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="lT2-Qs-uMr"/>
+                <constraint firstAttribute="trailing" secondItem="uDr-Er-K35" secondAttribute="trailing" constant="7" id="qL9-C8-mY3"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
