@@ -12,6 +12,8 @@
 #import "SHMAppearance.h"
 #import <sys/utsname.h>
 
+static const CGFloat kSHMTableViewSectionHeight = 64.f;
+
 @interface SHMCalculationScreenViewController () <SHMTableWithOpeningSectionsSectionViewDelegate>
 
 @property (nonatomic, strong) NSArray *numberOfRowsToShowForSection;    //number of rows for each section
@@ -21,26 +23,9 @@
 @property (nonatomic, weak) NSNumber *lastOpenedSection; //последняя открытая секция
 @property (nonatomic, strong) NSMutableArray* sectionViewsArray; //массив из элементов SHMCalculationScreenSectionInfo, в которых хранятся указатели на UIView секции.
 
-
 @end
 
 @implementation SHMCalculationScreenViewController
-
-#define SHM_HEADER_HEIGHT 64
-#define SHM_ROW_HEIGHT 44
-#define SHM_TAB_BAR_HEIGHT 49     //странные размеры, почему-то не сходятся
-#define SHM_NAVIGATION_BAR_HEIGHT 44
-#define SHM_STATUS_BAR_HEIGHT 20
-
-
-NSString* machineName()
-{
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
-    return [NSString stringWithCString:systemInfo.machine
-                              encoding:NSUTF8StringEncoding];
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
@@ -50,23 +35,26 @@ NSString* machineName()
     return self;
 }
 
--(UITableView *) setCalculationTableView{
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
     
-    _calculationTableView.rowHeight = SHM_ROW_HEIGHT;
-    _calculationTableView.sectionHeaderHeight = SHM_HEADER_HEIGHT;
-    _calculationTableView.scrollEnabled = YES;
-    _calculationTableView.showsVerticalScrollIndicator = YES;
-    _calculationTableView.userInteractionEnabled = YES;
-    _calculationTableView.bounces = YES;
-        
-    _calculationTableView.delegate = self;
-    _calculationTableView.dataSource = self;
-        
-    [_calculationTableView registerClass:[SHMCalculationScreenTableViewCell class] forCellReuseIdentifier:@"Cell"];
-    [_calculationTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [_calculationTableView setBackgroundColor:[SHMAppearance defaultBackgroundColor]];
+    [self.calculationTableView registerClass:[SHMCalculationScreenTableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.calculationTableView setBackgroundColor:[SHMAppearance defaultBackgroundColor]];
     
-    return _calculationTableView;
+    self.view.backgroundColor = [SHMAppearance defaultBackgroundColor];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.tabBarController.navigationItem.title = @"Calculations";
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 -(NSArray *) openedSectionsArray
@@ -188,29 +176,6 @@ NSString* machineName()
     return _numberOfRowsToShowForSection;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    //[self.view addSubview:self.calculationTableView];
-    
-    [self setCalculationTableView];
-    
-    self.view.backgroundColor = [SHMAppearance defaultBackgroundColor];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    self.tabBarController.navigationItem.title = @"Calculations";
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -260,10 +225,26 @@ NSString* machineName()
 -(SHMTableWithOpeningSectionsSectionView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     //lazily instatniate headers    
-    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.calculationTableView.bounds.size.width, SHM_HEADER_HEIGHT) title:[[self.listOfDebts allKeys] objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
+    SHMTableWithOpeningSectionsSectionView *sectionHeader = [[SHMTableWithOpeningSectionsSectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.calculationTableView.bounds.size.width, kSHMTableViewSectionHeight) title:[[self.listOfDebts allKeys] objectAtIndex:section] section:section state:[[self.openedSectionsArray objectAtIndex:section] boolValue] delegate:self];
     [self.sectionViewsArray replaceObjectAtIndex:section withObject:sectionHeader];
     
     return sectionHeader;
+}
+
+#pragma mark -
+#pragma mark Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44.f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return kSHMTableViewSectionHeight;
 }
 
 #pragma mark -
@@ -285,16 +266,6 @@ NSString* machineName()
     NSIndexPath *certainIndexPath = [self firstIndexPathInOpenedSection];
     [self.calculationTableView scrollToRowAtIndexPath:certainIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
-
-
-#pragma mark -
-#pragma mark Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
 
 #pragma mark -
 #pragma mark SectionViewDelegate Methods
