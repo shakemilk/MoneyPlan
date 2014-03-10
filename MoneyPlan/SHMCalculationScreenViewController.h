@@ -10,6 +10,7 @@
 
 @interface SHMCalculationScreenViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) IBOutlet UITableView *calculationTableView;
+//@property (nonatomic, strong) IBOutlet UITableView *calculationTableView;
+@property (strong, nonatomic) IBOutlet UITableView *calculationTableView;
 
 @end

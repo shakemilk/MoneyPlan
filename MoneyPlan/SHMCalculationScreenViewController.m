@@ -50,41 +50,21 @@ NSString* machineName()
     return self;
 }
 
--(UITableView *) calculationTableView{
+-(UITableView *) setCalculationTableView{
     
-    if (!_calculationTableView){
-        CGFloat x = 0.0;
-        CGFloat y = 0.0;
-        CGFloat width = self.view.frame.size.width;
+    _calculationTableView.rowHeight = SHM_ROW_HEIGHT;
+    _calculationTableView.sectionHeaderHeight = SHM_HEADER_HEIGHT;
+    _calculationTableView.scrollEnabled = YES;
+    _calculationTableView.showsVerticalScrollIndicator = YES;
+    _calculationTableView.userInteractionEnabled = YES;
+    _calculationTableView.bounces = YES;
         
+    _calculationTableView.delegate = self;
+    _calculationTableView.dataSource = self;
         
-        NSString *platform = machineName();
-        
-#warning размеры таблицы не подгоняются нормально по высоте. Переделать под autolayout.
-        CGFloat height;
-        if ([platform isEqualToString:@"iPhone4,1"])
-             height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT-SHM_NAVIGATION_BAR_HEIGHT-SHM_STATUS_BAR_HEIGHT-24;
-        else
-             height = self.view.frame.size.height-SHM_TAB_BAR_HEIGHT;
-        
-        CGRect rect = CGRectMake(x, y, width, height);
-        
-        _calculationTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
-        
-        _calculationTableView.rowHeight = SHM_ROW_HEIGHT;
-        _calculationTableView.sectionHeaderHeight = SHM_HEADER_HEIGHT;
-        _calculationTableView.scrollEnabled = YES;
-        _calculationTableView.showsVerticalScrollIndicator = YES;
-        _calculationTableView.userInteractionEnabled = YES;
-        _calculationTableView.bounces = YES;
-        
-        _calculationTableView.delegate = self;
-        _calculationTableView.dataSource = self;
-        
-        [_calculationTableView registerClass:[SHMCalculationScreenTableViewCell class] forCellReuseIdentifier:@"Cell"];
-        [_calculationTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        [_calculationTableView setBackgroundColor:[SHMAppearance defaultBackgroundColor]];
-    }
+    [_calculationTableView registerClass:[SHMCalculationScreenTableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [_calculationTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [_calculationTableView setBackgroundColor:[SHMAppearance defaultBackgroundColor]];
     
     return _calculationTableView;
 }
@@ -211,7 +191,9 @@ NSString* machineName()
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view addSubview:self.calculationTableView];
+    //[self.view addSubview:self.calculationTableView];
+    
+    [self setCalculationTableView];
     
     self.view.backgroundColor = [SHMAppearance defaultBackgroundColor];
 }
@@ -368,6 +350,10 @@ NSString* machineName()
     [array replaceObjectAtIndex:sectionOpened withObject:rows];
     self.numberOfRowsToShowForSection = array;
 
+    //понадобится для торможения анимации раскрытия совместно с performTableUpdatesWithTimer
+    //NSTimer *tableTimer=[NSTimer scheduledTimerWithTimeInterval:0.4f target:self selector:@selector(performTableUpdates:) userInfo:nil repeats:YES];
+    
+    
     // Apply the updates.
     [self.calculationTableView beginUpdates];
     [self.calculationTableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
@@ -412,6 +398,12 @@ NSString* machineName()
     [tempArray replaceObjectAtIndex:sectionClosed withObject:[[NSNumber alloc] initWithBool:NO]];
     self.openedSectionsArray = [tempArray copy];
 }
+
+//-(void)performTableUpdatesWithTimer:(NSTimer *) Timer
+//{
+    //понадобится для торможения анимации раскрытия
+    //заменяет стандартный performTableUpdates
+//}
 
 
 @end
