@@ -12,31 +12,9 @@
 #import "SHMButtonCollectionViewCell.h"
 #import "SHMPartyCollectionViewCell.h"
 #import "SHMAlertView.h"
-
-@interface SHMParty : NSObject
-@property (nonatomic, strong) NSString *partyName;
-@property (nonatomic, strong) NSDate *partyDate;
-@property (nonatomic, strong) NSString *partyDateString;
-
--(instancetype)initWithName:(NSString *)name date:(NSDate *)date;
-@end
-
-@implementation SHMParty
-
--(instancetype)initWithName:(NSString *)name date:(NSDate *)date {
-    if (self = [super init]) {
-        self.partyName = name;
-        self.partyDate = date;
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"dd.MM.yy";
-        self.partyDateString = [dateFormatter stringFromDate:date];
-    }
-    
-    return self;
-}
-
-@end
+#import "SHMEvent.h"
+#import "SHMCoreDataManager.h"
+#import "SHMManagedObjectContext.h"
 
 @interface SHMPartiesViewController () <UIActionSheetDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SHMButtonCollectionViewCellDelegate, SHMAlertViewDelegate>
 
@@ -77,6 +55,12 @@
 -(NSMutableArray *)partiesArray {
     if (!_partiesArray) {
         _partiesArray = @[].mutableCopy;
+        NSManagedObjectContext *context = [SHMCoreDataManager mainContext];
+        NSError *error;
+        NSArray *events = [context executeFetchRequest:[SHMEvent eventsFetchRequest] error:&error];
+        if (!error) {
+            [_partiesArray addObjectsFromArray:events];
+        }
     }
     
     return _partiesArray;
@@ -87,8 +71,8 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row) {
         SHMPartyCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PartyCell" forIndexPath:indexPath];
-        SHMParty *party = self.partiesArray[indexPath.row-1];
-        [cell configureWithEventName:party.partyName dateString:party.partyDateString];
+        SHMEvent *party = self.partiesArray[indexPath.row-1];
+        [cell configureWithEvent:party];
         return cell;
     } else {
         SHMButtonCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ButtonCell" forIndexPath:indexPath];
@@ -143,25 +127,31 @@
 #pragma mark - SHMAlertView delegate
 
 -(void)alertView:(SHMAlertView *)alertView createEventWithName:(NSString *)name date:(NSDate *)date {
-    [self.collectionView performBatchUpdates:^{
-        SHMParty *newParty = [[SHMParty alloc] initWithName:name date:date];
-        [self.partiesArray addObject:newParty];
-        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:self.partiesArray.count inSection:0];
-        [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-    } completion:^(BOOL finished) {
-        [self.collectionView reloadData];
+    NSManagedObjectContext *context = [SHMCoreDataManager mainContext];
+    [context performBlockAndSaveOrReset:^BOOL(NSError *__autoreleasing *error) {
+        SHMEvent *event = [SHMEvent insertInManagedObjectContext:context];
+        event.name = name;
+        event.date = date;
+        [self.partiesArray addObject:event];
+        return YES;
+    } completion:^(BOOL success, NSError *error) {
+        if (success && !error) {
+            [self.collectionView reloadData];
+        }
     }];
 }
 
 -(void)alertView:(SHMAlertView *)alertView joinEventWithID:(NSString *)eventID {
-    [self.collectionView performBatchUpdates:^{
-        SHMParty *newParty = [[SHMParty alloc] initWithName:@"День рождения Маши" date:[NSDate date]];
-        [self.partiesArray addObject:newParty];
-        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:self.partiesArray.count inSection:0];
-        [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-    } completion:^(BOOL finished) {
-        [self.collectionView reloadData];
-    }];
+//    [self.collectionView performBatchUpdates:^{
+//        SHMEvent *newParty = [[[SHMEvent alloc] init];
+//        newParty.name = @"День рождения Маши";
+//        newParty.date = [NSDate date];
+//        [self.partiesArray addObject:newParty];
+//        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:self.partiesArray.count inSection:0];
+//        [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+//    } completion:^(BOOL finished) {
+//        [self.collectionView reloadData];
+//    }];
 }
 
 -(void)alertView:(SHMAlertView *)alertView didCancelWithType:(SHMAlertViewType)type {

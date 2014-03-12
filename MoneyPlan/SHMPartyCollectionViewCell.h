@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class SHMEvent;
+
 @interface SHMPartyCollectionViewCell : UICollectionViewCell
 
--(void)configureWithEventName:(NSString *)name dateString:(NSString *)dateString;
+-(void)configureWithEvent:(SHMEvent *)event;
 
 @end

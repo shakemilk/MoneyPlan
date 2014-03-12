@@ -7,13 +7,12 @@
 //
 
 #import "SHMPartyCollectionViewCell.h"
+#import "SHMEvent.h"
 
 @interface SHMPartyCollectionViewCell()
 
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-
-
 @end
 
 @implementation SHMPartyCollectionViewCell
@@ -26,9 +25,16 @@
     return self;
 }
 
--(void)configureWithEventName:(NSString *)name dateString:(NSString *)dateString {
-    self.dateLabel.text = dateString;
-    self.descriptionLabel.text = name;
+- (void)prepareForReuse {
+    _dateLabel.text = nil;
+    _descriptionLabel.text = nil;
+}
+
+-(void)configureWithEvent:(SHMEvent *)event {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"dd.MM.yy";
+    self.dateLabel.text = [dateFormatter stringFromDate:event.date];
+    self.descriptionLabel.text = event.name;
 }
 
 @end
