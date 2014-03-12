@@ -23,6 +23,15 @@
 		74EC6F5A1783FF3E0066D122 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 74EC6F591783FF3E0066D122 /* Default.png */; };
 		74EC6F5C1783FF3E0066D122 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 74EC6F5B1783FF3E0066D122 /* Default@2x.png */; };
 		74EC6F5E1783FF3E0066D122 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 74EC6F5D1783FF3E0066D122 /* Default-568h@2x.png */; };
+		86099F7318D0DA91000B07A6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86099F7118D0DA91000B07A6 /* Model.xcdatamodeld */; };
+		86099F7E18D0E6D9000B07A6 /* _SHMEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 86099F7718D0E6D9000B07A6 /* _SHMEvent.m */; };
+		86099F7F18D0E6D9000B07A6 /* _SHMProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 86099F7918D0E6D9000B07A6 /* _SHMProduct.m */; };
+		86099F8018D0E6D9000B07A6 /* _SHMTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 86099F7B18D0E6D9000B07A6 /* _SHMTransaction.m */; };
+		86099F8118D0E6D9000B07A6 /* _SHMUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 86099F7D18D0E6D9000B07A6 /* _SHMUser.m */; };
+		86099F8A18D0E738000B07A6 /* SHMEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 86099F8318D0E738000B07A6 /* SHMEvent.m */; };
+		86099F8B18D0E738000B07A6 /* SHMProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 86099F8518D0E738000B07A6 /* SHMProduct.m */; };
+		86099F8C18D0E738000B07A6 /* SHMTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 86099F8718D0E738000B07A6 /* SHMTransaction.m */; };
+		86099F8D18D0E738000B07A6 /* SHMUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 86099F8918D0E738000B07A6 /* SHMUser.m */; };
 		86BB9C8C181D17A70094B912 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86BB9C8B181D17A70094B912 /* Images.xcassets */; };
 		86EA4C591821599A00B87A82 /* SHMAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C581821599A00B87A82 /* SHMAppearance.m */; };
 		86EA4C5D18215E2E00B87A82 /* SHMPartiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EA4C5C18215E2E00B87A82 /* SHMPartiesViewController.m */; };
@@ -64,6 +73,23 @@
 		74EC6F591783FF3E0066D122 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		74EC6F5B1783FF3E0066D122 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		74EC6F5D1783FF3E0066D122 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		86099F7218D0DA91000B07A6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		86099F7618D0E6D9000B07A6 /* _SHMEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _SHMEvent.h; path = MoneyPlan/_SHMEvent.h; sourceTree = "<group>"; };
+		86099F7718D0E6D9000B07A6 /* _SHMEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _SHMEvent.m; path = MoneyPlan/_SHMEvent.m; sourceTree = "<group>"; };
+		86099F7818D0E6D9000B07A6 /* _SHMProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _SHMProduct.h; path = MoneyPlan/_SHMProduct.h; sourceTree = "<group>"; };
+		86099F7918D0E6D9000B07A6 /* _SHMProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _SHMProduct.m; path = MoneyPlan/_SHMProduct.m; sourceTree = "<group>"; };
+		86099F7A18D0E6D9000B07A6 /* _SHMTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _SHMTransaction.h; path = MoneyPlan/_SHMTransaction.h; sourceTree = "<group>"; };
+		86099F7B18D0E6D9000B07A6 /* _SHMTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _SHMTransaction.m; path = MoneyPlan/_SHMTransaction.m; sourceTree = "<group>"; };
+		86099F7C18D0E6D9000B07A6 /* _SHMUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _SHMUser.h; path = MoneyPlan/_SHMUser.h; sourceTree = "<group>"; };
+		86099F7D18D0E6D9000B07A6 /* _SHMUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = _SHMUser.m; path = MoneyPlan/_SHMUser.m; sourceTree = "<group>"; };
+		86099F8218D0E738000B07A6 /* SHMEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMEvent.h; path = MoneyPlan/SHMEvent.h; sourceTree = "<group>"; };
+		86099F8318D0E738000B07A6 /* SHMEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHMEvent.m; path = MoneyPlan/SHMEvent.m; sourceTree = "<group>"; };
+		86099F8418D0E738000B07A6 /* SHMProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMProduct.h; path = MoneyPlan/SHMProduct.h; sourceTree = "<group>"; };
+		86099F8518D0E738000B07A6 /* SHMProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHMProduct.m; path = MoneyPlan/SHMProduct.m; sourceTree = "<group>"; };
+		86099F8618D0E738000B07A6 /* SHMTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMTransaction.h; path = MoneyPlan/SHMTransaction.h; sourceTree = "<group>"; };
+		86099F8718D0E738000B07A6 /* SHMTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHMTransaction.m; path = MoneyPlan/SHMTransaction.m; sourceTree = "<group>"; };
+		86099F8818D0E738000B07A6 /* SHMUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SHMUser.h; path = MoneyPlan/SHMUser.h; sourceTree = "<group>"; };
+		86099F8918D0E738000B07A6 /* SHMUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SHMUser.m; path = MoneyPlan/SHMUser.m; sourceTree = "<group>"; };
 		86BB9C8B181D17A70094B912 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		86EA4C571821599A00B87A82 /* SHMAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHMAppearance.h; sourceTree = "<group>"; };
 		86EA4C581821599A00B87A82 /* SHMAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMAppearance.m; sourceTree = "<group>"; };
@@ -167,6 +193,7 @@
 		74EC6F4D1783FF3E0066D122 /* MoneyPlan */ = {
 			isa = PBXGroup;
 			children = (
+				86099F7018D0D9C0000B07A6 /* Model */,
 				86EA4C7B1824195800B87A82 /* CustomViews */,
 				86EA4C7A1824194500B87A82 /* ViewControllers */,
 				86EA4C561821598400B87A82 /* Helpers */,
@@ -191,6 +218,46 @@
 				74EC6F5D1783FF3E0066D122 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		86099F7018D0D9C0000B07A6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				86099F7518D0DC31000B07A6 /* Model class files */,
+				86099F7418D0DC25000B07A6 /* Autogenerated class files */,
+				86099F7118D0DA91000B07A6 /* Model.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		86099F7418D0DC25000B07A6 /* Autogenerated class files */ = {
+			isa = PBXGroup;
+			children = (
+				86099F7618D0E6D9000B07A6 /* _SHMEvent.h */,
+				86099F7718D0E6D9000B07A6 /* _SHMEvent.m */,
+				86099F7818D0E6D9000B07A6 /* _SHMProduct.h */,
+				86099F7918D0E6D9000B07A6 /* _SHMProduct.m */,
+				86099F7A18D0E6D9000B07A6 /* _SHMTransaction.h */,
+				86099F7B18D0E6D9000B07A6 /* _SHMTransaction.m */,
+				86099F7C18D0E6D9000B07A6 /* _SHMUser.h */,
+				86099F7D18D0E6D9000B07A6 /* _SHMUser.m */,
+			);
+			name = "Autogenerated class files";
+			sourceTree = "<group>";
+		};
+		86099F7518D0DC31000B07A6 /* Model class files */ = {
+			isa = PBXGroup;
+			children = (
+				86099F8218D0E738000B07A6 /* SHMEvent.h */,
+				86099F8318D0E738000B07A6 /* SHMEvent.m */,
+				86099F8418D0E738000B07A6 /* SHMProduct.h */,
+				86099F8518D0E738000B07A6 /* SHMProduct.m */,
+				86099F8618D0E738000B07A6 /* SHMTransaction.h */,
+				86099F8718D0E738000B07A6 /* SHMTransaction.m */,
+				86099F8818D0E738000B07A6 /* SHMUser.h */,
+				86099F8918D0E738000B07A6 /* SHMUser.m */,
+			);
+			name = "Model class files";
 			sourceTree = "<group>";
 		};
 		86EA4C561821598400B87A82 /* Helpers */ = {
@@ -361,17 +428,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86099F8B18D0E738000B07A6 /* SHMProduct.m in Sources */,
 				74EC6F541783FF3E0066D122 /* main.m in Sources */,
 				74EC6F581783FF3E0066D122 /* SHMAppDelegate.m in Sources */,
+				86099F7F18D0E6D9000B07A6 /* _SHMProduct.m in Sources */,
+				86099F8A18D0E738000B07A6 /* SHMEvent.m in Sources */,
 				86EA4C591821599A00B87A82 /* SHMAppearance.m in Sources */,
 				86EA4C711822CCCD00B87A82 /* SHMButtonCollectionViewCell.m in Sources */,
 				86EA4C5D18215E2E00B87A82 /* SHMPartiesViewController.m in Sources */,
 				86EA4C6A18218BB800B87A82 /* SHMPartyCollectionViewCell.m in Sources */,
+				86099F8D18D0E738000B07A6 /* SHMUser.m in Sources */,
+				86099F8118D0E6D9000B07A6 /* _SHMUser.m in Sources */,
 				271B7A0517895881008427F0 /* SHMTableWithOpeningSectionsSectionView.m in Sources */,
+				86099F7E18D0E6D9000B07A6 /* _SHMEvent.m in Sources */,
+				86099F8018D0E6D9000B07A6 /* _SHMTransaction.m in Sources */,
 				27BC4BAF1795215E006DD809 /* SHMCalculationScreenViewController.m in Sources */,
 				86EA4C7E1824199600B87A82 /* SHMAlertView.m in Sources */,
 				279B97FE179EE1CB00BE1D0A /* SHMCalculationScreenTableViewCell.m in Sources */,
 				279F616617C8D6D200674081 /* SHMFolksListViewController.m in Sources */,
+				86099F8C18D0E738000B07A6 /* SHMTransaction.m in Sources */,
+				86099F7318D0DA91000B07A6 /* Model.xcdatamodeld in Sources */,
 				86EA4C631821834B00B87A82 /* SHMTabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -545,6 +621,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		86099F7118D0DA91000B07A6 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				86099F7218D0DA91000B07A6 /* Model.xcdatamodel */,
+			);
+			currentVersion = 86099F7218D0DA91000B07A6 /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = MoneyPlan/Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 74EC6F3C1783FF3E0066D122 /* Project object */;
 }
