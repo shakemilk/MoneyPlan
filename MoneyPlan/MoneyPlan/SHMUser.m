@@ -10,6 +10,10 @@
 
 @implementation SHMUser
 
-// Custom logic goes here.
++ (NSFetchRequest *)usersFetchRequest {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[SHMUser entityName]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    return fetchRequest;
+}
 
 @end

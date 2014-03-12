@@ -10,6 +10,10 @@
 
 @implementation SHMProduct
 
-// Custom logic goes here.
++ (NSFetchRequest *)productsFetchRequest {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[SHMProduct entityName]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    return fetchRequest;
+}
 
 @end

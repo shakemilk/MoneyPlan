@@ -10,6 +10,8 @@
 
 @implementation SHMTransaction
 
-// Custom logic goes here.
++ (NSFetchRequest *)transactionsFetchRequest {
+    return [NSFetchRequest fetchRequestWithEntityName:[SHMTransaction entityName]];
+}
 
 @end

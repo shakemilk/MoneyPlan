@@ -10,6 +10,10 @@
 
 @implementation SHMEvent
 
-// Custom logic goes here.
++ (NSFetchRequest *)eventsFetchRequest {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[SHMEvent entityName]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
+    return fetchRequest;
+}
 
 @end
